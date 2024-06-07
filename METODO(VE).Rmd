@@ -1,0 +1,15 @@
+---
+title: "METODO (VE)"
+author: "Juan C. Correa"
+date: "2024-06-07"
+output: html_document
+---
+
+# Paso 1
+El primer paso, naturalmente, es definir la muestra de programas de postgrado en el país. Para ello, se utiliza la librería readtext de la siguiente manera
+
+```{r}
+library(readtext)
+textos <- readtext("Venezuela/DATA_VE/")
+```
+
