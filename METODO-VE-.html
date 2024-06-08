@@ -357,13 +357,278 @@ display: none;
 </div>
 
 
-<div id="paso-1" class="section level1">
-<h1>Paso 1</h1>
+<div id="paso-1-creación-de-corpus" class="section level1">
+<h1>Paso 1 (Creación de Corpus)</h1>
 <p>El primer paso, naturalmente, es definir la muestra de programas de
 postgrado en el país. Para ello, se utiliza la librería readtext de la
 siguiente manera</p>
 <pre class="r"><code>library(readtext)
-textos &lt;- readtext(&quot;Venezuela/DATA_VE/&quot;)</code></pre>
+textos &lt;- readtext(&quot;Venezuela/DATA_VE/&quot;)
+textos$doc_id &lt;- gsub(&quot;.pdf&quot;, &quot;&quot;, textos$doc_id)</code></pre>
+<p>Luego, vamos a relacionar cada programa con su nivel educativo
+así:</p>
+<pre class="r"><code>library(dplyr)
+textos &lt;- mutate(textos, 
+                 Program = ifelse(
+                   grepl(&quot;Doctorado en&quot;, text), &quot;Doctor&quot;,
+                        ifelse(grepl(&quot;Maestría&quot;, text), &quot;Master&quot;, 
+                               &quot;Specialization&quot;)))
+table(textos$Program)</code></pre>
+<pre><code>## 
+##         Doctor         Master Specialization 
+##             33             55            122</code></pre>
+<p>Ahora, pasamos a crear el corpus lingüístico.</p>
+<pre class="r"><code>library(quanteda)
+Textos &lt;- corpus(textos$text)
+docvars(Textos, &quot;Program&quot;) &lt;- textos$Program
+head(summary(Textos), 10)</code></pre>
+<pre><code>##      Text Types Tokens Sentences        Program
+## 1   text1   213    484        12         Doctor
+## 2   text2   240    703        11 Specialization
+## 3   text3   172    365        10 Specialization
+## 4   text4   170    335         9 Specialization
+## 5   text5   166    337         8         Doctor
+## 6   text6   214    578         8         Master
+## 7   text7   248    539        14         Master
+## 8   text8   184    408         7         Master
+## 9   text9   220    499        12         Master
+## 10 text10   218    424        10         Master</code></pre>
+<pre class="r"><code>Programs &lt;- tokens(Textos, 
+                     remove_numbers = TRUE, 
+                     remove_punct = TRUE, 
+                     remove_url = TRUE, 
+                     remove_symbols = TRUE) %&gt;%  
+  tokens_remove(stopwords(&quot;spanish&quot;))</code></pre>
+<p>Ahora, pasamos a hacer a buscar con el filtro contextual así:</p>
+<pre class="r"><code>s1 &lt;- data.frame(kwic(Programs, pattern = phrase(&quot;pensamiento crítico&quot;)))
+s2 &lt;- data.frame(kwic(Programs, pattern = phrase(&quot;solucionar problemas&quot;)))
+s3 &lt;- data.frame(kwic(Programs, pattern = &quot;comunicar&quot;))
+s4 &lt;- data.frame(kwic(Programs, pattern = &quot;creatividad&quot;))
+s5 &lt;- data.frame(kwic(Programs, pattern = &quot;paciencia&quot;))
+s6 &lt;- data.frame(kwic(Programs, pattern = &quot;crear&quot;))
+s7 &lt;- data.frame(kwic(Programs, pattern = &quot;liderar&quot;))
+s8 &lt;- data.frame(kwic(Programs, pattern = &quot;resolver&quot;))
+s9 &lt;- data.frame(kwic(Programs, pattern = &quot;comprometer&quot;))
+s10 &lt;- data.frame(kwic(Programs, pattern = &quot;comprometerse&quot;))
+s11 &lt;- data.frame(kwic(Programs, pattern = &quot;gestionar&quot;))
+s12 &lt;- data.frame(kwic(Programs, pattern = &quot;reflexionar&quot;))
+s13 &lt;- data.frame(kwic(Programs, pattern = &quot;controlar&quot;))
+s14 &lt;- data.frame(kwic(Programs, pattern = &quot;ético&quot;))
+s15 &lt;- data.frame(kwic(Programs, pattern = &quot;tolerar&quot;))
+s16 &lt;- data.frame(kwic(Programs, pattern = &quot;argumentar&quot;))
+s17 &lt;- data.frame(kwic(Programs, pattern = &quot;conflictos&quot;))
+s18 &lt;- data.frame(kwic(Programs, pattern = &quot;negociar&quot;))
+s19 &lt;- data.frame(kwic(Programs, pattern = &quot;comprender&quot;))
+s20 &lt;- data.frame(kwic(Programs, pattern = &quot;equipos&quot;))
+s21 &lt;- data.frame(kwic(Programs, pattern = &quot;planificar&quot;))
+s22 &lt;- data.frame(kwic(Programs, pattern = &quot;generar&quot;))
+s23 &lt;- data.frame(kwic(Programs, pattern = &quot;empatía&quot;))
+s24 &lt;- data.frame(kwic(Programs, pattern = &quot;compartir&quot;))
+s25 &lt;- data.frame(kwic(Programs, pattern = &quot;analizar&quot;))
+s26 &lt;- data.frame(kwic(Programs, pattern = &quot;reconocer&quot;))
+s27 &lt;- data.frame(kwic(Programs, pattern = &quot;orientar&quot;))
+s28 &lt;- data.frame(kwic(Programs, pattern = &quot;respetar&quot;))
+s29 &lt;- data.frame(kwic(Programs, pattern = &quot;motivar&quot;))
+s30 &lt;- data.frame(kwic(Programs, pattern = &quot;cooperar&quot;))
+s31 &lt;- data.frame(kwic(Programs, pattern = &quot;fortalecer&quot;))
+s32 &lt;- data.frame(kwic(Programs, pattern = &quot;impulsar&quot;))
+s33 &lt;- data.frame(kwic(Programs, pattern = &quot;acercar&quot;))
+s34 &lt;- data.frame(kwic(Programs, pattern = &quot;ayudar&quot;))
+s35 &lt;- data.frame(kwic(Programs, pattern = &quot;cambiar&quot;))
+s36 &lt;- data.frame(kwic(Programs, pattern = &quot;apreciar&quot;))
+s37 &lt;- data.frame(kwic(Programs, pattern = &quot;dirigir&quot;))
+s38 &lt;- data.frame(kwic(Programs, pattern = &quot;fomentar&quot;))
+s39 &lt;- data.frame(kwic(Programs, pattern = &quot;interactuar&quot;))
+s40 &lt;- data.frame(kwic(Programs, pattern = &quot;identificar&quot;))
+s41 &lt;- data.frame(kwic(Programs, pattern = &quot;competir&quot;))
+s42 &lt;- data.frame(kwic(Programs, pattern = &quot;manifestar&quot;))
+s43 &lt;- data.frame(kwic(Programs, pattern = &quot;responsable&quot;))
+s44 &lt;- data.frame(kwic(Programs, pattern = &quot;evaluar&quot;))
+s45 &lt;- data.frame(kwic(Programs, pattern = &quot;innovar&quot;))
+s46 &lt;- data.frame(kwic(Programs, pattern = &quot;decidir&quot;))
+s47 &lt;- data.frame(kwic(Programs, pattern = phrase(&quot;tomar decisiones&quot;)))
+s48 &lt;- data.frame(kwic(Programs, pattern = &quot;flexibilidad&quot;))
+s49 &lt;- data.frame(kwic(Programs, pattern = &quot;persua*&quot;))
+s50 &lt;- data.frame(kwic(Programs, pattern = &quot;convencer&quot;))
+
+df_list &lt;- mget(paste0(&quot;s&quot;, 1:50))
+SS &lt;- do.call(rbind, df_list)
+SS$Skill &lt;- rownames(SS)
+SS$Skill &lt;- gsub(&quot;\\..*&quot;, &quot;&quot;, SS$Skill)
+rm(list=setdiff(ls(), &quot;SS&quot;))
+variable.names(SS)</code></pre>
+<pre><code>## [1] &quot;docname&quot; &quot;from&quot;    &quot;to&quot;      &quot;pre&quot;     &quot;keyword&quot; &quot;post&quot;    &quot;pattern&quot;
+## [8] &quot;Skill&quot;</code></pre>
+<pre class="r"><code>head(SS, 5)</code></pre>
+<pre><code>##      docname from   to
+## s1.1  text21   56   57
+## s1.2 text158 2797 2798
+## s1.3 text158 4260 4261
+## s1.4 text158 7202 7203
+## s1.5 text159 2805 2806
+##                                                             pre
+## s1.1 intercambio interdisciplinar plural enriquecer profundizar
+## s1.2              carácter público calidad innovación ejercicio
+## s1.3                Aragua Libertad Universidad promoverá valor
+## s1.4   estrategia abarca profundización ampliación conocimiento
+## s1.5              carácter público calidad innovación ejercicio
+##                  keyword
+## s1.1 pensamiento crítico
+## s1.2 pensamiento crítico
+## s1.3 pensamiento crítico
+## s1.4 pensamiento crítico
+## s1.5 pensamiento crítico
+##                                                             post
+## s1.1 creativo dirigido profesionales preocupados acontecimientos
+## s1.2          reflexivo inclusión pertinencia formación integral
+## s1.3                estudiantes puedan emitir juicios personales
+## s1.4         creativo analítico Modelo Educativo Especialización
+## s1.5          reflexivo inclusión pertinencia formación integral
+##                  pattern Skill
+## s1.1 pensamiento crítico    s1
+## s1.2 pensamiento crítico    s1
+## s1.3 pensamiento crítico    s1
+## s1.4 pensamiento crítico    s1
+## s1.5 pensamiento crítico    s1</code></pre>
+</div>
+<div id="paso-2-modelado-de-red-de-habilidades" class="section level1">
+<h1>Paso 2: (Modelado de Red de Habilidades)</h1>
+<p>Ahora, pasamos a modelar las relaciones entre las habilidades y los
+programas de postgrado. Para ello, vamos a usar los datos de la tabla SS
+resultante del último código del paso anterior para construir la redd a
+través de una lista de aristas.</p>
+<pre class="r"><code>network &lt;- SS[c(1,8)]
+head(network, 3)</code></pre>
+<pre><code>##      docname Skill
+## s1.1  text21    s1
+## s1.2 text158    s1
+## s1.3 text158    s1</code></pre>
+<p>Ahora, pasamos a graficar la red bipartita entre habilidades y
+programas</p>
+<pre class="r"><code>library(igraph)
+bn2 &lt;- graph.data.frame(network,directed=FALSE)
+bipartite.mapping(bn2)</code></pre>
+<pre><code>## $res
+## [1] TRUE
+## 
+## $type
+##  text21 text158 text159 text160 text161 text162 text163 text164 text165 text166 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text167 text168 text169 text170 text171 text172 text173 text174 text175 text176 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text177 text178 text179 text180 text181 text182 text183 text184 text185 text186 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text187 text188 text189 text116 text115  text13  text52 text139 text135   text7 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+##  text75  text76 text141 text143 text148  text24  text81  text83  text84 text122 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text144 text156 text157 text197 text202   text3   text9  text27 text105 text108 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text131 text142 text155  text80 text106 text154  text77 text191  text32  text36 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+##  text41  text64  text78 text125 text147 text192 text210  text29  text69  text73 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text102  text26 text145  text20 text100 text123 text152 text194   text1  text17 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+##  text23  text68  text97 text209  text18  text66  text85   text6  text19  text28 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text136 text207  text14 text199 text205 text206 text124 text126  text89  text90 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE 
+## text198 text130 text153  text86 text112 text128 text140  text25 text104      s1 
+##   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE   FALSE    TRUE 
+##      s2      s3      s4      s6      s7      s8     s10     s11     s12     s13 
+##    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE 
+##     s14     s15     s17     s19     s20     s21     s22     s23     s24     s25 
+##    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE 
+##     s26     s27     s28     s31     s32     s33     s34     s35     s36     s37 
+##    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE 
+##     s38     s39     s40     s41     s43     s44     s45     s46     s47     s48 
+##    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE    TRUE 
+##     s49 
+##    TRUE</code></pre>
+<pre class="r"><code>V(bn2)$type &lt;- bipartite_mapping(bn2)$type
+V(bn2)$shape &lt;- ifelse(V(bn2)$type, &quot;circle&quot;, &quot;square&quot;)
+V(bn2)$label.cex &lt;- ifelse(V(bn2)$type, 0.5, 1)
+V(bn2)$size &lt;- sqrt(igraph::degree(bn2))
+E(bn2)$color &lt;- &quot;lightgrey&quot;
+
+bn2.pr &lt;- bipartite.projection(bn2)
+Terms &lt;- bn2.pr$proj2
+
+centrality_scores &lt;- igraph::eigen_centrality(Terms)
+centrality_scores &lt;- centrality_scores$vector
+
+color_palette &lt;- colorRampPalette(c(&quot;#CE1127&quot;, &quot;white&quot;, &quot;#0A3A7E&quot;))(length(unique(centrality_scores)))
+
+# Assign colors to nodes based on their normalized centrality scores
+node_colors &lt;- color_palette[rank(centrality_scores)]
+
+# Plot the network with node colors based on centrality
+set.seed(56)
+png(&quot;F1.png&quot;, width = 15, height = 7, units = &#39;in&#39;, res = 300)
+
+plot(Terms, vertex.label.color = &quot;black&quot;, vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = &quot;lightgray&quot;, layout = layout_randomly, main = &quot;&quot;)
+
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+<p>Seguimos con el cálculo de la importancia de cada habilidad y
+analicemos la correlación entre los cuatro indicadores de centralidad
+para ver si se comportan de una manera semejante a lo esperado por la
+evidencia empírica sobre indicadores de centralidad.</p>
+<pre class="r"><code>BNA &lt;- graph.data.frame(network, directed = FALSE)
+Programs &lt;- data.frame(Degree = igraph::degree(BNA),
+                   Closeness = igraph::closeness(BNA),
+                   Betweennes = igraph::betweenness(BNA),
+                   Eigen = igraph::eigen_centrality(BNA))
+Programs &lt;- Programs[ -c(5:25) ]
+rownames(Programs)</code></pre>
+<pre><code>##   [1] &quot;text21&quot;  &quot;text158&quot; &quot;text159&quot; &quot;text160&quot; &quot;text161&quot; &quot;text162&quot; &quot;text163&quot;
+##   [8] &quot;text164&quot; &quot;text165&quot; &quot;text166&quot; &quot;text167&quot; &quot;text168&quot; &quot;text169&quot; &quot;text170&quot;
+##  [15] &quot;text171&quot; &quot;text172&quot; &quot;text173&quot; &quot;text174&quot; &quot;text175&quot; &quot;text176&quot; &quot;text177&quot;
+##  [22] &quot;text178&quot; &quot;text179&quot; &quot;text180&quot; &quot;text181&quot; &quot;text182&quot; &quot;text183&quot; &quot;text184&quot;
+##  [29] &quot;text185&quot; &quot;text186&quot; &quot;text187&quot; &quot;text188&quot; &quot;text189&quot; &quot;text116&quot; &quot;text115&quot;
+##  [36] &quot;text13&quot;  &quot;text52&quot;  &quot;text139&quot; &quot;text135&quot; &quot;text7&quot;   &quot;text75&quot;  &quot;text76&quot; 
+##  [43] &quot;text141&quot; &quot;text143&quot; &quot;text148&quot; &quot;text24&quot;  &quot;text81&quot;  &quot;text83&quot;  &quot;text84&quot; 
+##  [50] &quot;text122&quot; &quot;text144&quot; &quot;text156&quot; &quot;text157&quot; &quot;text197&quot; &quot;text202&quot; &quot;text3&quot;  
+##  [57] &quot;text9&quot;   &quot;text27&quot;  &quot;text105&quot; &quot;text108&quot; &quot;text131&quot; &quot;text142&quot; &quot;text155&quot;
+##  [64] &quot;text80&quot;  &quot;text106&quot; &quot;text154&quot; &quot;text77&quot;  &quot;text191&quot; &quot;text32&quot;  &quot;text36&quot; 
+##  [71] &quot;text41&quot;  &quot;text64&quot;  &quot;text78&quot;  &quot;text125&quot; &quot;text147&quot; &quot;text192&quot; &quot;text210&quot;
+##  [78] &quot;text29&quot;  &quot;text69&quot;  &quot;text73&quot;  &quot;text102&quot; &quot;text26&quot;  &quot;text145&quot; &quot;text20&quot; 
+##  [85] &quot;text100&quot; &quot;text123&quot; &quot;text152&quot; &quot;text194&quot; &quot;text1&quot;   &quot;text17&quot;  &quot;text23&quot; 
+##  [92] &quot;text68&quot;  &quot;text97&quot;  &quot;text209&quot; &quot;text18&quot;  &quot;text66&quot;  &quot;text85&quot;  &quot;text6&quot;  
+##  [99] &quot;text19&quot;  &quot;text28&quot;  &quot;text136&quot; &quot;text207&quot; &quot;text14&quot;  &quot;text199&quot; &quot;text205&quot;
+## [106] &quot;text206&quot; &quot;text124&quot; &quot;text126&quot; &quot;text89&quot;  &quot;text90&quot;  &quot;text198&quot; &quot;text130&quot;
+## [113] &quot;text153&quot; &quot;text86&quot;  &quot;text112&quot; &quot;text128&quot; &quot;text140&quot; &quot;text25&quot;  &quot;text104&quot;
+## [120] &quot;s1&quot;      &quot;s2&quot;      &quot;s3&quot;      &quot;s4&quot;      &quot;s6&quot;      &quot;s7&quot;      &quot;s8&quot;     
+## [127] &quot;s10&quot;     &quot;s11&quot;     &quot;s12&quot;     &quot;s13&quot;     &quot;s14&quot;     &quot;s15&quot;     &quot;s17&quot;    
+## [134] &quot;s19&quot;     &quot;s20&quot;     &quot;s21&quot;     &quot;s22&quot;     &quot;s23&quot;     &quot;s24&quot;     &quot;s25&quot;    
+## [141] &quot;s26&quot;     &quot;s27&quot;     &quot;s28&quot;     &quot;s31&quot;     &quot;s32&quot;     &quot;s33&quot;     &quot;s34&quot;    
+## [148] &quot;s35&quot;     &quot;s36&quot;     &quot;s37&quot;     &quot;s38&quot;     &quot;s39&quot;     &quot;s40&quot;     &quot;s41&quot;    
+## [155] &quot;s43&quot;     &quot;s44&quot;     &quot;s45&quot;     &quot;s46&quot;     &quot;s47&quot;     &quot;s48&quot;     &quot;s49&quot;</code></pre>
+<pre class="r"><code>Programs$SS &lt;- rownames(Programs)
+Programs &lt;- Programs[order(Programs$SS), ]
+Programs &lt;- Programs[grepl(&quot;s&quot;, Programs$SS), ]
+Programs &lt;- Programs[1:4]
+colnames(Programs)[4] &lt;- &quot;Eigenvector&quot;
+
+library(psych)
+png(&quot;F2.png&quot;, width = 12, height = 10, units = &#39;in&#39;, res = 300)
+pairs.panels(Programs, 
+             method = &quot;spearman&quot;, 
+             hist.col = &quot;#0A3A7E&quot;,
+             density = TRUE,  
+             ellipses = TRUE,
+             pch = 15,
+             cex = 1,
+             cex.axis = 1.8,
+             cex.labels = 1.5,
+             lwd = 2,
+             rug = TRUE,
+             stars = TRUE)
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
 </div>
 
 
