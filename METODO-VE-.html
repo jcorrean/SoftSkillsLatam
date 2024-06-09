@@ -490,6 +490,57 @@ variable.names(SS)</code></pre>
 ## s1.3 pensamiento crítico    s1
 ## s1.4 pensamiento crítico    s1
 ## s1.5 pensamiento crítico    s1</code></pre>
+<pre class="r"><code>Skills &lt;- data.frame(SkillCode = c(paste0(&quot;s&quot;, 1:50)),
+                     Skill = c(&quot;pensamiento crítico&quot;,
+                              &quot;solucionar problemas&quot;,
+                              &quot;comunicar&quot;,
+                              &quot;creatividad&quot;,
+                              &quot;paciencia&quot;,
+                              &quot;crear&quot;,
+                              &quot;liderar&quot;,
+                              &quot;resolver&quot;,
+                              &quot;comprometer&quot;,
+                              &quot;comprometerse&quot;,
+                              &quot;gestionar&quot;,
+                              &quot;reflexionar&quot;,
+                              &quot;controlar&quot;,
+                              &quot;ético&quot;,
+                              &quot;tolerar&quot;,
+                              &quot;argumentar&quot;,
+                              &quot;conflictos&quot;,
+                              &quot;negociar&quot;,
+                              &quot;comprender&quot;,
+                              &quot;equipos&quot;,
+                              &quot;planificar&quot;,
+                              &quot;generar&quot;,
+                              &quot;empatía&quot;,
+                              &quot;compartir&quot;,
+                              &quot;analizar&quot;,
+                              &quot;reconocer&quot;,
+                              &quot;orientar&quot;,
+                              &quot;respetar&quot;,
+                              &quot;motivar&quot;,
+                              &quot;cooperar&quot;,
+                              &quot;fortalecer&quot;,
+                              &quot;impulsar&quot;,
+                              &quot;acercar&quot;,
+                              &quot;ayudar&quot;,
+                              &quot;cambiar&quot;,
+                              &quot;apreciar&quot;,
+                              &quot;dirigir&quot;,
+                              &quot;fomentar&quot;,
+                              &quot;interactuar&quot;,
+                              &quot;identificar&quot;,
+                              &quot;competir&quot;,
+                              &quot;manifestar&quot;,
+                              &quot;responsable&quot;,
+                              &quot;evaluar&quot;,
+                              &quot;innovar&quot;,
+                              &quot;decidir&quot;,
+                              &quot;tomar decisiones&quot;,
+                              &quot;flexibilidad&quot;,
+                              &quot;persua*&quot;,
+                              &quot;convencer&quot;))</code></pre>
 </div>
 <div id="paso-2-modelado-de-red-de-habilidades" class="section level1">
 <h1>Paso 2: (Modelado de Red de Habilidades)</h1>
@@ -629,6 +680,50 @@ pairs.panels(Programs,
 dev.off()</code></pre>
 <pre><code>## png 
 ##   2</code></pre>
+<p>Ahora, veamos el ranking de las diez habilidades más importantes</p>
+<pre class="r"><code>IM &lt;- as_incidence_matrix(BNA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNA)$type)
+IM2 &lt;- as.matrix(IM)
+
+rownames(Programs)[order(Programs$Eigenvector, decreasing = TRUE)]</code></pre>
+<pre><code>##  [1] &quot;s22&quot; &quot;s31&quot; &quot;s4&quot;  &quot;s6&quot;  &quot;s44&quot; &quot;s17&quot; &quot;s19&quot; &quot;s38&quot; &quot;s48&quot; &quot;s20&quot; &quot;s1&quot;  &quot;s8&quot; 
+## [13] &quot;s43&quot; &quot;s40&quot; &quot;s25&quot; &quot;s32&quot; &quot;s27&quot; &quot;s24&quot; &quot;s14&quot; &quot;s47&quot; &quot;s21&quot; &quot;s12&quot; &quot;s11&quot; &quot;s26&quot;
+## [25] &quot;s23&quot; &quot;s46&quot; &quot;s45&quot; &quot;s39&quot; &quot;s3&quot;  &quot;s7&quot;  &quot;s15&quot; &quot;s28&quot; &quot;s36&quot; &quot;s10&quot; &quot;s37&quot; &quot;s33&quot;
+## [37] &quot;s35&quot; &quot;s41&quot; &quot;s13&quot; &quot;s49&quot; &quot;s2&quot;  &quot;s34&quot;</code></pre>
+<pre class="r"><code>selected_columns &lt;- head(rownames(Programs)[order(Programs$Eigenvector, decreasing = TRUE)], 10)
+# Let&#39;s pick the most important soft skills
+# as per their eigenvector centrality
+
+current_column_names &lt;- colnames(IM2)
+
+# Subset the matrix by column names
+IM3 &lt;- IM2[, selected_columns, drop = FALSE]
+
+current_column_names &lt;- colnames(IM3)
+
+
+# Create a vector to hold the mapped skill names
+mapped_skill_names &lt;- character(length(current_column_names))
+
+
+for (i in seq_along(current_column_names)) {
+
+  skill_index &lt;- match(current_column_names[i], Skills$SkillCode)
+  
+  # If a match is found, map the skill code to its name
+  if (!is.na(skill_index)) {
+    mapped_skill_names[i] &lt;- Skills$Skill[skill_index]
+  } else {
+    # Handle unmatched column names as needed
+    # For example, assign a default value or leave blank
+    mapped_skill_names[i] &lt;- &quot;Unmatched&quot;
+  }
+}
+
+# Replace the column names of IM3 with the mapped skill names
+colnames(IM3) &lt;- mapped_skill_names
+colnames(IM3)</code></pre>
+<pre><code>##  [1] &quot;generar&quot;      &quot;fortalecer&quot;   &quot;creatividad&quot;  &quot;crear&quot;        &quot;evaluar&quot;     
+##  [6] &quot;conflictos&quot;   &quot;comprender&quot;   &quot;fomentar&quot;     &quot;flexibilidad&quot; &quot;equipos&quot;</code></pre>
 </div>
 
 
