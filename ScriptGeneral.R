@@ -20,6 +20,7 @@ Programas$ymax <- cumsum(Programas$fraction)
 Programas$ymin <- c(0, head(Programas$ymax, n=-1))
 Programas$labelPosition <- (Programas$ymax + Programas$ymin) / 2
 Programas$label <- paste0(Programas$Programa, "\n total: ", Programas$Total)
+png("F0.png", width = 15, height = 7, units = 'in', res = 300)
 ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
   geom_rect() +
   geom_text(x=2, aes(y=labelPosition, label=label, color=Programa), size=5) + 
@@ -29,6 +30,7 @@ ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
   xlim(c(-1, 4)) +
   theme_void() +
   theme(legend.position = "none")
+dev.off()
 
 library(quanteda)
 Textos <- corpus(textos$text)
@@ -246,7 +248,7 @@ for (i in seq_along(current_column_names)) {
 colnames(IM3) <- mapped_skill_names
 
 library(bipartite)
-
+png("F3.png", width = 15, height = 7, units = 'in', res = 300)
 plotweb(IM3, method = "normal", 
         col.high = "#0A3A7E", 
         bor.col.high = "#0A3A7E",
@@ -259,3 +261,4 @@ plotweb(IM3, method = "normal",
         high.y = 1,
         ybig = 0.8,
         labsize = 2)
+dev.off()
