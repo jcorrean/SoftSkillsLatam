@@ -1,33 +1,13 @@
----
-title: "Análisis de Habilidades Blandas en Postgrados (Sección Venezuela)"
-author: "Juan C. Correa"
-date: "2024-06-07"
-output: html_document
----
-
-```{r setup, include=FALSE} 
-knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
-```
-
-# Paso 1 (Creación de Corpus)
-El primer paso, naturalmente, es pre-procesar la muestra de programas de postgrado que se seleccionaron para el estudio. Para ello, se utiliza la librería readtext de la siguiente manera y se calcula el número de programas de postgrado que oficialmente forman parte del análisis. En el caso de Venezuela, el total de programas de postgrados analizados es de 210.
-
-```{r}
 library(readtext)
-textos <- readtext("Venezuela/DATA_VE/")
+textos <- readtext("Venezuela/DATA_VE/") # reemplazar por la carpeta del país
 textos$doc_id <- gsub(".pdf", "", textos$doc_id)
-length(textos$text)
-```
 
-Luego, pasamos a relacionar cada programa de postgrado con su correspondiente nivel educativo para observar cuántos programas hay de cada nivel:
-
-```{r}
 library(dplyr)
 textos <- mutate(textos, 
                  Program = ifelse(
                    grepl("Doctorado en", text), "Doctorado",
-                        ifelse(grepl("Maestría", text), "Maestría", 
-                               "Especialización")))
+                   ifelse(grepl("Maestría", text), "Maestría", 
+                          "Especialización")))
 Programas <- data.frame(table(textos$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
@@ -49,29 +29,71 @@ ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
   xlim(c(-1, 4)) +
   theme_void() +
   theme(legend.position = "none")
-```
 
-Ahora, pasamos a crear el corpus lingüístico. Para ello, cada documento se va a descomponer en número de palabras totales (tokens), número de palabras únicas (types) y número de oraciones (sentences). Esto nos permitirá observar la longitud de cada oferta de postgrado. 
-
-```{r}
 library(quanteda)
 Textos <- corpus(textos$text)
 docvars(Textos, "Program") <- textos$Program
 head(summary(Textos), 10)
-```
 
-```{r}
 Programs <- tokens(Textos, 
-                     remove_numbers = TRUE, 
-                     remove_punct = TRUE, 
-                     remove_url = TRUE, 
-                     remove_symbols = TRUE) %>%  
+                   remove_numbers = TRUE, 
+                   remove_punct = TRUE, 
+                   remove_url = TRUE, 
+                   remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish"))
-```
 
-Ahora, pasamos a hacer a buscar con el filtro contextual así:
+SkillsList <- data.frame(SkillCode = c(paste0("s", 1:50)),
+                     Skill = c("pensamiento.crítico",
+                              "solucionar.problemas",
+                              "comunicar",
+                              "creatividad",
+                              "paciencia",
+                              "crear",
+                              "liderar",
+                              "resolver",
+                              "comprometer",
+                              "comprometerse",
+                              "gestionar",
+                              "reflexionar",
+                              "controlar",
+                              "ético",
+                              "tolerar",
+                              "argumentar",
+                              "conflictos",
+                              "negociar",
+                              "comprender",
+                              "equipos",
+                              "planificar",
+                              "generar",
+                              "empatía",
+                              "compartir",
+                              "analizar",
+                              "reconocer",
+                              "orientar",
+                              "respetar",
+                              "motivar",
+                              "cooperar",
+                              "fortalecer",
+                              "impulsar",
+                              "acercar",
+                              "ayudar",
+                              "cambiar",
+                              "apreciar",
+                              "dirigir",
+                              "fomentar",
+                              "interactuar",
+                              "identificar",
+                              "competir",
+                              "manifestar",
+                              "responsable",
+                              "evaluar",
+                              "innovar",
+                              "decidir",
+                              "tomar.decisiones",
+                              "flexibilidad",
+                              "persua*",
+                              "convencer"))
 
-```{r}
 s1 <- data.frame(kwic(Programs, pattern = phrase("pensamiento crítico")))
 s2 <- data.frame(kwic(Programs, pattern = phrase("solucionar problemas")))
 s3 <- data.frame(kwic(Programs, pattern = "comunicar"))
@@ -127,76 +149,9 @@ df_list <- mget(paste0("s", 1:50))
 SS <- do.call(rbind, df_list)
 SS$Skill <- rownames(SS)
 SS$Skill <- gsub("\\..*", "", SS$Skill)
-rm(list=setdiff(ls(), "SS"))
-variable.names(SS)
-head(SS, 5)
 
-Skills <- data.frame(SkillCode = c(paste0("s", 1:50)),
-                     Skill = c("pensamiento crítico",
-                              "solucionar problemas",
-                              "comunicar",
-                              "creatividad",
-                              "paciencia",
-                              "crear",
-                              "liderar",
-                              "resolver",
-                              "comprometer",
-                              "comprometerse",
-                              "gestionar",
-                              "reflexionar",
-                              "controlar",
-                              "ético",
-                              "tolerar",
-                              "argumentar",
-                              "conflictos",
-                              "negociar",
-                              "comprender",
-                              "equipos",
-                              "planificar",
-                              "generar",
-                              "empatía",
-                              "compartir",
-                              "analizar",
-                              "reconocer",
-                              "orientar",
-                              "respetar",
-                              "motivar",
-                              "cooperar",
-                              "fortalecer",
-                              "impulsar",
-                              "acercar",
-                              "ayudar",
-                              "cambiar",
-                              "apreciar",
-                              "dirigir",
-                              "fomentar",
-                              "interactuar",
-                              "identificar",
-                              "competir",
-                              "manifestar",
-                              "responsable",
-                              "evaluar",
-                              "innovar",
-                              "decidir",
-                              "tomar decisiones",
-                              "flexibilidad",
-                              "persua*",
-                              "convencer"))
-
-```
-
-# Paso 2: (Modelado de Red de Habilidades)
-
-Ahora, pasamos a modelar las relaciones entre las habilidades y los programas de postgrado. Para ello, vamos a usar los datos de la tabla SS resultante del último código del paso anterior para construir la redd a través de una lista de aristas.
-
-```{r}
 network <- SS[c(1,8)]
-head(network, 3)
-```
 
-Ahora, pasamos a graficar la red bipartita entre habilidades y programas
-
-```{r}
 library(igraph)
 bn2 <- graph.data.frame(network,directed=FALSE)
 bipartite.mapping(bn2)
@@ -219,21 +174,17 @@ node_colors <- color_palette[rank(centrality_scores)]
 
 # Plot the network with node colors based on centrality
 set.seed(915)
-
+png("F1.png", width = 15, height = 7, units = 'in', res = 300)
 
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
 
+dev.off()
 
-```
-
-Seguimos con el cálculo de la importancia de cada habilidad y analicemos la correlación entre los cuatro indicadores de centralidad para ver si se comportan de una manera semejante a lo esperado por la evidencia empírica sobre indicadores de centralidad. 
-
-```{r}
 BNA <- graph.data.frame(network, directed = FALSE)
 Programs <- data.frame(Degree = igraph::degree(BNA),
-                   Closeness = igraph::closeness(BNA),
-                   Betweennes = igraph::betweenness(BNA),
-                   Eigen = igraph::eigen_centrality(BNA))
+                       Closeness = igraph::closeness(BNA),
+                       Betweennes = igraph::betweenness(BNA),
+                       Eigen = igraph::eigen_centrality(BNA))
 Programs <- Programs[ -c(5:25) ]
 rownames(Programs)
 Programs$SS <- rownames(Programs)
@@ -243,7 +194,7 @@ Programs <- Programs[1:4]
 colnames(Programs)[4] <- "Eigenvector"
 
 library(psych)
-
+png("F2.png", width = 12, height = 10, units = 'in', res = 300)
 pairs.panels(Programs, 
              method = "spearman", 
              hist.col = "#0A3A7E",
@@ -256,16 +207,11 @@ pairs.panels(Programs,
              lwd = 2,
              rug = TRUE,
              stars = TRUE)
+dev.off()
 
 
-```
-
-Ahora, veamos el ranking de las diez habilidades más importantes
-
-```{r}
 IM <- as_incidence_matrix(BNA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNA)$type)
 IM2 <- as.matrix(IM)
-
 rownames(Programs)[order(Programs$Eigenvector, decreasing = TRUE)]
 selected_columns <- head(rownames(Programs)[order(Programs$Eigenvector, decreasing = TRUE)], 10)
 # Let's pick the most important soft skills
@@ -278,18 +224,17 @@ IM3 <- IM2[, selected_columns, drop = FALSE]
 
 current_column_names <- colnames(IM3)
 
-
 # Create a vector to hold the mapped skill names
 mapped_skill_names <- character(length(current_column_names))
 
-
+# Loop through each column name in IM3
 for (i in seq_along(current_column_names)) {
-
-  skill_index <- match(current_column_names[i], Skills$SkillCode)
+  # Find the index of the current column name in SkillsList$SkillCode
+  skill_index <- match(current_column_names[i], SkillsList$SkillCode)
   
   # If a match is found, map the skill code to its name
   if (!is.na(skill_index)) {
-    mapped_skill_names[i] <- Skills$Skill[skill_index]
+    mapped_skill_names[i] <- SkillsList$Skill[skill_index]
   } else {
     # Handle unmatched column names as needed
     # For example, assign a default value or leave blank
@@ -299,12 +244,7 @@ for (i in seq_along(current_column_names)) {
 
 # Replace the column names of IM3 with the mapped skill names
 colnames(IM3) <- mapped_skill_names
-colnames(IM3)
-```
 
-# Paso 3 (Visualización de Red Bipartita)
-
-```{r}
 library(bipartite)
 
 plotweb(IM3, method = "normal", 
@@ -319,6 +259,3 @@ plotweb(IM3, method = "normal",
         high.y = 1,
         ybig = 0.8,
         labsize = 2)
-
-```
-
