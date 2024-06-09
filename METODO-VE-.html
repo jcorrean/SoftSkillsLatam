@@ -725,6 +725,23 @@ colnames(IM3)</code></pre>
 <pre><code>##  [1] &quot;generar&quot;      &quot;fortalecer&quot;   &quot;creatividad&quot;  &quot;crear&quot;        &quot;evaluar&quot;     
 ##  [6] &quot;conflictos&quot;   &quot;comprender&quot;   &quot;fomentar&quot;     &quot;flexibilidad&quot; &quot;equipos&quot;</code></pre>
 </div>
+<div id="paso-3-visualización-de-red-bipartita" class="section level1">
+<h1>Paso 3 (Visualización de Red Bipartita)</h1>
+<pre class="r"><code>library(bipartite)
+png(&quot;F3.png&quot;, width = 20, height = 7, units = &#39;in&#39;, res = 300)
+plotweb(IM3, method = &quot;normal&quot;, 
+        col.high = &quot;#0A3A7E&quot;, 
+        bor.col.high = &quot;#0A3A7E&quot;,
+        col.low = &quot;#CE1127&quot;, 
+        bor.col.low = &quot;#CE1127&quot;,
+        col.interaction = &quot;grey90&quot;,
+        bor.col.interaction = &quot;grey90&quot;,
+        low.lablength = 0,
+        labsize = 2)
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+</div>
 
 
 
