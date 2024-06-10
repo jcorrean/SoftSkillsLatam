@@ -1,5 +1,5 @@
 library(readtext)
-textos <- readtext("Venezuela/DATA_VE/") # reemplazar por la carpeta del país
+textos <- readtext("Venezuela") # reemplazar por la carpeta del país
 textos$doc_id <- gsub(".pdf", "", textos$doc_id)
 
 library(dplyr)

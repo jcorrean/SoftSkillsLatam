@@ -14,7 +14,7 @@ El primer paso, naturalmente, es pre-procesar la muestra de programas de postgra
 
 ```{r}
 library(readtext)
-textos <- readtext("Venezuela/DATA_VE/")
+textos <- readtext("Venezuela")
 textos$doc_id <- gsub(".pdf", "", textos$doc_id)
 length(textos$text)
 ```
