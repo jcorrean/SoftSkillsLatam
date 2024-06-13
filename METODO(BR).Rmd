@@ -66,13 +66,13 @@ Programs <- tokens(Textos,
                      remove_punct = TRUE, 
                      remove_url = TRUE, 
                      remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("portuguese"))
+  tokens_remove(stopwords("pt"))
 ```
 
 Ahora, pasamos a hacer a buscar con el filtro contextual así:
 
 ```{r}
-s1 <- data.frame(kwic(Textos, pattern = phrase("pensamiento crítico")))
+s1 <- data.frame(kwic(Textos, pattern = phrase("pensamento critico")))
 s2 <- data.frame(kwic(Textos, pattern = phrase("solucionar problemas")))
 s3 <- data.frame(kwic(Textos, pattern = "comunicar"))
 s4 <- data.frame(kwic(Textos, pattern = "creatividade"))
