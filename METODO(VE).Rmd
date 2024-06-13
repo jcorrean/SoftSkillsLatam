@@ -9,14 +9,14 @@ output: html_document
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
 
-# Paso 1 (Creación de Corpus)
-El primer paso, naturalmente, es pre-procesar la muestra de programas de postgrado que se seleccionaron para el estudio. Para ello, se utiliza la librería readtext de la siguiente manera y se calcula el número de programas de postgrado que oficialmente forman parte del análisis. En el caso de Venezuela, el total de programas de postgrados analizados es de 210.
+# Carga de datos
+
+Primero, se carga el paquete "readtext" y se lee el directorio "Venezuela" para extraer los textos de los documentos PDF. Luego, se elimina la extensión ".pdf" del identificador de cada documento.
 
 ```{r}
 library(readtext)
 textos <- readtext("Venezuela")
 textos$doc_id <- gsub(".pdf", "", textos$doc_id)
-length(textos$text)
 ```
 
 Luego, pasamos a relacionar cada programa de postgrado con su correspondiente nivel educativo para observar cuántos programas hay de cada nivel:
