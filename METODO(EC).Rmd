@@ -10,12 +10,12 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
 # Paso 1 (Creación de Corpus)
-El primer paso, naturalmente, es pre-procesar la muestra de programas de postgrado que se seleccionaron para el estudio. Para ello, se utiliza la librería readtext de la siguiente manera y se calcula el número de programas de postgrado que oficialmente forman parte del análisis. En el caso de Venezuela, el total de programas de postgrados analizados es de 210.
+El primer paso, naturalmente, es pre-procesar la muestra de programas de postgrado que se seleccionaron para el estudio. Para ello, se utiliza la librería readtext de la siguiente manera y se calcula el número de programas de postgrado que oficialmente forman parte del análisis.
 
 ```{r}
 library(readtext)
 textos <- readtext("Ecuador")
-textos$doc_id <- gsub(".pdf", "", textos$doc_id)
+textos$doc_id <- gsub("\\.pdf$|\\.docx$", "", textos$doc_id)
 length(textos$text)
 ```
 
@@ -25,8 +25,8 @@ Luego, pasamos a relacionar cada programa de postgrado con su correspondiente ni
 library(dplyr)
 textos <- mutate(textos, 
                  Program = ifelse(
-                   grepl("Doctorado en", text), "Doctorado",
-                        ifelse(grepl("Maestría", text), "Maestría", 
+                   grepl("DOCTORADO EN|Doctorado en", text), "Doctorado",
+                        ifelse(grepl("MAESTRÍA|Maestría|Magíster en|MAGÍSTER EN", text), "Maestría", 
                                "Especialización")))
 Programas <- data.frame(table(textos$Program))
 colnames(Programas)[1] <- "Programa" 
