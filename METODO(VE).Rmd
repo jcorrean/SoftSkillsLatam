@@ -16,7 +16,7 @@ Primero, se carga el paquete "readtext" y se lee el directorio "Venezuela" para 
 ```{r}
 library(readtext)
 textos <- readtext("Venezuela")
-textos$doc_id <- gsub(".pdf", "", textos$doc_id)
+textos$doc_id <- gsub("\\.pdf$|\\.docx$", "", textos$doc_id)
 ```
 
 Luego, pasamos a relacionar cada programa de postgrado con su correspondiente nivel educativo para observar cuántos programas hay de cada nivel:

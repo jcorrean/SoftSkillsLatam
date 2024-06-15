@@ -16,7 +16,7 @@ Primero, se carga el paquete "readtext" y se lee el directorio "Venezuela" para 
 ```{r}
 library(readtext)
 textos <- readtext("Brazil")
-textos$doc_id <- gsub(".pdf", "", textos$doc_id)
+textos$doc_id <- gsub("\\.pdf$|\\.docx$", "", textos$doc_id)
 ```
 
 Luego, pasamos a relacionar cada programa de postgrado con su correspondiente nivel educativo para observar cuántos programas hay de cada nivel:
@@ -66,7 +66,7 @@ Programs <- tokens(Textos,
                      remove_punct = TRUE, 
                      remove_url = TRUE, 
                      remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("pt"))
+  tokens_remove(stopwords("portuguese"))
 ```
 
 Ahora, pasamos a hacer a buscar con el filtro contextual así:
