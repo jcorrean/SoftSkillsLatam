@@ -3,7 +3,7 @@ load("CHL.RData")
 load("COL.RData")
 load("VEN.RData")
 load("ECU.RData")
-rm(list=setdiff(ls(), c("ProgramsMX","ProgramsCL", "ProgramsCO", "ProgramsVE", "ProgramsEC")))
+rm(list=setdiff(ls(), c("ProgramsMX" = "ProgramsCL", "ProgramsCO", "ProgramsVE", "ProgramsEC")))
 ProgramsCL$Country <- "Chile"
 ProgramsCL$Skill <- rownames(ProgramsCL)
 ProgramsCO$Country <- "Colombia"
@@ -17,54 +17,56 @@ ProgramsMX$Skill <- rownames(ProgramsMX)
 df <- mget(ls(pattern = "Programs"))
 SS <- do.call(rbind, df)
 
-SS$Skill <- ifelse(SS$Skill == "s1","pensamiento crítico", NA)
-SS$Skill <- ifelse(SS$Skill == "s2","solucionar problemas", NA)
-SS$Skill <- ifelse(SS$Skill == "s3","comunicar", NA)
-SS$Skill <- ifelse(SS$Skill == "s4","creatividad", NA)
-SS$Skill <- ifelse(SS$Skill == "s5","paciencia", NA)
-SS$Skill <- ifelse(SS$Skill == "s6","crear", NA)
-SS$Skill <- ifelse(SS$Skill == "s7","liderar", NA)
-SS$Skill <- ifelse(SS$Skill == "s8","resolver", NA)
-SS$Skill <- ifelse(SS$Skill == "s9","comprometer", NA)
-SS$Skill <- ifelse(SS$Skill == "s10","comprometerse", NA)
-SS$Skill <- ifelse(SS$Skill == "s11","gestionar", NA)
-SS$Skill <- ifelse(SS$Skill == "s12","reflexionar", NA)
-SS$Skill <- ifelse(SS$Skill == "s13","controlar", NA)
-SS$Skill <- ifelse(SS$Skill == "s14","ético", NA)
-SS$Skill <- ifelse(SS$Skill == "s15","tolerar", NA)
-SS$Skill <- ifelse(SS$Skill == "s16","argumentar", NA)
-SS$Skill <- ifelse(SS$Skill == "s17","conflictos", NA)
-SS$Skill <- ifelse(SS$Skill == "s18","negociar", NA)
-SS$Skill <- ifelse(SS$Skill == "s19","comprender", NA)
-SS$Skill <- ifelse(SS$Skill == "s20","", NA)
-SS$Skill <- ifelse(SS$Skill == "s21","", NA)
-SS$Skill <- ifelse(SS$Skill == "s22","", NA)
-SS$Skill <- ifelse(SS$Skill == "s23","", NA)
-SS$Skill <- ifelse(SS$Skill == "s24","", NA)
-SS$Skill <- ifelse(SS$Skill == "s25","", NA)
-SS$Skill <- ifelse(SS$Skill == "s26","", NA)
-SS$Skill <- ifelse(SS$Skill == "s27","", NA)
-SS$Skill <- ifelse(SS$Skill == "s28","", NA)
-SS$Skill <- ifelse(SS$Skill == "s29","", NA)
-SS$Skill <- ifelse(SS$Skill == "s30","", NA)
-SS$Skill <- ifelse(SS$Skill == "s31","", NA)
-SS$Skill <- ifelse(SS$Skill == "s32","", NA)
-SS$Skill <- ifelse(SS$Skill == "s33","", NA)
-SS$Skill <- ifelse(SS$Skill == "s34","", NA)
-SS$Skill <- ifelse(SS$Skill == "s35","", NA)
-SS$Skill <- ifelse(SS$Skill == "s36","", NA)
-SS$Skill <- ifelse(SS$Skill == "s37","", NA)
-SS$Skill <- ifelse(SS$Skill == "s38","", NA)
-SS$Skill <- ifelse(SS$Skill == "s39","", NA)
-SS$Skill <- ifelse(SS$Skill == "s40","", NA)
-SS$Skill <- ifelse(SS$Skill == "s41","", NA)
-SS$Skill <- ifelse(SS$Skill == "s42","", NA)
-SS$Skill <- ifelse(SS$Skill == "s43","", NA)
-SS$Skill <- ifelse(SS$Skill == "s44","", NA)
-SS$Skill <- ifelse(SS$Skill == "s45","", NA)
-SS$Skill <- ifelse(SS$Skill == "s46","", NA)
-SS$Skill <- ifelse(SS$Skill == "s47","", NA)
-SS$Skill <- ifelse(SS$Skill == "s48","", NA)
-SS$Skill <- ifelse(SS$Skill == "s49","", NA)
-SS$Skill <- ifelse(SS$Skill == "s50","", NA)
-
+library(dplyr)
+SS <- SS %>% mutate(Skill = recode(Skill,
+                             "s1" = "pensamiento crítico", 
+                             "s2" = "solucionar problemas", 
+                             "s3" = "comunicar",
+                             "s4" = "creatividad",
+                             "s5" = "paciencia",
+                             "s6" = "crear",
+                             "s7" = "liderar",
+                             "s8" = "resolver", 
+                             "s9" = "comprometer",
+                             "s10" = "comprometerse",
+                             "s11" = "gestionar",
+                             "s12" = "reflexionar",
+                             "s13" = "controlar",
+                             "s14" = "ético",
+                             "s15" = "tolerar",
+                             "s16" = "argumentar",
+                             "s17" = "conflictos",
+                             "s18" = "negociar",
+                             "s19" = "comprender", 
+                             "s20" = "equipos",
+                             "s21" = "planificar",
+                             "s22" = "generar",
+                             "s23" = "empatía",
+                             "s24" = "compartir",
+                             "s25" = "analizar",
+                             "s26" = "reconocer",
+                             "s27" = "orientar",
+                             "s28" = "respetar",
+                             "s29" = "motivar",
+                             "s30" = "cooperar",
+                             "s31" = "fortalecer",
+                             "s32" = "impulsar",
+                             "s33" = "acercar",
+                             "s34" = "ayudar",
+                             "s35" = "cambiar",
+                             "s36" = "apreciar",
+                             "s37" = "dirigir",
+                             "s38" = "fomentar",
+                             "s39" = "interactuar",
+                             "s40" = "identificar",
+                             "s41" = "competir",
+                             "s42" = "manifestar",
+                             "s43" = "responsable",
+                             "s44" = "evaluar",
+                             "s45" = "innovar",
+                             "s46" = "decidir",
+                             "s47" = "tomar decisiones",
+                             "s48" = "flexibilidad",
+                             "s49" = "persua*",
+                             "s50" = "convencer"))
+is.na(SS$Skill)
