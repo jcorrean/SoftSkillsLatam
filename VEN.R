@@ -36,63 +36,63 @@ TextsVE <- corpus(VE$text)
 docvars(TextsVE, "Program") <- VE$Program
 head(summary(TextsVE), 10)
 
-Programs <- tokens(TextsVE, 
+ProgramsVE <- tokens(TextsVE, 
                    remove_numbers = TRUE, 
                    remove_punct = TRUE, 
                    remove_url = TRUE, 
                    remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish"))
 
-s1 <- data.frame(kwic(Programs, pattern = phrase("pensamiento crítico")))
-s2 <- data.frame(kwic(Programs, pattern = phrase("solucionar problemas")))
-s3 <- data.frame(kwic(Programs, pattern = "comunicar"))
-s4 <- data.frame(kwic(Programs, pattern = "creatividad"))
-s5 <- data.frame(kwic(Programs, pattern = "paciencia"))
-s6 <- data.frame(kwic(Programs, pattern = "crear"))
-s7 <- data.frame(kwic(Programs, pattern = "liderar"))
-s8 <- data.frame(kwic(Programs, pattern = "resolver"))
-s9 <- data.frame(kwic(Programs, pattern = "comprometer"))
-s10 <- data.frame(kwic(Programs, pattern = "comprometerse"))
-s11 <- data.frame(kwic(Programs, pattern = "gestionar"))
-s12 <- data.frame(kwic(Programs, pattern = "reflexionar"))
-s13 <- data.frame(kwic(Programs, pattern = "controlar"))
-s14 <- data.frame(kwic(Programs, pattern = "ético"))
-s15 <- data.frame(kwic(Programs, pattern = "tolerar"))
-s16 <- data.frame(kwic(Programs, pattern = "argumentar"))
-s17 <- data.frame(kwic(Programs, pattern = "conflictos"))
-s18 <- data.frame(kwic(Programs, pattern = "negociar"))
-s19 <- data.frame(kwic(Programs, pattern = "comprender"))
-s20 <- data.frame(kwic(Programs, pattern = "equipos"))
-s21 <- data.frame(kwic(Programs, pattern = "planificar"))
-s22 <- data.frame(kwic(Programs, pattern = "generar"))
-s23 <- data.frame(kwic(Programs, pattern = "empatía"))
-s24 <- data.frame(kwic(Programs, pattern = "compartir"))
-s25 <- data.frame(kwic(Programs, pattern = "analizar"))
-s26 <- data.frame(kwic(Programs, pattern = "reconocer"))
-s27 <- data.frame(kwic(Programs, pattern = "orientar"))
-s28 <- data.frame(kwic(Programs, pattern = "respetar"))
-s29 <- data.frame(kwic(Programs, pattern = "motivar"))
-s30 <- data.frame(kwic(Programs, pattern = "cooperar"))
-s31 <- data.frame(kwic(Programs, pattern = "fortalecer"))
-s32 <- data.frame(kwic(Programs, pattern = "impulsar"))
-s33 <- data.frame(kwic(Programs, pattern = "acercar"))
-s34 <- data.frame(kwic(Programs, pattern = "ayudar"))
-s35 <- data.frame(kwic(Programs, pattern = "cambiar"))
-s36 <- data.frame(kwic(Programs, pattern = "apreciar"))
-s37 <- data.frame(kwic(Programs, pattern = "dirigir"))
-s38 <- data.frame(kwic(Programs, pattern = "fomentar"))
-s39 <- data.frame(kwic(Programs, pattern = "interactuar"))
-s40 <- data.frame(kwic(Programs, pattern = "identificar"))
-s41 <- data.frame(kwic(Programs, pattern = "competir"))
-s42 <- data.frame(kwic(Programs, pattern = "manifestar"))
-s43 <- data.frame(kwic(Programs, pattern = "responsable"))
-s44 <- data.frame(kwic(Programs, pattern = "evaluar"))
-s45 <- data.frame(kwic(Programs, pattern = "innovar"))
-s46 <- data.frame(kwic(Programs, pattern = "decidir"))
-s47 <- data.frame(kwic(Programs, pattern = phrase("tomar decisiones")))
-s48 <- data.frame(kwic(Programs, pattern = "flexibilidad"))
-s49 <- data.frame(kwic(Programs, pattern = "persua*"))
-s50 <- data.frame(kwic(Programs, pattern = "convencer"))
+s1 <- data.frame(kwic(ProgramsVE, pattern = phrase("pensamiento crítico")))
+s2 <- data.frame(kwic(ProgramsVE, pattern = phrase("solucionar problemas")))
+s3 <- data.frame(kwic(ProgramsVE, pattern = "comunicar"))
+s4 <- data.frame(kwic(ProgramsVE, pattern = "creatividad"))
+s5 <- data.frame(kwic(ProgramsVE, pattern = "paciencia"))
+s6 <- data.frame(kwic(ProgramsVE, pattern = "crear"))
+s7 <- data.frame(kwic(ProgramsVE, pattern = "liderar"))
+s8 <- data.frame(kwic(ProgramsVE, pattern = "resolver"))
+s9 <- data.frame(kwic(ProgramsVE, pattern = "comprometer"))
+s10 <- data.frame(kwic(ProgramsVE, pattern = "comprometerse"))
+s11 <- data.frame(kwic(ProgramsVE, pattern = "gestionar"))
+s12 <- data.frame(kwic(ProgramsVE, pattern = "reflexionar"))
+s13 <- data.frame(kwic(ProgramsVE, pattern = "controlar"))
+s14 <- data.frame(kwic(ProgramsVE, pattern = "ético"))
+s15 <- data.frame(kwic(ProgramsVE, pattern = "tolerar"))
+s16 <- data.frame(kwic(ProgramsVE, pattern = "argumentar"))
+s17 <- data.frame(kwic(ProgramsVE, pattern = "conflictos"))
+s18 <- data.frame(kwic(ProgramsVE, pattern = "negociar"))
+s19 <- data.frame(kwic(ProgramsVE, pattern = "comprender"))
+s20 <- data.frame(kwic(ProgramsVE, pattern = "equipos"))
+s21 <- data.frame(kwic(ProgramsVE, pattern = "planificar"))
+s22 <- data.frame(kwic(ProgramsVE, pattern = "generar"))
+s23 <- data.frame(kwic(ProgramsVE, pattern = "empatía"))
+s24 <- data.frame(kwic(ProgramsVE, pattern = "compartir"))
+s25 <- data.frame(kwic(ProgramsVE, pattern = "analizar"))
+s26 <- data.frame(kwic(ProgramsVE, pattern = "reconocer"))
+s27 <- data.frame(kwic(ProgramsVE, pattern = "orientar"))
+s28 <- data.frame(kwic(ProgramsVE, pattern = "respetar"))
+s29 <- data.frame(kwic(ProgramsVE, pattern = "motivar"))
+s30 <- data.frame(kwic(ProgramsVE, pattern = "cooperar"))
+s31 <- data.frame(kwic(ProgramsVE, pattern = "fortalecer"))
+s32 <- data.frame(kwic(ProgramsVE, pattern = "impulsar"))
+s33 <- data.frame(kwic(ProgramsVE, pattern = "acercar"))
+s34 <- data.frame(kwic(ProgramsVE, pattern = "ayudar"))
+s35 <- data.frame(kwic(ProgramsVE, pattern = "cambiar"))
+s36 <- data.frame(kwic(ProgramsVE, pattern = "apreciar"))
+s37 <- data.frame(kwic(ProgramsVE, pattern = "dirigir"))
+s38 <- data.frame(kwic(ProgramsVE, pattern = "fomentar"))
+s39 <- data.frame(kwic(ProgramsVE, pattern = "interactuar"))
+s40 <- data.frame(kwic(ProgramsVE, pattern = "identificar"))
+s41 <- data.frame(kwic(ProgramsVE, pattern = "competir"))
+s42 <- data.frame(kwic(ProgramsVE, pattern = "manifestar"))
+s43 <- data.frame(kwic(ProgramsVE, pattern = "responsable"))
+s44 <- data.frame(kwic(ProgramsVE, pattern = "evaluar"))
+s45 <- data.frame(kwic(ProgramsVE, pattern = "innovar"))
+s46 <- data.frame(kwic(ProgramsVE, pattern = "decidir"))
+s47 <- data.frame(kwic(ProgramsVE, pattern = phrase("tomar decisiones")))
+s48 <- data.frame(kwic(ProgramsVE, pattern = "flexibilidad"))
+s49 <- data.frame(kwic(ProgramsVE, pattern = "persua*"))
+s50 <- data.frame(kwic(ProgramsVE, pattern = "convencer"))
 
 df_list <- mget(paste0("s", 1:50))
 SS <- do.call(rbind, df_list)
@@ -184,23 +184,23 @@ set.seed(915)
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
 
 BNA <- graph.data.frame(networkVE, directed = FALSE)
-Programs <- data.frame(Degree = igraph::degree(BNA),
+ProgramsVE <- data.frame(Degree = igraph::degree(BNA),
                        Closeness = igraph::closeness(BNA),
                        Betweennes = igraph::betweenness(BNA),
                        Eigen = igraph::eigen_centrality(BNA))
-Programs <- Programs[ -c(5:25) ]
-rownames(Programs)
-Programs$SS <- rownames(Programs)
-Programs <- Programs[order(Programs$SS), ]
-Programs <- Programs[grepl("s", Programs$SS), ]
-Programs <- Programs[1:4]
-colnames(Programs)[4] <- "Eigenvector"
+ProgramsVE <- ProgramsVE[ -c(5:25) ]
+rownames(ProgramsVE)
+ProgramsVE$SS <- rownames(ProgramsVE)
+ProgramsVE <- ProgramsVE[order(ProgramsVE$SS), ]
+ProgramsVE <- ProgramsVE[grepl("s", ProgramsVE$SS), ]
+ProgramsVE <- ProgramsVE[1:4]
+colnames(ProgramsVE)[4] <- "Eigenvector"
 
 
 
 library(psych)
 
-pairs.panels(Programs, 
+pairs.panels(ProgramsVE, 
              method = "spearman", 
              hist.col = "#0A3A7E",
              density = TRUE,  
@@ -217,8 +217,8 @@ pairs.panels(Programs,
 IM <- as_incidence_matrix(BNA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNA)$type)
 IM2 <- as.matrix(IM)
 
-rownames(Programs)[order(Programs$Eigenvector, decreasing = TRUE)]
-selected_columns <- head(rownames(Programs)[order(Programs$Eigenvector, decreasing = TRUE)], 10)
+rownames(ProgramsVE)[order(ProgramsVE$Eigenvector, decreasing = TRUE)]
+selected_columns <- head(rownames(ProgramsVE)[order(ProgramsVE$Eigenvector, decreasing = TRUE)], 10)
 # Let's pick the most important soft skills
 # as per their eigenvector centrality
 

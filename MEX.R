@@ -36,63 +36,63 @@ TextsMEX <- corpus(MEX$text)
 docvars(TextsMEX, "Program") <- MEX$Program
 head(summary(TextsMEX), 10)
 
-ProgramsMEX <- tokens(TextsMEX, 
+ProgramsMX <- tokens(TextsMEX, 
                      remove_numbers = TRUE, 
                      remove_punct = TRUE, 
                      remove_url = TRUE, 
                      remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish"))
 
-s1 <- data.frame(kwic(ProgramsMEX, pattern = phrase("pensamiento crítico")))
-s2 <- data.frame(kwic(ProgramsMEX, pattern = phrase("solucionar problemas")))
-s3 <- data.frame(kwic(ProgramsMEX, pattern = "comunicar"))
-s4 <- data.frame(kwic(ProgramsMEX, pattern = "creatividad"))
-s5 <- data.frame(kwic(ProgramsMEX, pattern = "paciencia"))
-s6 <- data.frame(kwic(ProgramsMEX, pattern = "crear"))
-s7 <- data.frame(kwic(ProgramsMEX, pattern = "liderar"))
-s8 <- data.frame(kwic(ProgramsMEX, pattern = "resolver"))
-s9 <- data.frame(kwic(ProgramsMEX, pattern = "comprometer"))
-s10 <- data.frame(kwic(ProgramsMEX, pattern = "comprometerse"))
-s11 <- data.frame(kwic(ProgramsMEX, pattern = "gestionar"))
-s12 <- data.frame(kwic(ProgramsMEX, pattern = "reflexionar"))
-s13 <- data.frame(kwic(ProgramsMEX, pattern = "controlar"))
-s14 <- data.frame(kwic(ProgramsMEX, pattern = "ético"))
-s15 <- data.frame(kwic(ProgramsMEX, pattern = "tolerar"))
-s16 <- data.frame(kwic(ProgramsMEX, pattern = "argumentar"))
-s17 <- data.frame(kwic(ProgramsMEX, pattern = "conflictos"))
-s18 <- data.frame(kwic(ProgramsMEX, pattern = "negociar"))
-s19 <- data.frame(kwic(ProgramsMEX, pattern = "comprender"))
-s20 <- data.frame(kwic(ProgramsMEX, pattern = "equipos"))
-s21 <- data.frame(kwic(ProgramsMEX, pattern = "planificar"))
-s22 <- data.frame(kwic(ProgramsMEX, pattern = "generar"))
-s23 <- data.frame(kwic(ProgramsMEX, pattern = "empatía"))
-s24 <- data.frame(kwic(ProgramsMEX, pattern = "compartir"))
-s25 <- data.frame(kwic(ProgramsMEX, pattern = "analizar"))
-s26 <- data.frame(kwic(ProgramsMEX, pattern = "reconocer"))
-s27 <- data.frame(kwic(ProgramsMEX, pattern = "orientar"))
-s28 <- data.frame(kwic(ProgramsMEX, pattern = "respetar"))
-s29 <- data.frame(kwic(ProgramsMEX, pattern = "motivar"))
-s30 <- data.frame(kwic(ProgramsMEX, pattern = "cooperar"))
-s31 <- data.frame(kwic(ProgramsMEX, pattern = "fortalecer"))
-s32 <- data.frame(kwic(ProgramsMEX, pattern = "impulsar"))
-s33 <- data.frame(kwic(ProgramsMEX, pattern = "acercar"))
-s34 <- data.frame(kwic(ProgramsMEX, pattern = "ayudar"))
-s35 <- data.frame(kwic(ProgramsMEX, pattern = "cambiar"))
-s36 <- data.frame(kwic(ProgramsMEX, pattern = "apreciar"))
-s37 <- data.frame(kwic(ProgramsMEX, pattern = "dirigir"))
-s38 <- data.frame(kwic(ProgramsMEX, pattern = "fomentar"))
-s39 <- data.frame(kwic(ProgramsMEX, pattern = "interactuar"))
-s40 <- data.frame(kwic(ProgramsMEX, pattern = "identificar"))
-s41 <- data.frame(kwic(ProgramsMEX, pattern = "competir"))
-s42 <- data.frame(kwic(ProgramsMEX, pattern = "manifestar"))
-s43 <- data.frame(kwic(ProgramsMEX, pattern = "responsable"))
-s44 <- data.frame(kwic(ProgramsMEX, pattern = "evaluar"))
-s45 <- data.frame(kwic(ProgramsMEX, pattern = "innovar"))
-s46 <- data.frame(kwic(ProgramsMEX, pattern = "decidir"))
-s47 <- data.frame(kwic(ProgramsMEX, pattern = phrase("tomar decisiones")))
-s48 <- data.frame(kwic(ProgramsMEX, pattern = "flexibilidad"))
-s49 <- data.frame(kwic(ProgramsMEX, pattern = "persua*"))
-s50 <- data.frame(kwic(ProgramsMEX, pattern = "convencer"))
+s1 <- data.frame(kwic(ProgramsMX, pattern = phrase("pensamiento crítico")))
+s2 <- data.frame(kwic(ProgramsMX, pattern = phrase("solucionar problemas")))
+s3 <- data.frame(kwic(ProgramsMX, pattern = "comunicar"))
+s4 <- data.frame(kwic(ProgramsMX, pattern = "creatividad"))
+s5 <- data.frame(kwic(ProgramsMX, pattern = "paciencia"))
+s6 <- data.frame(kwic(ProgramsMX, pattern = "crear"))
+s7 <- data.frame(kwic(ProgramsMX, pattern = "liderar"))
+s8 <- data.frame(kwic(ProgramsMX, pattern = "resolver"))
+s9 <- data.frame(kwic(ProgramsMX, pattern = "comprometer"))
+s10 <- data.frame(kwic(ProgramsMX, pattern = "comprometerse"))
+s11 <- data.frame(kwic(ProgramsMX, pattern = "gestionar"))
+s12 <- data.frame(kwic(ProgramsMX, pattern = "reflexionar"))
+s13 <- data.frame(kwic(ProgramsMX, pattern = "controlar"))
+s14 <- data.frame(kwic(ProgramsMX, pattern = "ético"))
+s15 <- data.frame(kwic(ProgramsMX, pattern = "tolerar"))
+s16 <- data.frame(kwic(ProgramsMX, pattern = "argumentar"))
+s17 <- data.frame(kwic(ProgramsMX, pattern = "conflictos"))
+s18 <- data.frame(kwic(ProgramsMX, pattern = "negociar"))
+s19 <- data.frame(kwic(ProgramsMX, pattern = "comprender"))
+s20 <- data.frame(kwic(ProgramsMX, pattern = "equipos"))
+s21 <- data.frame(kwic(ProgramsMX, pattern = "planificar"))
+s22 <- data.frame(kwic(ProgramsMX, pattern = "generar"))
+s23 <- data.frame(kwic(ProgramsMX, pattern = "empatía"))
+s24 <- data.frame(kwic(ProgramsMX, pattern = "compartir"))
+s25 <- data.frame(kwic(ProgramsMX, pattern = "analizar"))
+s26 <- data.frame(kwic(ProgramsMX, pattern = "reconocer"))
+s27 <- data.frame(kwic(ProgramsMX, pattern = "orientar"))
+s28 <- data.frame(kwic(ProgramsMX, pattern = "respetar"))
+s29 <- data.frame(kwic(ProgramsMX, pattern = "motivar"))
+s30 <- data.frame(kwic(ProgramsMX, pattern = "cooperar"))
+s31 <- data.frame(kwic(ProgramsMX, pattern = "fortalecer"))
+s32 <- data.frame(kwic(ProgramsMX, pattern = "impulsar"))
+s33 <- data.frame(kwic(ProgramsMX, pattern = "acercar"))
+s34 <- data.frame(kwic(ProgramsMX, pattern = "ayudar"))
+s35 <- data.frame(kwic(ProgramsMX, pattern = "cambiar"))
+s36 <- data.frame(kwic(ProgramsMX, pattern = "apreciar"))
+s37 <- data.frame(kwic(ProgramsMX, pattern = "dirigir"))
+s38 <- data.frame(kwic(ProgramsMX, pattern = "fomentar"))
+s39 <- data.frame(kwic(ProgramsMX, pattern = "interactuar"))
+s40 <- data.frame(kwic(ProgramsMX, pattern = "identificar"))
+s41 <- data.frame(kwic(ProgramsMX, pattern = "competir"))
+s42 <- data.frame(kwic(ProgramsMX, pattern = "manifestar"))
+s43 <- data.frame(kwic(ProgramsMX, pattern = "responsable"))
+s44 <- data.frame(kwic(ProgramsMX, pattern = "evaluar"))
+s45 <- data.frame(kwic(ProgramsMX, pattern = "innovar"))
+s46 <- data.frame(kwic(ProgramsMX, pattern = "decidir"))
+s47 <- data.frame(kwic(ProgramsMX, pattern = phrase("tomar decisiones")))
+s48 <- data.frame(kwic(ProgramsMX, pattern = "flexibilidad"))
+s49 <- data.frame(kwic(ProgramsMX, pattern = "persua*"))
+s50 <- data.frame(kwic(ProgramsMX, pattern = "convencer"))
 
 df_list <- mget(paste0("s", 1:50))
 SS <- do.call(rbind, df_list)
@@ -184,23 +184,23 @@ set.seed(915)
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
 
 BNMEX <- graph.data.frame(networkMEX, directed = FALSE)
-ProgramsMEX <- data.frame(Degree = igraph::degree(BNMEX),
+ProgramsMX <- data.frame(Degree = igraph::degree(BNMEX),
                          Closeness = igraph::closeness(BNMEX),
                          Betweennes = igraph::betweenness(BNMEX),
                          Eigen = igraph::eigen_centrality(BNMEX))
-ProgramsMEX <- ProgramsMEX[ -c(5:25) ]
-rownames(ProgramsMEX)
-ProgramsMEX$SS <- rownames(ProgramsMEX)
-ProgramsMEX <- ProgramsMEX[order(ProgramsMEX$SS), ]
-ProgramsMEX <- ProgramsMEX[grepl("s", ProgramsMEX$SS), ]
-ProgramsMEX <- ProgramsMEX[1:4]
-colnames(ProgramsMEX)[4] <- "Eigenvector"
+ProgramsMX <- ProgramsMX[ -c(5:25) ]
+rownames(ProgramsMX)
+ProgramsMX$SS <- rownames(ProgramsMX)
+ProgramsMX <- ProgramsMX[order(ProgramsMX$SS), ]
+ProgramsMX <- ProgramsMX[grepl("s", ProgramsMX$SS), ]
+ProgramsMX <- ProgramsMX[1:4]
+colnames(ProgramsMX)[4] <- "Eigenvector"
 
 
 
 library(psych)
 
-pairs.panels(ProgramsMEX, 
+pairs.panels(ProgramsMX, 
              method = "spearman", 
              hist.col = "#0A3A7E",
              density = TRUE,  
@@ -217,8 +217,8 @@ pairs.panels(ProgramsMEX,
 IMEX <- as_biadjacency_matrix(BNMEX, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNMEX)$type)
 IMEX2 <- as.matrix(IMEX)
 
-rownames(ProgramsMEX)[order(ProgramsMEX$Eigenvector, decreasing = TRUE)]
-selected_columns <- head(rownames(ProgramsMEX)[order(ProgramsMEX$Eigenvector, decreasing = TRUE)], 10)
+rownames(ProgramsMX)[order(ProgramsMX$Eigenvector, decreasing = TRUE)]
+selected_columns <- head(rownames(ProgramsMX)[order(ProgramsMX$Eigenvector, decreasing = TRUE)], 10)
 # Let's pick the most important soft skills
 # as per their eigenvector centrality
 
