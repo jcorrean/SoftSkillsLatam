@@ -154,3 +154,115 @@ SkillsCL <- data.frame(Country = "Chile",
 
 networkCL <- SS[c(1,8)]
 head(networkCL, 3)
+
+library(igraph)
+bn5 <- graph.data.frame(networkCL,directed=FALSE)
+bipartite_mapping(bn5)
+V(bn5)$type <- bipartite_mapping(bn5)$type
+V(bn5)$shape <- ifelse(V(bn5)$type, "circle", "square")
+V(bn5)$label.cex <- ifelse(V(bn5)$type, 0.5, 1)
+V(bn5)$size <- sqrt(igraph::degree(bn5))
+E(bn5)$color <- "lightgrey"
+
+bn5.pr <- bipartite_projection(bn5)
+Terms <- bn5.pr$proj2
+
+pave <- data.frame(igraph::betweenness(Terms))
+
+centrality_scores <- igraph::eigen_centrality(Terms)
+centrality_scores <- centrality_scores$vector
+
+color_palette <- colorRampPalette(c("#CE1127", "white", "#0A3A7E"))(length(unique(centrality_scores)))
+
+# Assign colors to nodes based on their normalized centrality scores
+node_colors <- color_palette[rank(centrality_scores)]
+
+# Plot the network with node colors based on centrality
+set.seed(915)
+
+
+plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
+
+BNCL <- graph.data.frame(networkCL, directed = FALSE)
+ProgramsCL <- data.frame(Degree = igraph::degree(BNCL),
+                          Closeness = igraph::closeness(BNCL),
+                          Betweennes = igraph::betweenness(BNCL),
+                          Eigen = igraph::eigen_centrality(BNCL))
+ProgramsCL <- ProgramsCL[ -c(5:25) ]
+rownames(ProgramsCL)
+ProgramsCL$SS <- rownames(ProgramsCL)
+ProgramsCL <- ProgramsCL[order(ProgramsCL$SS), ]
+ProgramsCL <- ProgramsCL[grepl("s", ProgramsCL$SS), ]
+ProgramsCL <- ProgramsCL[1:4]
+colnames(ProgramsCL)[4] <- "Eigenvector"
+
+
+
+library(psych)
+
+pairs.panels(ProgramsCL, 
+             method = "spearman", 
+             hist.col = "#0A3A7E",
+             density = TRUE,  
+             ellipses = TRUE,
+             pch = 15,
+             cex = 1,
+             cex.axis = 1.8,
+             cex.labels = 1.5,
+             lwd = 2,
+             rug = TRUE,
+             stars = TRUE, 
+             main = "Chile")
+
+IMCL <- as_biadjacency_matrix(BNCL, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNCL)$type)
+IMCL2 <- as.matrix(IMCL)
+
+rownames(ProgramsCL)[order(ProgramsCL$Eigenvector, decreasing = TRUE)]
+selected_columns <- head(rownames(ProgramsCL)[order(ProgramsCL$Eigenvector, decreasing = TRUE)], 10)
+# Let's pick the most important soft skills
+# as per their eigenvector centrality
+
+current_column_names <- colnames(IMCL2)
+
+# Subset the matrix by column names
+IMCL3 <- IMCL2[, selected_columns, drop = FALSE]
+
+current_column_names <- colnames(IMCL3)
+
+
+# Create a vector to hold the mapped skill names
+mapped_skill_names <- character(length(current_column_names))
+
+
+for (i in seq_along(current_column_names)) {
+  
+  skill_index <- match(current_column_names[i], SkillsCL$SkillCode)
+  
+  # If a match is found, map the skill code to its name
+  if (!is.na(skill_index)) {
+    mapped_skill_names[i] <- SkillsCL$Skill[skill_index]
+  } else {
+    # Handle unmatched column names as needed
+    # For example, assign a default value or leave blank
+    mapped_skill_names[i] <- "Unmatched"
+  }
+}
+
+# Replace the column names of IM3 with the mapped skill names
+colnames(IMCL3) <- mapped_skill_names
+colnames(IMCL3)
+
+library(bipartite)
+plotweb(IMCL3, method = "normal", 
+        col.high = "#0032A0", 
+        bor.col.high = "#0032A0",
+        col.low = "#DA291C", 
+        bor.col.low = "#DA291C",
+        col.interaction = "grey90",
+        bor.col.interaction = "grey90",
+        low.lablength = 0,
+        text.rot = 80,
+        high.y = 1,
+        ybig = 0.8,
+        labsize = 2)
+
