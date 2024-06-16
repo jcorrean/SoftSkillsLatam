@@ -222,8 +222,6 @@ set.seed(915)
 
 
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
-
-
 ```
 
 Seguimos con el cálculo de la importancia de cada habilidad y analicemos la correlación entre los cuatro indicadores de centralidad para ver si se comportan de una manera semejante a lo esperado por la evidencia empírica sobre indicadores de centralidad. 
@@ -256,8 +254,6 @@ pairs.panels(Programs,
              lwd = 2,
              rug = TRUE,
              stars = TRUE)
-
-
 ```
 
 Ahora, veamos el ranking de las diez habilidades más importantes
