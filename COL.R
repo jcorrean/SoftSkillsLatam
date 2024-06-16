@@ -254,8 +254,8 @@ colnames(IMCO3)
 
 library(bipartite)
 plotweb(IMCO3, method = "normal", 
-        col.high = "#FCD116", 
-        bor.col.high = "#FCD116",
+        col.high = "#0A3A7E", 
+        bor.col.high = "#0A3A7E",
         col.low = "#CE1127", 
         bor.col.low = "#CE1127",
         col.interaction = "grey90",
