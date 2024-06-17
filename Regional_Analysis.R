@@ -69,4 +69,5 @@ SS <- SS %>% mutate(Skill = recode(Skill,
                              "s48" = "flexibilidad",
                              "s49" = "persua*",
                              "s50" = "convencer"))
-is.na(SS$Skill)
+rm(list=setdiff(ls(), "SS"))
+   
