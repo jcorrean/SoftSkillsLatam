@@ -11,12 +11,12 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 # Carga de datos
 
-Primero, se carga el paquete "readtext" y se lee el directorio "Venezuela" para extraer los textos de los documentos PDF. Luego, se elimina la extensión ".pdf" del identificador de cada documento.
+Primero, se carga el paquete "readtext" y se lee el directorio "Brazil" para extraer los textos de los documentos PDF. Luego, se elimina la extensión ".pdf" del identificador de cada documento.
 
 ```{r}
 library(readtext)
 textos <- readtext("Brazil")
-textos$doc_id <- gsub("\\.pdf$|\\.docx$", "", textos$doc_id)
+textos$doc_id <- gsub(".pdf", "", textos$doc_id)
 ```
 
 Luego, pasamos a relacionar cada programa de postgrado con su correspondiente nivel educativo para observar cuántos programas hay de cada nivel:
@@ -43,8 +43,8 @@ Programas$label <- paste0(Programas$Programa, "\n total: ", Programas$Total)
 ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
   geom_rect() +
   geom_text(x=2, aes(y=labelPosition, label=label, color=Programa), size=5) + 
-  scale_fill_manual(values=c("Doutorado"="#FCE300", "Mestrado"="#0A3A7E", "Especialização"="#CE1127")) + 
-  scale_color_manual(values=c("Doutorado"="black", "Mestrado"="black", "Especialização"="black")) + # Custom text colors
+  scale_fill_manual(values=c("Doctorado"="#FCE300", "Maestría"="#0A3A7E", "Especialização"="#CE1127")) + 
+  scale_color_manual(values=c("Doctorado"="black", "Maestría"="black", "Especialização"="black")) + # Custom text colors
   coord_polar(theta="y") +
   xlim(c(-1, 4)) +
   theme_void() +
@@ -72,62 +72,62 @@ Programs <- tokens(Textos,
 Ahora, pasamos a hacer a buscar con el filtro contextual así:
 
 ```{r}
-s1 <- data.frame(kwic(Textos, pattern = phrase("pensamento critico")))
-s2 <- data.frame(kwic(Textos, pattern = phrase("solucionar problemas")))
-s3 <- data.frame(kwic(Textos, pattern = "comunicar"))
-s4 <- data.frame(kwic(Textos, pattern = "creatividade"))
-s5 <- data.frame(kwic(Textos, pattern = "paciência"))
-s6 <- data.frame(kwic(Textos, pattern = "criar"))
-s7 <- data.frame(kwic(Textos, pattern = "liderar"))
-s8 <- data.frame(kwic(Textos, pattern = "resolver"))
-s9 <- data.frame(kwic(Textos, pattern = "envolver"))
-s10 <- data.frame(kwic(Textos, pattern = "comprometer-se"))
-s11 <- data.frame(kwic(Textos, pattern = "gerenciar"))
-s12 <- data.frame(kwic(Textos, pattern = "refletir"))
-s13 <- data.frame(kwic(Textos, pattern = "verificar"))
-s14 <- data.frame(kwic(Textos, pattern = "ético"))
-s15 <- data.frame(kwic(Textos, pattern = "tolerar"))
-s16 <- data.frame(kwic(Textos, pattern = "discutir"))
-s17 <- data.frame(kwic(Textos, pattern = "conflictos"))
-s18 <- data.frame(kwic(Textos, pattern = "negociar"))
-s19 <- data.frame(kwic(Textos, pattern = "entender"))
-s20 <- data.frame(kwic(Textos, pattern = "equipes"))
-s21 <- data.frame(kwic(Textos, pattern = "planejar"))
-s22 <- data.frame(kwic(Textos, pattern = "acionar"))
-s23 <- data.frame(kwic(Textos, pattern = "empatia"))
-s24 <- data.frame(kwic(Textos, pattern = "compartilhar"))
-s25 <- data.frame(kwic(Textos, pattern = "analisar"))
-s26 <- data.frame(kwic(Textos, pattern = "reconhecer"))
-s27 <- data.frame(kwic(Textos, pattern = "guia"))
-s28 <- data.frame(kwic(Textos, pattern = "respeito"))
-s29 <- data.frame(kwic(Textos, pattern = "motivar"))
-s30 <- data.frame(kwic(Textos, pattern = "colaborar"))
-s31 <- data.frame(kwic(Textos, pattern = "fortalecer"))
-s32 <- data.frame(kwic(Textos, pattern = "impulsionar"))
-s33 <- data.frame(kwic(Textos, pattern = "acercar"))
-s34 <- data.frame(kwic(Textos, pattern = "ajudar"))
-s35 <- data.frame(kwic(Textos, pattern = "mudar"))
-s36 <- data.frame(kwic(Textos, pattern = "apreciar"))
-s37 <- data.frame(kwic(Textos, pattern = "conduzir"))
-s38 <- data.frame(kwic(Textos, pattern = "fomentar"))
-s39 <- data.frame(kwic(Textos, pattern = "interagir"))
-s40 <- data.frame(kwic(Textos, pattern = "identificar"))
-s41 <- data.frame(kwic(Textos, pattern = "competir"))
-s42 <- data.frame(kwic(Textos, pattern = "manifesto"))
-s43 <- data.frame(kwic(Textos, pattern = "responsável"))
-s44 <- data.frame(kwic(Textos, pattern = "avaliar"))
-s45 <- data.frame(kwic(Textos, pattern = "inovar"))
-s46 <- data.frame(kwic(Textos, pattern = "decidir"))
-s47 <- data.frame(kwic(Textos, pattern = phrase("Tomar decisões")))
-s48 <- data.frame(kwic(Textos, pattern = "flexibilidade"))
-s49 <- data.frame(kwic(Textos, pattern = "persua*"))
-s50 <- data.frame(kwic(Textos, pattern = "convencer"))
-
+s1 <- data.frame(kwic(Programs, pattern = phrase("pensamento crítico")))
+s2 <- data.frame(kwic(Programs, pattern = phrase("solução problemas")))
+s3 <- data.frame(kwic(Programs, pattern = "comunicar"))
+s4 <- data.frame(kwic(Programs, pattern = "criatividade"))
+s5 <- data.frame(kwic(Programs, pattern = "tranqüilidade"))# paciencia
+s6 <- data.frame(kwic(Programs, pattern = "criar"))
+s7 <- data.frame(kwic(Programs, pattern = "liderar"))
+s8 <- data.frame(kwic(Programs, pattern = "resolver"))
+s9 <- data.frame(kwic(Programs, pattern = "comprometer"))
+s10 <- data.frame(kwic(Programs, pattern = "comprometer-se"))
+s11 <- data.frame(kwic(Programs, pattern = "gerenciar"))
+s12 <- data.frame(kwic(Programs, pattern = "refletir"))
+s13 <- data.frame(kwic(Programs, pattern = "verificar"))
+s14 <- data.frame(kwic(Programs, pattern = "ético"))
+s15 <- data.frame(kwic(Programs, pattern = "suportar")) # tolerar
+s16 <- data.frame(kwic(Programs, pattern = "discutir")) 
+s17 <- data.frame(kwic(Programs, pattern = "conflitos"))
+s18 <- data.frame(kwic(Programs, pattern = "negociação")) # negociar
+s19 <- data.frame(kwic(Programs, pattern = "entender"))
+s20 <- data.frame(kwic(Programs, pattern = "equipes"))
+s21 <- data.frame(kwic(Programs, pattern = "planejar"))
+s22 <- data.frame(kwic(Programs, pattern = "efetuar"))  # generar
+s23 <- data.frame(kwic(Programs, pattern = "empatia"))   
+s24 <- data.frame(kwic(Programs, pattern = "compartilhar")) # compartir
+s25 <- data.frame(kwic(Programs, pattern = "analisar"))
+s26 <- data.frame(kwic(Programs, pattern = "reconhecer"))
+s27 <- data.frame(kwic(Programs, pattern = "dirigir"))  # orientar
+s28 <- data.frame(kwic(Programs, pattern = "respeito"))
+s29 <- data.frame(kwic(Programs, pattern = "incentivar")) # motivar
+s30 <- data.frame(kwic(Programs, pattern = "colaborar")) # cooperar
+s31 <- data.frame(kwic(Programs, pattern = "fortalecer"))
+s32 <- data.frame(kwic(Programs, pattern = "impulsionar")) # impulsar
+s33 <- data.frame(kwic(Programs, pattern = "aproximar"))
+s34 <- data.frame(kwic(Programs, pattern = "ajudar"))
+s35 <- data.frame(kwic(Programs, pattern = "transformar")) # mudar
+s36 <- data.frame(kwic(Programs, pattern = "gostar"))  # apreciar
+s37 <- data.frame(kwic(Programs, pattern = "conduzir"))
+s38 <- data.frame(kwic(Programs, pattern = "fomentar"))
+s39 <- data.frame(kwic(Programs, pattern = "interagir"))
+s40 <- data.frame(kwic(Programs, pattern = "identificar"))
+s41 <- data.frame(kwic(Programs, pattern = "concorrer")) # competir
+s42 <- data.frame(kwic(Programs, pattern = "demonstrar")) # manifestar
+s43 <- data.frame(kwic(Programs, pattern = "responsável"))
+s44 <- data.frame(kwic(Programs, pattern = "avaliar")) # evaluar
+s45 <- data.frame(kwic(Programs, pattern = "inovar"))
+s46 <- data.frame(kwic(Programs, pattern = "definir")) # decidir
+s47 <- data.frame(kwic(Programs, pattern = phrase("tomada decisões")))
+s48 <- data.frame(kwic(Programs, pattern = "flexibilidade"))
+s49 <- data.frame(kwic(Programs, pattern = "aconselhar")) # persuadir
+s50 <- data.frame(kwic(Programs, pattern = "incentivar")) # convencer
+ 
 df_list <- mget(paste0("s", 1:50))
 SS <- do.call(rbind, df_list)
 SS$Skill <- rownames(SS)
 SS$Skill <- gsub("\\..*", "", SS$Skill)
-rm(list=setdiff(ls(), "SS"))
+# rm(list=setdiff(ls(), "SS"))
 variable.names(SS)
 head(SS, 5)
 
@@ -160,28 +160,28 @@ Skills <- data.frame(SkillCode = c(paste0("s", 1:50)),
                               "reconocer",
                               "orientar",
                               "respetar",
-                              "motivar",
+                              "incentivar",
                               "cooperar",
                               "fortalecer",
                               "impulsar",
-                              "acercar",
+                              "aproximar",
                               "ayudar",
-                              "cambiar",
-                              "apreciar",
+                              "transformar",
+                              "gostar",
                               "dirigir",
                               "fomentar",
                               "interactuar",
                               "identificar",
-                              "competir",
-                              "manifestar",
+                              "concorrer",
+                              "demonstrar",
                               "responsable",
                               "evaluar",
-                              "innovar",
-                              "decidir",
-                              "tomar decisiones",
+                              "inovar",
+                              "definir",
+                              "tomada decisões",
                               "flexibilidad",
-                              "persua*",
-                              "convencer"))
+                              "aconselhar",
+                              "incentivar"))
 
 ```
 
