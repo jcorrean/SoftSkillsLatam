@@ -3,7 +3,7 @@ load("CHL.RData")
 load("COL.RData")
 load("VEN.RData")
 load("ECU.RData")
-rm(list=setdiff(ls(), c("ProgramsMX" = "ProgramsCL", "ProgramsCO", "ProgramsVE", "ProgramsEC")))
+rm(list=setdiff(ls(), c("ProgramsMX", "ProgramsCL", "ProgramsCO", "ProgramsVE", "ProgramsEC")))
 ProgramsCL$Country <- "Chile"
 ProgramsCL$Skill <- rownames(ProgramsCL)
 ProgramsCO$Country <- "Colombia"
