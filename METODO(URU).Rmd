@@ -1,7 +1,27 @@
+---
+title: "Análisis de Habilidades Blandas en Postgrados (Sección Uruguay)"
+author: "Juan Esteban Gómez y Juan C. Correa"
+date: "2024-06-23"
+output: html_document
+---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+# Carga de datos
+
+Primero, se carga el paquete "readtext" y se lee el directorio "Uruguay" para extraer los textos de los documentos PDF. Luego, se elimina la extensión ".pdf" del identificador de cada documento.
+
+```{r}
 library(readtext)
 URU <- readtext("Uruguay")
-URU$doc_id <- gsub("\\.pdf$|\\.docx$", "", URU$doc_id)
+URU$doc_id <- gsub(".pdf", "", URU$doc_id)
+```
 
+Luego, pasamos a relacionar cada programa de postgrado con su correspondiente nivel educativo para observar cuántos programas hay de cada nivel:
+
+```{r}
 library(dplyr)
 URU <- mutate(URU, 
               Program = ifelse(
@@ -30,20 +50,30 @@ ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
   theme_void() +
   theme(legend.position = "none") + 
   ggtitle("Uruguay")
+```
 
+Ahora, pasamos a crear el corpus lingüístico. Para ello, cada documento se va a descomponer en número de palabras totales (tokens), número de palabras únicas (types) y número de oraciones (sentences). Esto nos permitirá observar la longitud de cada oferta de postgrado. 
+
+```{r}
 library(quanteda)
 TextsURU <- corpus(URU$text)
 docvars(TextsURU, "Program") <- URU$Program
 docvars(TextsURU, "Country") <- "Uruguay"
-head(summary(TextsURU), 10)
+head(summary(TextsURU), 3)
+```
 
+```{r}
 ProgramsURU <- tokens(TextsURU, 
                       remove_numbers = TRUE, 
                       remove_punct = TRUE, 
                       remove_url = TRUE, 
                       remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish"))
+```
 
+Ahora, pasamos a hacer a buscar con el filtro contextual así:
+
+```{r}
 s1 <- data.frame(kwic(ProgramsURU, pattern = phrase("pensamiento crítico")))
 s2 <- data.frame(kwic(ProgramsURU, pattern = phrase("solucionar problemas")))
 s3 <- data.frame(kwic(ProgramsURU, pattern = "comunicar"))
@@ -152,10 +182,20 @@ SkillsURU <- data.frame(Country = "Uruguay",
                                   "flexibilidad",
                                   "persua*",
                                   "convencer"))
+```
 
+# Paso 2: (Modelado de Red de Habilidades)
+
+Ahora, pasamos a modelar las relaciones entre las habilidades y los programas de postgrado. Para ello, vamos a usar los datos de la tabla SS resultante del último código del paso anterior para construir la redd a través de una lista de aristas.
+
+```{r}
 networkURU <- SS[c(1,8)]
 head(networkURU, 3)
+```
 
+Ahora, pasamos a graficar la red bipartita entre habilidades y programas
+
+```{r}
 library(igraph)
 bn7 <- graph.data.frame(networkURU,directed=FALSE)
 bipartite_mapping(bn7)
@@ -183,7 +223,11 @@ set.seed(915)
 
 
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
+```
 
+Seguimos con el cálculo de la importancia de cada habilidad y analicemos la correlación entre los cuatro indicadores de centralidad para ver si se comportan de una manera semejante a lo esperado por la evidencia empírica sobre indicadores de centralidad. 
+
+```{r}
 BNURU <- graph.data.frame(networkURU, directed = FALSE)
 ProgramsURU <- data.frame(Degree = igraph::degree(BNURU),
                           Closeness = igraph::closeness(BNURU),
@@ -214,7 +258,11 @@ pairs.panels(ProgramsURU,
              rug = TRUE,
              stars = TRUE, 
              main = "Uruguay")
+```
 
+Ahora, veamos el ranking de las diez habilidades más importantes
+
+```{r}
 IURU <- as_biadjacency_matrix(BNURU, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNURU)$type)
 IURU2 <- as.matrix(IURU)
 
@@ -252,7 +300,11 @@ for (i in seq_along(current_column_names)) {
 # Replace the column names of IM3 with the mapped skill names
 colnames(IURU3) <- mapped_skill_names
 colnames(IURU3)
+```
 
+# Paso 3 (Visualización de Red Bipartita)
+
+```{r}
 library(bipartite)
 plotweb(IURU3, method = "normal", 
         col.high = "#006847", 
@@ -266,3 +318,5 @@ plotweb(IURU3, method = "normal",
         high.y = 1,
         ybig = 0.8,
         labsize = 2)
+```
+
