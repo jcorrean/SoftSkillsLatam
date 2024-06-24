@@ -34,6 +34,7 @@ ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
 library(quanteda)
 TextsMEX <- corpus(MEX$text)
 docvars(TextsMEX, "Program") <- MEX$Program
+docvars(TextsMEX, "Country") <- "Mexico"
 head(summary(TextsMEX), 10)
 
 ProgramsMX <- tokens(TextsMEX, 
