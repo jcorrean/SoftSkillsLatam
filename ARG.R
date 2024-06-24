@@ -213,7 +213,7 @@ pairs.panels(ProgramsARG,
              lwd = 2,
              rug = TRUE,
              stars = TRUE, 
-             main = "ARGico")
+             main = "Argentina")
 
 IARG <- as_biadjacency_matrix(BNARG, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNARG)$type)
 IARG2 <- as.matrix(IARG)
