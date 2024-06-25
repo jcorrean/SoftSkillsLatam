@@ -1,6 +1,8 @@
 library(entropy)
 load("ARG.RData")
+
 total_por_columna <- colSums(IARG2)
+
 
 # Normalizamos las frecuencias dividiendo por el total de cada columna
 probabilidades_normalizadas <- IARG2 / total_por_columna
