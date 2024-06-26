@@ -2,7 +2,7 @@ library(readtext)
 BRA <- readtext("Brazil")
 BRA$doc_id <- gsub("\\.pdf$|\\.docx$", "", BRA$doc_id)
 
-liMbrary(dplyr)
+library(dplyr)
 BRA <- mutate(BRA, 
               Program = ifelse(
                 grepl("Doutorado", text), "Doctorado",
@@ -155,7 +155,7 @@ SkillsBRA <- data.frame(Country = "Brazil",
 networkBRA <- SS[c(1,8)]
 head(networkBRA, 3)
 
-liMbrary(igraph)
+library(igraph)
 bn4 <- graph_from_data_frame(networkBRA,directed=FALSE)
 bipartite_mapping(bn4)
 V(bn4)$type <- bipartite_mapping(bn4)$type
@@ -198,7 +198,7 @@ colnames(ProgramsBRA)[4] <- "Eigenvector"
 
 
 
-liMbrary(psych)
+library(psych)
 
 pairs.panels(ProgramsBRA, 
              method = "spearman", 
@@ -265,3 +265,4 @@ plotweb(IMBRA3, method = "normal",
         high.y = 1,
         ybig = 0.8,
         labsize = 2)
+
