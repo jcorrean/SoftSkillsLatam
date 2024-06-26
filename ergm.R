@@ -5,6 +5,8 @@
 # Paso 1 (Cargar la Red) ----
 
 load("ARG.RData")
+V(bn6)$shape <- ifelse(V(bn6)$type, "circle", "square")
+V(bn6)$color <- ifelse(V(bn6)$type, "red", "blue")
 
 # Paso 2 (Calcular la probabilidad de conexión entre nodos) ----
 # Para ello hay que contar el número de celdas en la red bipartita
@@ -48,8 +50,16 @@ E(g)$color <- "lightgray"
 V(g)$size <- 2
 
 # To visualize the graph
-plot(g, vertex.label = NA, main = "Random Bipartite Graph")
+plot(g, vertex.label = NA, main = "Red Aleatoria Simulada", layout = layout_components)
+plot(bn6, vertex.label = NA, vertex.label.color = "black", vertex.label.cex = NA, 
+     vertex.color = node_colors, vertex.size = 2, 
+     edge.width = 0.5, edge.color = "lightgray", 
+     layout = layout_components, main = "Red Observada Argentina")
 
+pave <- biconnected_components(bn2)
+pave$no
+pave$components
+pave$articulation_points
 edge_density(g)
 edge_density(bn6)
 mean(edge_betweenness(g))
