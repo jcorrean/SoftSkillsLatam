@@ -164,7 +164,7 @@ V(bn2)$label.cex <- ifelse(V(bn2)$type, 0.5, 1)
 V(bn2)$size <- sqrt(igraph::degree(bn2))
 E(bn2)$color <- "lightgrey"
 
-bn2.pr <- bipartite.projection(bn2)
+bn2.pr <- bipartite_projection(bn2)
 Terms <- bn2.pr$proj2
 
 pave <- data.frame(igraph::betweenness(Terms))
@@ -214,20 +214,20 @@ pairs.panels(ProgramsVE,
              stars = TRUE, 
              main = "Venezuela")
 
-IM <- as_incidence_matrix(BNA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNA)$type)
-IM2 <- as.matrix(IM)
+IMVEN <- as_biadjacency_matrix(BNA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNA)$type)
+IMVEN2 <- as.matrix(IMVEN)
 
 rownames(ProgramsVE)[order(ProgramsVE$Eigenvector, decreasing = TRUE)]
 selected_columns <- head(rownames(ProgramsVE)[order(ProgramsVE$Eigenvector, decreasing = TRUE)], 10)
 # Let's pick the most important soft skills
 # as per their eigenvector centrality
 
-current_column_names <- colnames(IM2)
+current_column_names <- colnames(IMVEN2)
 
 # Subset the matrix by column names
-IM3 <- IM2[, selected_columns, drop = FALSE]
+IMVEN3 <- IMVEN2[, selected_columns, drop = FALSE]
 
-current_column_names <- colnames(IM3)
+current_column_names <- colnames(IMVEN3)
 
 
 # Create a vector to hold the mapped skill names
@@ -249,11 +249,11 @@ for (i in seq_along(current_column_names)) {
 }
 
 # Replace the column names of IM3 with the mapped skill names
-colnames(IM3) <- mapped_skill_names
-colnames(IM3)
+colnames(IMVEN3) <- mapped_skill_names
+colnames(IMVEN3)
 
 library(bipartite)
-plotweb(IM3, method = "normal", 
+plotweb(IMVEN3, method = "normal", 
         col.high = "#0A3A7E", 
         bor.col.high = "#0A3A7E",
         col.low = "#CE1127", 
