@@ -1,0 +1,66 @@
+---
+title: "Observación-Simulación de Red Habilidades-Programas"
+author: "Juan C. Correa"
+date: "2024-06-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Paso 1 
+## Cargar la red de cada país
+
+```{r}
+load("ARG.RData")
+load("BRA.RData")
+load("CHL.RData")
+load("COL.RData")
+load("ECU.RData")
+load("MEX.RData")
+load("URU.RData")
+load("VEN.RData")
+```
+
+
+
+# Paso 2
+## Describir las características estadísticas de cada red
+
+```{r, echo=FALSE}
+library(igraph)
+D_ARG <- edge_density(bn6)
+D_BRA <-  edge_density(bn4)
+D_CHL <- edge_density(bn5)
+D_COL <- edge_density(bn1)
+D_ECU <- edge_density(bn3)
+D_MEX <- edge_density(bn8)
+D_URU <- edge_density(bn7)
+D_VEN <- edge_density(bn2)
+
+distance_table(bn2)
+
+print(paste("Densidad Red Argentina:", D_ARG))
+print(paste("Densidad Red Brazil:", D_BRA))
+print(paste("Densidad Red Chile:", D_CHL))
+print(paste("Densidad Red Colombia:", D_COL))
+print(paste("Densidad Red Ecuador:", D_ECU))
+print(paste("Densidad Red Mexico:", D_MEX))
+print(paste("Densidad Red Uruguay:", D_URU))
+print(paste("Densidad Red Venezuela:", D_VEN))
+```
+
+# Paso 3
+## Visualizar cada red
+
+```{r}
+V(bn6)$shape <- ifelse(V(bn6)$type, "circle", "square")
+V(bn6)$color <- ifelse(V(bn6)$type, "red", "blue")
+plot(bn6, vertex.label = NA, vertex.label.color = "black", vertex.label.cex = NA, 
+     vertex.color = ifelse(V(bn6)$type, "red", "blue"), 
+     vertex.size = 2, 
+     edge.width = 0.5, edge.color = "lightgray", 
+     layout = layout_components, main = "Red Observada Argentina")
+```
+
