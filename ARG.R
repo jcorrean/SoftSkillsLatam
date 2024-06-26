@@ -215,20 +215,20 @@ pairs.panels(ProgramsARG,
              stars = TRUE, 
              main = "Argentina")
 
-IARG <- as_biadjacency_matrix(BNARG, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNARG)$type)
-IARG2 <- as.matrix(IARG)
+IMARG <- as_biadjacency_matrix(BNARG, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNARG)$type)
+IMARG2 <- as.matrix(IMARG)
 
 rownames(ProgramsARG)[order(ProgramsARG$Eigenvector, decreasing = TRUE)]
 selected_columns <- head(rownames(ProgramsARG)[order(ProgramsARG$Eigenvector, decreasing = TRUE)], 10)
 # Let's pick the most important soft skills
 # as per their eigenvector centrality
 
-current_column_names <- colnames(IARG2)
+current_column_names <- colnames(IMARG2)
 
 # Subset the matrix by column names
-IARG3 <- IARG2[, selected_columns, drop = FALSE]
+IMARG3 <- IMARG2[, selected_columns, drop = FALSE]
 
-current_column_names <- colnames(IARG3)
+current_column_names <- colnames(IMARG3)
 
 
 # Create a vector to hold the mapped skill names
@@ -250,11 +250,11 @@ for (i in seq_along(current_column_names)) {
 }
 
 # Replace the column names of IM3 with the mapped skill names
-colnames(IARG3) <- mapped_skill_names
-colnames(IARG3)
+colnames(IMARG3) <- mapped_skill_names
+colnames(IMARG3)
 
 library(bipartite)
-plotweb(IARG3, method = "normal", 
+plotweb(IMARG3, method = "normal", 
         col.high = "#006847", 
         bor.col.high = "#006847",
         col.low = "#CE1125", 
