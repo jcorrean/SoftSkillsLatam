@@ -15,10 +15,11 @@ plot(g, vertex.label = NA, main = "Random Bipartite Graph")
 # Conteo de ceros para definir la probabilidad de conexión entre 
 # nodos
 # total de celdas en la matrix - total de ceros / total de celdas
-# celdas no nulas / total de celdas
-sum(IMEX2 == 0)
-ncol(IMEX2)
-nrow(IMEX2)
-# Para el caso de México con 112 programas y 40 skills
-(40*112-sum(IMEX2 == 0))/(40*112)
+# celdas no nulas / total de celdas. Veamos con el caso de Venezuela
+load("VEN.RData")
+sum(IMVEN2 == 0)
+ncol(IMVEN2)
+nrow(IMVEN2)
+# Para el caso de Venezuela con 119 programas y 42 skills
+(ncol(IMVEN2)*nrow(IMVEN2)-sum(IMVEN2 == 0))/(nrow(IMVEN2)*ncol(IMVEN2))
 
