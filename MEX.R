@@ -157,16 +157,16 @@ networkMEX <- SS[c(1,8)]
 head(networkMEX, 3)
 
 library(igraph)
-bn4 <- graph.data.frame(networkMEX,directed=FALSE)
-bipartite_mapping(bn4)
-V(bn4)$type <- bipartite_mapping(bn4)$type
-V(bn4)$shape <- ifelse(V(bn4)$type, "circle", "square")
-V(bn4)$label.cex <- ifelse(V(bn4)$type, 0.5, 1)
-V(bn4)$size <- sqrt(igraph::degree(bn4))
-E(bn4)$color <- "lightgrey"
+bn8 <- graph.data.frame(networkMEX,directed=FALSE)
+bipartite_mapping(bn8)
+V(bn8)$type <- bipartite_mapping(bn8)$type
+V(bn8)$shape <- ifelse(V(bn8)$type, "circle", "square")
+V(bn8)$label.cex <- ifelse(V(bn8)$type, 0.5, 1)
+V(bn8)$size <- sqrt(igraph::degree(bn8))
+E(bn8)$color <- "lightgrey"
 
-bn4.pr <- bipartite_projection(bn4)
-Terms <- bn4.pr$proj2
+bn8.pr <- bipartite_projection(bn8)
+Terms <- bn8.pr$proj2
 
 pave <- data.frame(igraph::betweenness(Terms))
 
