@@ -7,7 +7,16 @@ load("MEX.RData")
 load("URU.RData")
 load("VEN.RData")
 rm(list=setdiff(ls(), c("IMARG2", "IMVEN2", "IMBRA2", "IMCL2", "IMCO2", "IMEC2", "IMEX2", "IMURU2")))
-
+country_names <- c(
+  IMARG2 = "Argentina",
+  IMBRA2 = "Brazil",
+  IMCL2 = "Chile",
+  IMCO2 = "Colombia",
+  IMEC2 = "Ecuador",
+  IMEX2 = "Mexico",
+  IMURU2 = "Uruguay",
+  IMVEN2 = "Venezuela"
+)
 library(entropy)
 
 # Function to calculate entropy metrics for matrix data
@@ -39,7 +48,10 @@ calculate_entropy_metrics_matrix <- function(dataset_name) {
   # Average entropies
   entropia_promedio <- mean(entropias_columna, na.rm = TRUE)
   
-  print(paste("Entropía Promedio:", entropia_promedio))
+  # Get the country name associated with the dataset
+  country_name <- country_names[dataset_name]
+  
+  print(paste("Entropía Promedio para", country_name, ":", entropia_promedio))
   
   return(entropia_promedio)
 }
