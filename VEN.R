@@ -1,14 +1,14 @@
 library(readtext)
-VE <- readtext("Venezuela")
-VE$doc_id <- gsub("\\.pdf$|\\.docx$", "", VE$doc_id)
+VEN <- readtext("Venezuela")
+VEN$doc_id <- gsub("\\.pdf$|\\.docx$", "", VEN$doc_id)
 
 library(dplyr)
-VE <- mutate(VE, 
-             Program = ifelse(
-               grepl("Doctorado en", text), "Doctorado",
-               ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
-                      "Especialización")))
-Programas <- data.frame(table(VE$Program))
+VEN <- mutate(VEN, 
+              Program = ifelse(
+                grepl("Doctorado en", text), "Doctorado",
+                ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
+                       "Especialización")))
+Programas <- data.frame(table(VEN$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
@@ -29,134 +29,137 @@ ggplot(Programas, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Programa)) +
   xlim(c(-1, 4)) +
   theme_void() +
   theme(legend.position = "none") + 
-  ggtitle("VENEZUELA")
+  ggtitle("Venezuela")
 
 library(quanteda)
-TextsVE <- corpus(VE$text)
-docvars(TextsVE, "Program") <- VE$Program
-head(summary(TextsVE), 10)
+TextsVEN <- corpus(VEN$text)
+docvars(TextsVEN, "Program") <- VEN$Program
+docvars(TextsVEN, "Country") <- "Venezuela"
+docvars(TextsVEN, "doc_id") <- VEN$doc_id
+head(summary(TextsVEN), 3)
+ProgIdentificados <- data.frame(summary(TextsVEN, length(TextsVEN)))
 
-ProgramsVE <- tokens(TextsVE, 
-                   remove_numbers = TRUE, 
-                   remove_punct = TRUE, 
-                   remove_url = TRUE, 
-                   remove_symbols = TRUE) %>%  
+ProgramsVEN <- tokens(TextsVEN, 
+                      remove_numbers = TRUE, 
+                      remove_punct = TRUE, 
+                      remove_url = TRUE, 
+                      remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish"))
 
-s1 <- data.frame(kwic(ProgramsVE, pattern = phrase("pensamiento crítico")))
-s2 <- data.frame(kwic(ProgramsVE, pattern = phrase("solucionar problemas")))
-s3 <- data.frame(kwic(ProgramsVE, pattern = "comunicar"))
-s4 <- data.frame(kwic(ProgramsVE, pattern = "creatividad"))
-s5 <- data.frame(kwic(ProgramsVE, pattern = "paciencia"))
-s6 <- data.frame(kwic(ProgramsVE, pattern = "crear"))
-s7 <- data.frame(kwic(ProgramsVE, pattern = "liderar"))
-s8 <- data.frame(kwic(ProgramsVE, pattern = "resolver"))
-s9 <- data.frame(kwic(ProgramsVE, pattern = "comprometer"))
-s10 <- data.frame(kwic(ProgramsVE, pattern = "comprometerse"))
-s11 <- data.frame(kwic(ProgramsVE, pattern = "gestionar"))
-s12 <- data.frame(kwic(ProgramsVE, pattern = "reflexionar"))
-s13 <- data.frame(kwic(ProgramsVE, pattern = "controlar"))
-s14 <- data.frame(kwic(ProgramsVE, pattern = "ético"))
-s15 <- data.frame(kwic(ProgramsVE, pattern = "tolerar"))
-s16 <- data.frame(kwic(ProgramsVE, pattern = "argumentar"))
-s17 <- data.frame(kwic(ProgramsVE, pattern = "conflictos"))
-s18 <- data.frame(kwic(ProgramsVE, pattern = "negociar"))
-s19 <- data.frame(kwic(ProgramsVE, pattern = "comprender"))
-s20 <- data.frame(kwic(ProgramsVE, pattern = "equipos"))
-s21 <- data.frame(kwic(ProgramsVE, pattern = "planificar"))
-s22 <- data.frame(kwic(ProgramsVE, pattern = "generar"))
-s23 <- data.frame(kwic(ProgramsVE, pattern = "empatía"))
-s24 <- data.frame(kwic(ProgramsVE, pattern = "compartir"))
-s25 <- data.frame(kwic(ProgramsVE, pattern = "analizar"))
-s26 <- data.frame(kwic(ProgramsVE, pattern = "reconocer"))
-s27 <- data.frame(kwic(ProgramsVE, pattern = "orientar"))
-s28 <- data.frame(kwic(ProgramsVE, pattern = "respetar"))
-s29 <- data.frame(kwic(ProgramsVE, pattern = "motivar"))
-s30 <- data.frame(kwic(ProgramsVE, pattern = "cooperar"))
-s31 <- data.frame(kwic(ProgramsVE, pattern = "fortalecer"))
-s32 <- data.frame(kwic(ProgramsVE, pattern = "impulsar"))
-s33 <- data.frame(kwic(ProgramsVE, pattern = "acercar"))
-s34 <- data.frame(kwic(ProgramsVE, pattern = "ayudar"))
-s35 <- data.frame(kwic(ProgramsVE, pattern = "cambiar"))
-s36 <- data.frame(kwic(ProgramsVE, pattern = "apreciar"))
-s37 <- data.frame(kwic(ProgramsVE, pattern = "dirigir"))
-s38 <- data.frame(kwic(ProgramsVE, pattern = "fomentar"))
-s39 <- data.frame(kwic(ProgramsVE, pattern = "interactuar"))
-s40 <- data.frame(kwic(ProgramsVE, pattern = "identificar"))
-s41 <- data.frame(kwic(ProgramsVE, pattern = "competir"))
-s42 <- data.frame(kwic(ProgramsVE, pattern = "manifestar"))
-s43 <- data.frame(kwic(ProgramsVE, pattern = "responsable"))
-s44 <- data.frame(kwic(ProgramsVE, pattern = "evaluar"))
-s45 <- data.frame(kwic(ProgramsVE, pattern = "innovar"))
-s46 <- data.frame(kwic(ProgramsVE, pattern = "decidir"))
-s47 <- data.frame(kwic(ProgramsVE, pattern = phrase("tomar decisiones")))
-s48 <- data.frame(kwic(ProgramsVE, pattern = "flexibilidad"))
-s49 <- data.frame(kwic(ProgramsVE, pattern = "persua*"))
-s50 <- data.frame(kwic(ProgramsVE, pattern = "convencer"))
+s1 <- data.frame(kwic(ProgramsVEN, pattern = phrase("pensamiento crítico")))
+s2 <- data.frame(kwic(ProgramsVEN, pattern = phrase("solucionar problemas")))
+s3 <- data.frame(kwic(ProgramsVEN, pattern = "comunicar"))
+s4 <- data.frame(kwic(ProgramsVEN, pattern = "creatividad"))
+s5 <- data.frame(kwic(ProgramsVEN, pattern = "paciencia"))
+s6 <- data.frame(kwic(ProgramsVEN, pattern = "crear"))
+s7 <- data.frame(kwic(ProgramsVEN, pattern = "liderar"))
+s8 <- data.frame(kwic(ProgramsVEN, pattern = "resolver"))
+s9 <- data.frame(kwic(ProgramsVEN, pattern = "comprometer"))
+s10 <- data.frame(kwic(ProgramsVEN, pattern = "comprometerse"))
+s11 <- data.frame(kwic(ProgramsVEN, pattern = "gestionar"))
+s12 <- data.frame(kwic(ProgramsVEN, pattern = "reflexionar"))
+s13 <- data.frame(kwic(ProgramsVEN, pattern = "controlar"))
+s14 <- data.frame(kwic(ProgramsVEN, pattern = "ético"))
+s15 <- data.frame(kwic(ProgramsVEN, pattern = "tolerar"))
+s16 <- data.frame(kwic(ProgramsVEN, pattern = "URUumentar"))
+s17 <- data.frame(kwic(ProgramsVEN, pattern = "conflictos"))
+s18 <- data.frame(kwic(ProgramsVEN, pattern = "negociar"))
+s19 <- data.frame(kwic(ProgramsVEN, pattern = "comprender"))
+s20 <- data.frame(kwic(ProgramsVEN, pattern = "equipos"))
+s21 <- data.frame(kwic(ProgramsVEN, pattern = "planificar"))
+s22 <- data.frame(kwic(ProgramsVEN, pattern = "generar"))
+s23 <- data.frame(kwic(ProgramsVEN, pattern = "empatía"))
+s24 <- data.frame(kwic(ProgramsVEN, pattern = "compartir"))
+s25 <- data.frame(kwic(ProgramsVEN, pattern = "analizar"))
+s26 <- data.frame(kwic(ProgramsVEN, pattern = "reconocer"))
+s27 <- data.frame(kwic(ProgramsVEN, pattern = "orientar"))
+s28 <- data.frame(kwic(ProgramsVEN, pattern = "respetar"))
+s29 <- data.frame(kwic(ProgramsVEN, pattern = "motivar"))
+s30 <- data.frame(kwic(ProgramsVEN, pattern = "cooperar"))
+s31 <- data.frame(kwic(ProgramsVEN, pattern = "fortalecer"))
+s32 <- data.frame(kwic(ProgramsVEN, pattern = "impulsar"))
+s33 <- data.frame(kwic(ProgramsVEN, pattern = "acercar"))
+s34 <- data.frame(kwic(ProgramsVEN, pattern = "ayudar"))
+s35 <- data.frame(kwic(ProgramsVEN, pattern = "cambiar"))
+s36 <- data.frame(kwic(ProgramsVEN, pattern = "apreciar"))
+s37 <- data.frame(kwic(ProgramsVEN, pattern = "dirigir"))
+s38 <- data.frame(kwic(ProgramsVEN, pattern = "fomentar"))
+s39 <- data.frame(kwic(ProgramsVEN, pattern = "interactuar"))
+s40 <- data.frame(kwic(ProgramsVEN, pattern = "identificar"))
+s41 <- data.frame(kwic(ProgramsVEN, pattern = "competir"))
+s42 <- data.frame(kwic(ProgramsVEN, pattern = "manifestar"))
+s43 <- data.frame(kwic(ProgramsVEN, pattern = "responsable"))
+s44 <- data.frame(kwic(ProgramsVEN, pattern = "evaluar"))
+s45 <- data.frame(kwic(ProgramsVEN, pattern = "innovar"))
+s46 <- data.frame(kwic(ProgramsVEN, pattern = "decidir"))
+s47 <- data.frame(kwic(ProgramsVEN, pattern = phrase("tomar decisiones")))
+s48 <- data.frame(kwic(ProgramsVEN, pattern = "flexibilidad"))
+s49 <- data.frame(kwic(ProgramsVEN, pattern = "persua*"))
+s50 <- data.frame(kwic(ProgramsVEN, pattern = "convencer"))
 
 df_list <- mget(paste0("s", 1:50))
 SS <- do.call(rbind, df_list)
 SS$Skill <- rownames(SS)
 SS$Skill <- gsub("\\..*", "", SS$Skill)
 
-SkillsVE <- data.frame(Country = "Venezuela",
-                      SkillCode = c(paste0("s", 1:50)),
-                      Skill = c("pensamiento crítico",
-                               "solucionar problemas",
-                               "comunicar",
-                               "creatividad",
-                               "paciencia",
-                               "crear",
-                               "liderar",
-                               "resolver",
-                               "comprometer",
-                               "comprometerse",
-                               "gestionar",
-                               "reflexionar",
-                               "controlar",
-                               "ético",
-                               "tolerar",
-                               "argumentar",
-                               "conflictos",
-                               "negociar",
-                               "comprender",
-                               "equipos",
-                               "planificar",
-                               "generar",
-                               "empatía",
-                               "compartir",
-                               "analizar",
-                               "reconocer",
-                               "orientar",
-                               "respetar",
-                               "motivar",
-                               "cooperar",
-                               "fortalecer",
-                               "impulsar",
-                               "acercar",
-                               "ayudar",
-                               "cambiar",
-                               "apreciar",
-                               "dirigir",
-                               "fomentar",
-                               "interactuar",
-                               "identificar",
-                               "competir",
-                               "manifestar",
-                               "responsable",
-                               "evaluar",
-                               "innovar",
-                               "decidir",
-                               "tomar decisiones",
-                               "flexibilidad",
-                               "persua*",
-                               "convencer"))
+SkillsVEN <- data.frame(Country = "Venezuela",
+                        SkillCode = c(paste0("s", 1:50)),
+                        Skill = c("pensamiento crítico",
+                                  "solucionar problemas",
+                                  "comunicar",
+                                  "creatividad",
+                                  "paciencia",
+                                  "crear",
+                                  "liderar",
+                                  "resolver",
+                                  "comprometer",
+                                  "comprometerse",
+                                  "gestionar",
+                                  "reflexionar",
+                                  "controlar",
+                                  "ético",
+                                  "tolerar",
+                                  "URUumentar",
+                                  "conflictos",
+                                  "negociar",
+                                  "comprender",
+                                  "equipos",
+                                  "planificar",
+                                  "generar",
+                                  "empatía",
+                                  "compartir",
+                                  "analizar",
+                                  "reconocer",
+                                  "orientar",
+                                  "respetar",
+                                  "motivar",
+                                  "cooperar",
+                                  "fortalecer",
+                                  "impulsar",
+                                  "acercar",
+                                  "ayudar",
+                                  "cambiar",
+                                  "apreciar",
+                                  "dirigir",
+                                  "fomentar",
+                                  "interactuar",
+                                  "identificar",
+                                  "competir",
+                                  "manifestar",
+                                  "responsable",
+                                  "evaluar",
+                                  "innovar",
+                                  "decidir",
+                                  "tomar decisiones",
+                                  "flexibilidad",
+                                  "persua*",
+                                  "convencer"))
 
-networkVE <- SS[c(1,8)]
-head(networkVE, 3)
+networkVEN <- SS[c(1,8)]
+head(networkVEN, 3)
 
 library(igraph)
-bn2 <- graph.data.frame(networkVE,directed=FALSE)
+bn2 <- graph.data.frame(networkVEN,directed=FALSE)
 bipartite_mapping(bn2)
 V(bn2)$type <- bipartite_mapping(bn2)$type
 V(bn2)$shape <- ifelse(V(bn2)$type, "circle", "square")
@@ -174,33 +177,33 @@ centrality_scores <- centrality_scores$vector
 
 color_palette <- colorRampPalette(c("#CE1127", "white", "#0A3A7E"))(length(unique(centrality_scores)))
 
-# Assign colors to nodes based on their normalized centrality scores
+# Assign URUors to nodes based on their normalized centrality scores
 node_colors <- color_palette[rank(centrality_scores)]
 
-# Plot the network with node colors based on centrality
+# Plot the network with node URUors based on centrality
 set.seed(915)
 
 
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
 
-BNA <- graph.data.frame(networkVE, directed = FALSE)
-ProgramsVE <- data.frame(Degree = igraph::degree(BNA),
-                       Closeness = igraph::closeness(BNA),
-                       Betweennes = igraph::betweenness(BNA),
-                       Eigen = igraph::eigen_centrality(BNA))
-ProgramsVE <- ProgramsVE[ -c(5:25) ]
-rownames(ProgramsVE)
-ProgramsVE$SS <- rownames(ProgramsVE)
-ProgramsVE <- ProgramsVE[order(ProgramsVE$SS), ]
-ProgramsVE <- ProgramsVE[grepl("s", ProgramsVE$SS), ]
-ProgramsVE <- ProgramsVE[1:4]
-colnames(ProgramsVE)[4] <- "Eigenvector"
+BNVEN <- graph.data.frame(networkVEN, directed = FALSE)
+ProgramsVEN <- data.frame(Degree = igraph::degree(BNVEN),
+                          Closeness = igraph::closeness(BNVEN),
+                          Betweennes = igraph::betweenness(BNVEN),
+                          Eigen = igraph::eigen_centrality(BNVEN))
+ProgramsVEN <- ProgramsVEN[ -c(5:25) ]
+rownames(ProgramsVEN)
+ProgramsVEN$SS <- rownames(ProgramsVEN)
+ProgramsVEN <- ProgramsVEN[order(ProgramsVEN$SS), ]
+ProgramsVEN <- ProgramsVEN[grepl("s", ProgramsVEN$SS), ]
+ProgramsVEN <- ProgramsVEN[1:4]
+colnames(ProgramsVEN)[4] <- "Eigenvector"
 
 
 
 library(psych)
 
-pairs.panels(ProgramsVE, 
+pairs.panels(ProgramsVEN, 
              method = "spearman", 
              hist.col = "#0A3A7E",
              density = TRUE,  
@@ -212,13 +215,13 @@ pairs.panels(ProgramsVE,
              lwd = 2,
              rug = TRUE,
              stars = TRUE, 
-             main = "Venezuela")
+             main = "Uruguay")
 
-IMVEN <- as_biadjacency_matrix(BNA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNA)$type)
+IMVEN <- as_biadjacency_matrix(BNVEN, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNVEN)$type)
 IMVEN2 <- as.matrix(IMVEN)
 
-rownames(ProgramsVE)[order(ProgramsVE$Eigenvector, decreasing = TRUE)]
-selected_columns <- head(rownames(ProgramsVE)[order(ProgramsVE$Eigenvector, decreasing = TRUE)], 10)
+rownames(ProgramsVEN)[order(ProgramsVEN$Eigenvector, decreasing = TRUE)]
+selected_columns <- head(rownames(ProgramsVEN)[order(ProgramsVEN$Eigenvector, decreasing = TRUE)], 10)
 # Let's pick the most important soft skills
 # as per their eigenvector centrality
 
@@ -236,11 +239,11 @@ mapped_skill_names <- character(length(current_column_names))
 
 for (i in seq_along(current_column_names)) {
   
-  skill_index <- match(current_column_names[i], SkillsVE$SkillCode)
+  skill_index <- match(current_column_names[i], SkillsVEN$SkillCode)
   
   # If a match is found, map the skill code to its name
   if (!is.na(skill_index)) {
-    mapped_skill_names[i] <- SkillsVE$Skill[skill_index]
+    mapped_skill_names[i] <- SkillsVEN$Skill[skill_index]
   } else {
     # Handle unmatched column names as needed
     # For example, assign a default value or leave blank
@@ -254,10 +257,10 @@ colnames(IMVEN3)
 
 library(bipartite)
 plotweb(IMVEN3, method = "normal", 
-        col.high = "#0A3A7E", 
-        bor.col.high = "#0A3A7E",
-        col.low = "#CE1127", 
-        bor.col.low = "#CE1127",
+        col.high = "#006847", 
+        bor.col.high = "#006847",
+        col.low = "#CE1125", 
+        bor.col.low = "#CE1125",
         col.interaction = "grey90",
         bor.col.interaction = "grey90",
         low.lablength = 0,
@@ -265,5 +268,4 @@ plotweb(IMVEN3, method = "normal",
         high.y = 1,
         ybig = 0.8,
         labsize = 2)
-
 
