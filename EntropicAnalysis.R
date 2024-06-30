@@ -6,16 +6,16 @@ load("ECU.RData")
 load("MEX.RData")
 load("URU.RData")
 load("VEN.RData")
-rm(list=setdiff(ls(), c("IMARG2", "IMVEN2", "IMBRA2", "IMCL2", "IMCO2", "IMEC2", "IMEX2", "IMURU2")))
+rm(list=setdiff(ls(), c("IMARG3", "IMVEN3", "IMBRA3", "IMCL3", "IMCO3", "IMEC3", "IMEX3", "IMURU3")))
 country_names <- c(
-  IMARG2 = "Argentina",
-  IMBRA2 = "Brazil",
-  IMCL2 = "Chile",
-  IMCO2 = "Colombia",
-  IMEC2 = "Ecuador",
-  IMEX2 = "Mexico",
-  IMURU2 = "Uruguay",
-  IMVEN2 = "Venezuela"
+  IMARG3 = "Argentina",
+  IMBRA3 = "Brazil",
+  IMCL3 = "Chile",
+  IMCO3 = "Colombia",
+  IMEC3 = "Ecuador",
+  IMEX3 = "Mexico",
+  IMURU3 = "Uruguay",
+  IMVEN3 = "Venezuela"
 )
 library(entropy)
 
@@ -57,8 +57,9 @@ calculate_entropy_metrics_matrix <- function(dataset_name) {
 }
 
 # List of datasets
-datasets <- c("IMARG2", "IMBRA2", "IMCL2", "IMCO2", "IMEC2", "IMEX2", "IMURU2", "IMVEN2")
+datasets <- c("IMARG3", "IMBRA3", "IMCL3", "IMCO3", "IMEC3", "IMEX3", "IMURU3", "IMVEN3")
 
 # Loop through each dataset and calculate entropy metrics
 results <- lapply(datasets, calculate_entropy_metrics_matrix)
-summary(results)
+results
+
