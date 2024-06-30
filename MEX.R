@@ -184,6 +184,7 @@ set.seed(915)
 
 plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
 
+
 BNMEX <- graph.data.frame(networkMEX, directed = FALSE)
 ProgramsMX <- data.frame(Degree = igraph::degree(BNMEX),
                          Closeness = igraph::closeness(BNMEX),
