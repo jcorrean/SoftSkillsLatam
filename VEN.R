@@ -61,7 +61,7 @@ s12 <- data.frame(kwic(ProgramsVEN, pattern = "reflexionar"))
 s13 <- data.frame(kwic(ProgramsVEN, pattern = "controlar"))
 s14 <- data.frame(kwic(ProgramsVEN, pattern = "ético"))
 s15 <- data.frame(kwic(ProgramsVEN, pattern = "tolerar"))
-s16 <- data.frame(kwic(ProgramsVEN, pattern = "URUumentar"))
+s16 <- data.frame(kwic(ProgramsVEN, pattern = "argumentar"))
 s17 <- data.frame(kwic(ProgramsVEN, pattern = "conflictos"))
 s18 <- data.frame(kwic(ProgramsVEN, pattern = "negociar"))
 s19 <- data.frame(kwic(ProgramsVEN, pattern = "comprender"))
@@ -119,7 +119,7 @@ SkillsVEN <- data.frame(Country = "Venezuela",
                                   "controlar",
                                   "ético",
                                   "tolerar",
-                                  "URUumentar",
+                                  "argumentar",
                                   "conflictos",
                                   "negociar",
                                   "comprender",
@@ -177,10 +177,10 @@ centrality_scores <- centrality_scores$vector
 
 color_palette <- colorRampPalette(c("#CE1127", "white", "#0A3A7E"))(length(unique(centrality_scores)))
 
-# Assign URUors to nodes based on their normalized centrality scores
+# Assign colors to nodes based on their normalized centrality scores
 node_colors <- color_palette[rank(centrality_scores)]
 
-# Plot the network with node URUors based on centrality
+# Plot the network with node colors based on centrality
 set.seed(915)
 
 
@@ -215,7 +215,7 @@ pairs.panels(ProgramsVEN,
              lwd = 2,
              rug = TRUE,
              stars = TRUE, 
-             main = "Uruguay")
+             main = "Venezuela")
 
 IMVEN <- as_biadjacency_matrix(BNVEN, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNVEN)$type)
 IMVEN2 <- as.matrix(IMVEN)
