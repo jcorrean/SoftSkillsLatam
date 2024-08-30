@@ -1,3 +1,5 @@
+library(igraph)
+library(network)
 load("ARG.RData")#bn6
 load("BRA.RData")#bn4
 load("CHL.RData")#bn5
@@ -31,9 +33,9 @@ transform_to_network <- function(bn) {
 bn_list <- list(bn1, bn2, bn3, bn4, bn5, bn6, bn7, bn8)
 network_list <- lapply(bn_list, transform_to_network)
 
-network_list[1]
+Colombia <- network_list[1]
 summary(bn1)
-
+get.vertex.attribute(Colombia, "vertex.names")
 
 
 
