@@ -31,12 +31,13 @@ bn_list <- list(bn1, bn2, bn3, bn4, bn5, bn6, bn7, bn8)
 network_list <- lapply(bn_list, transform_to_network)
 
 Colombia <- network_list[1]
+class(network_list[1])
 summary(bn1)
 get.vertex.attribute(Colombia, "vertex.names")
 
 
 
-library(igraph)
+
 BiM <- as_biadjacency_matrix(bn6, types = V(bn6)$type, names = TRUE)
 library(network)
 red <- network(BiM, 
@@ -45,7 +46,5 @@ red <- network(BiM,
                loops = FALSE, 
                multiple = FALSE, 
                bipartite = TRUE)
-is.network(Colombia)
-class(Colombia)
-red
+is.network(red)
 sna::gden(red)
