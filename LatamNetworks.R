@@ -11,10 +11,7 @@ load("VEN.RData")#bn2
 rm(list=setdiff(ls(), c("bn1","bn2","bn3","bn4","bn5","bn6","bn7","bn8")))
 
 transform_to_network <- function(bn) {
-  if (inherits(bn, "bn.fit")) {
-    # For bn.fit objects
-    BiM <- as_biadjacency_matrix(bn, types = V(bn)$type, names = TRUE)
-  } else if (inherits(bn, "igraph")) {
+  if (inherits(bn, "igraph")) {
     # For igraph objects (assuming bn is a bipartite graph)
     BiM <- as_biadjacency_matrix(bn, types = V(bn)$type, names = TRUE)
   } else {
@@ -48,6 +45,7 @@ red <- network(BiM,
                loops = FALSE, 
                multiple = FALSE, 
                bipartite = TRUE)
-is.network(red)
+is.network(Colombia)
+class(Colombia)
 red
 sna::gden(red)
