@@ -10,41 +10,20 @@ load("URU.RData")#bn7
 load("VEN.RData")#bn2
 rm(list=setdiff(ls(), c("bn1","bn2","bn3","bn4","bn5","bn6","bn7","bn8")))
 
-transform_to_network <- function(bn) {
-  if (inherits(bn, "igraph")) {
-    # For igraph objects (assuming bn is a bipartite graph)
-    BiM <- as_biadjacency_matrix(bn, types = V(bn)$type, names = TRUE)
-  } else {
-    stop("Input object must be a bn.fit or igraph object.")
-  }
-  
-  # Convert to network object
-  network(BiM,
-          directed = FALSE,
-          hyper = FALSE,
-          loops = FALSE,
-          multiple = FALSE,
-          bipartite = TRUE)
-}
-
-bn_list <- list(bn1, bn2, bn3, bn4, bn5, bn6, bn7, bn8)
-network_list <- lapply(bn_list, transform_to_network)
-
-Colombia <- network_list[1]
-class(network_list[1])
-summary(bn1)
-get.vertex.attribute(Colombia, "vertex.names")
-
-
-
-
-BiM <- as_biadjacency_matrix(bn6, types = V(bn6)$type, names = TRUE)
+BiM1 <- as_biadjacency_matrix(bn1, types = V(bn1)$type, names = TRUE)
+BiM2 <- as_biadjacency_matrix(bn2, types = V(bn2)$type, names = TRUE)
+BiM3 <- as_biadjacency_matrix(bn3, types = V(bn3)$type, names = TRUE)
+BiM4 <- as_biadjacency_matrix(bn4, types = V(bn4)$type, names = TRUE)
+BiM5 <- as_biadjacency_matrix(bn5, types = V(bn5)$type, names = TRUE)
+BiM6 <- as_biadjacency_matrix(bn6, types = V(bn6)$type, names = TRUE)
+BiM7 <- as_biadjacency_matrix(bn7, types = V(bn7)$type, names = TRUE)
+BiM8 <- as_biadjacency_matrix(bn8, types = V(bn8)$type, names = TRUE)
 library(network)
-red <- network(BiM, 
-               directed = FALSE, 
-               hyper = FALSE, 
-               loops = FALSE, 
-               multiple = FALSE, 
-               bipartite = TRUE)
-is.network(red)
-sna::gden(red)
+red1 <- network(BiM1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red2 <- network(BiM2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red3 <- network(BiM3, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red4 <- network(BiM4, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red5 <- network(BiM5, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red6 <- network(BiM6, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red7 <- network(BiM7, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red8 <- network(BiM8, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
