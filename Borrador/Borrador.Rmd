@@ -1,0 +1,72 @@
+---
+title: Skills and Academic Offering in Latin America
+author:
+  - name: Juan C. Correa
+    email: j.correa.n@gmail.com
+    affiliation: 1
+    corresponding: j.correa.n@gmail.com
+  - name: María del Pilar García-Chitiva
+    email: pilargarciach@tec.mx
+    affiliation: 2
+  - name: Mónica Panes-Martínez
+    affiliation: 3
+  - name: Eugenia Csoban
+    afilliation: 4
+  - name: Zuleima Santalla-Banderalli
+    affiliation: 5
+  - name: Ricardo Monge
+    affiliation: 3
+  - name: Alvaro Rivera-Eraso
+    affiliation: 6
+  - name: Julian Tejada
+    affiliation: 7
+  - name: Campo Elías Rodríguez
+    affiliation: 8
+  - name: Juan Esteban Gómez
+    affiliation: 6
+  - name: Nelson Fernandez
+    affiliation: 9
+  - name: Carlos Gershenson
+    affiliation: 9
+address:
+  - code: 1
+    address: Critical Centrality Institute, Monterrey, México
+  - code: 2
+    address: Tecnologico de Monterrey, Monterrey México
+  - code: 3
+    address: Universidad de Las Américas, Santiago, Chile
+  - code: 4
+    address: Universidad Católica Andrés Bello, Caracas, Venezuela
+  - code: 5
+    address: Universidad Espíritu Santo, Guayaquil, Ecuador
+  - code: 6
+    address: Fundación Universitaria Konrad Lorenz, Bogotá, Colombia
+  - code: 7
+    address: Universidade Federal de Sergipe, Sergipe, Brazil
+  - code: 8
+    address: Universidad Uniminuto, Bogotá, Colombia
+  - code: 9
+    address: Binghamton University, Binghamton, USA
+abstract: |
+  The relationship between professional skills and higher education programs is modeled as a bipartite network that represents the links between 28 skills (as captured by the occupational information network, O*NET) and 258 graduate program summaries (as captured by commercial brochures of graduate programs in marketing with accreditation standards of the ``Association to Advance Collegiate Schools of Business).'' While descriptive node-based analysis reveal the importance of professional skills, estimates of structural parameters of exponential random graph models show that commercial offering does not reflect the
+  
+
+
+bibliography: mybibfile.bib
+output: rticles::plos_article
+# plos.csl can be download and used locally
+csl: http://www.zotero.org/styles/plos
+---
+
+# Introduction
+
+A challenging decision for any manager is placing the right person in the right job. In his search for predictors of job performance, the American psychologist David C.McClelland [-@Mcclelland1973] argued that academic aptitude, knowledge from content tests, school grades, and credentials are often poor predictors of employee performance. McClelland's research laid the groundwork for the ``job competence assessment'' method, which became foundational to management literature in the latter half of the 20$^{th}$ century [@Spencer1993]. Contemporary data-driven research supports McClelland's findings, suggesting that academic offerings often fall short of meeting companies' job requirements @Borner2018. In this context, gaining a competitive advantage from a labor perspective increasingly relies on improving the educational-occupational match @Gadar2018. Some scholars argue that one way to enhance this education-job alignment is by estimating the value of employees' skills, especially given the unpredictable future @Vista2020. 
+
+A list
+
+- Item 1
+- Item 2
+
+
+
+# References {#references .unnumbered}
