@@ -1,0 +1,358 @@
+% Template for PLoS
+% Version 3.5 March 2018
+%
+% % % % % % % % % % % % % % % % % % % % % %
+%
+% -- IMPORTANT NOTE
+%
+% This template contains comments intended
+% to minimize problems and delays during our production
+% process. Please follow the template instructions
+% whenever possible.
+%
+% % % % % % % % % % % % % % % % % % % % % % %
+%
+% Once your paper is accepted for publication,
+% PLEASE REMOVE ALL TRACKED CHANGES in this file
+% and leave only the final text of your manuscript.
+% PLOS recommends the use of latexdiff to track changes during review, as this will help to maintain a clean tex file.
+% Visit https://www.ctan.org/pkg/latexdiff?lang=en for info or contact us at latex@plos.org.
+%
+%
+% There are no restrictions on package use within the LaTeX files except that
+% no packages listed in the template may be deleted.
+%
+% Please do not include colors or graphics in the text.
+%
+% The manuscript LaTeX source should be contained within a single file (do not use \input, \externaldocument, or similar commands).
+%
+% % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- FIGURES AND TABLES
+%
+% Please include tables/figure captions directly after the paragraph where they are first cited in the text.
+%
+% DO NOT INCLUDE GRAPHICS IN YOUR MANUSCRIPT
+% - Figures should be uploaded separately from your manuscript file.
+% - Figures generated using LaTeX should be extracted and removed from the PDF before submission.
+% - Figures containing multiple panels/subfigures must be combined into one image file before submission.
+% For figure citations, please use "Fig" instead of "Figure".
+% See http://journals.plos.org/plosone/s/figures for PLOS figure guidelines.
+%
+% Tables should be cell-based and may not contain:
+% - spacing/line breaks within cells to alter layout or alignment
+% - do not nest tabular environments (no tabular environments within tabular environments)
+% - no graphics or colored text (cell background color/shading OK)
+% See http://journals.plos.org/plosone/s/tables for table guidelines.
+%
+% For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- EQUATIONS, MATH SYMBOLS, SUBSCRIPTS, AND SUPERSCRIPTS
+%
+% IMPORTANT
+% Below are a few tips to help format your equations and other special characters according to our specifications. For more tips to help reduce the possibility of formatting errors during conversion, please see our LaTeX guidelines at http://journals.plos.org/plosone/s/latex
+%
+% For inline equations, please be sure to include all portions of an equation in the math environment.
+%
+% Do not include text that is not math in the math environment.
+%
+% Please add line breaks to long display equations when possible in order to fit size of the column.
+%
+% For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
+%
+% When adding superscript or subscripts outside of brackets/braces, please group using {}.
+%
+% Do not use \cal for caligraphic font.  Instead, use \mathcal{}
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+%
+% Please contact latex@plos.org with any questions.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
+
+% amsmath and amssymb packages, useful for mathematical formulas and symbols
+\usepackage{amsmath,amssymb}
+
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
+
+
+% textcomp package and marvosym package for additional characters
+\usepackage{textcomp,marvosym}
+
+% cite package, to clean up citations in the main text. Do not remove.
+% \usepackage{cite}
+
+% Use nameref to cite supporting information files (see Supporting Information section for more info)
+\usepackage{nameref,hyperref}
+
+% line numbers
+\usepackage[right]{lineno}
+
+% ligatures disabled
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+% color can be used to apply background shading to table cells only
+\usepackage[table]{xcolor}
+
+% array package and thick rules for tables
+\usepackage{array}
+
+% create "+" rule type for thick vertical lines
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+% create \thickcline for thick horizontal lines of variable length
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+  \cline{#1}%
+  \noalign{\vskip\arrayrulewidth}%
+  \noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+% \thickhline command for thick horizontal lines that span the table
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+\hline
+\noalign{\global\arrayrulewidth\savedwidth}}
+
+
+% Remove comment for double spacing
+%\usepackage{setspace}
+%\doublespacing
+
+% Text layout
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in
+\textheight 8.75in
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
+% Captions will be left justified
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
+\renewcommand{\figurename}{Fig}
+
+% Use the PLoS provided BiBTeX style
+% \bibliographystyle{plos2015}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+
+
+% Header and Footer with logo
+\usepackage{lastpage,fancyhdr,graphicx}
+\usepackage{epstopdf}
+%\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+%\setlength{\headheight}{27.023pt}
+%\lhead{\includegraphics[width=2.0in]{PLOS-submission.eps}}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[L]{2.25in}
+\fancyfootoffset[L]{2.25in}
+\lfoot{\today}
+
+%% Include all macros below
+
+\newcommand{\lorem}{{\bf LOREM}}
+\newcommand{\ipsum}{{\bf IPSUM}}
+
+
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+% Pandoc citation processing
+%From Pandoc 3.1.8
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\usepackage{forarray}
+\usepackage{xstring}
+\newcommand{\getIndex}[2]{
+  \ForEach{,}{\IfEq{#1}{\thislevelitem}{\number\thislevelcount\ExitForEach}{}}{#2}
+}
+
+\setcounter{secnumdepth}{0}
+
+\newcommand{\getAff}[1]{
+  \getIndex{#1}{1,2,3,4,5,6,7,8,9}
+}
+
+\begin{document}
+\vspace*{0.2in}
+
+
+% Title must be 250 characters or less.
+\begin{flushleft}
+{\Large
+\textbf\newline{Skills and Academic Offering in Latin
+America} % Please use "sentence case" for title and headings (capitalize only the first word in a title (or heading), the first word in a subtitle (or subheading), and any proper nouns).
+}
+\newline
+% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
+\\
+Juan C. Correa\textsuperscript{\getAff{1}}\textsuperscript{*},
+María del Pilar García-Chitiva\textsuperscript{\getAff{2}},
+Mónica Panes-Martínez\textsuperscript{\getAff{3}},
+Eugenia Csoban\textsuperscript{},
+Zuleima Santalla-Banderalli\textsuperscript{\getAff{5}},
+Ricardo Monge\textsuperscript{\getAff{3}},
+Alvaro Rivera-Eraso\textsuperscript{\getAff{6}},
+Julian Tejada\textsuperscript{\getAff{7}},
+Campo Elías Rodríguez\textsuperscript{\getAff{8}},
+Juan Esteban Gómez\textsuperscript{\getAff{6}},
+Nelson Fernandez\textsuperscript{\getAff{9}},
+Carlos Gershenson\textsuperscript{\getAff{9}}\\
+\bigskip
+\textbf{\getAff{1}}Critical Centrality Institute, Monterrey, México\\
+\textbf{\getAff{2}}Tecnologico de Monterrey, Monterrey México\\
+\textbf{\getAff{3}}Universidad de Las Américas, Santiago, Chile\\
+\textbf{\getAff{4}}Universidad Católica Andrés Bello, Caracas,
+Venezuela\\
+\textbf{\getAff{5}}Universidad Espíritu Santo, Guayaquil, Ecuador\\
+\textbf{\getAff{6}}Fundación Universitaria Konrad Lorenz, Bogotá,
+Colombia\\
+\textbf{\getAff{7}}Universidade Federal de Sergipe, Sergipe, Brazil\\
+\textbf{\getAff{8}}Universidad Uniminuto, Bogotá, Colombia\\
+\textbf{\getAff{9}}Binghamton University, Binghamton, USA\\
+\bigskip
+* Corresponding author: j.correa.n@gmail.com\\
+\end{flushleft}
+% Please keep the abstract below 300 words
+\section*{Abstract}
+The relationship between professional skills and higher education
+programs is modeled as a bipartite network that represents the links
+between 28 skills (as captured by the occupational information network,
+O*NET) and 258 graduate program summaries (as captured by commercial
+brochures of graduate programs in marketing with accreditation standards
+of the ``Association to Advance Collegiate Schools of Business).'\,'
+While descriptive node-based analysis reveal the importance of
+professional skills, estimates of structural parameters of exponential
+random graph models show that commercial offering does not reflect the
+
+% Please keep the Author Summary between 150 and 200 words
+% Use first person. PLOS ONE authors please skip this step.
+% Author Summary not valid for PLOS ONE submissions.
+
+\linenumbers
+
+% Use "Eq" instead of "Equation" for equation citations.
+\section{Introduction}\label{introduction}
+
+A challenging decision for any manager is placing the right person in
+the right job. In his search for predictors of job performance, the
+American psychologist David C.McClelland {[}1{]} argued that academic
+aptitude, knowledge from content tests, school grades, and credentials
+are often poor predictors of employee performance. McClelland's research
+laid the groundwork for the ``job competence assessment'\,' method,
+which became foundational to management literature in the latter half of
+the 20\(^{th}\) century {[}2{]}. Contemporary data-driven research
+supports McClelland's findings, suggesting that academic offerings often
+fall short of meeting companies' job requirements {[}3{]}. In this
+context, gaining a competitive advantage from a labor perspective
+increasingly relies on improving the educational-occupational match
+{[}4{]}. Some scholars argue that one way to enhance this education-job
+alignment is by estimating the value of employees' skills, especially
+given the unpredictable future {[}5{]}.
+
+A list
+
+\begin{itemize}
+\tightlist
+\item
+  Item 1
+\item
+  Item 2
+\end{itemize}
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{1}
+\bibitem[\citeproctext]{ref-Mcclelland1973}
+\CSLLeftMargin{1. }%
+\CSLRightInline{McClelland DC. Testing for competence rather than for
+{``intelligence.''} American psychologist. 1973;28: 1.
+doi:\href{https://doi.org/10.1037/h0034092}{10.1037/h0034092}}
+
+\bibitem[\citeproctext]{ref-Spencer1993}
+\CSLLeftMargin{2. }%
+\CSLRightInline{Spencer LM, Spencer SM. {Competence at Work: Models for
+Superior Performance}. New York: John Wiley \& Sons, Inc.; 1993. }
+
+\bibitem[\citeproctext]{ref-Borner2018}
+\CSLLeftMargin{3. }%
+\CSLRightInline{Börner K, Scrivner O, Gallant M, Ma S, Liu X, Chewning
+K, et al. Skill discrepancies between research, education, and jobs
+reveal the critical need to supply soft skills for the data economy.
+Proceedings of the National Academy of Sciences of the United States of
+America. 2018;115: 12630--12637.
+doi:\href{https://doi.org/10.1073/pnas.1804247115}{10.1073/pnas.1804247115}}
+
+\bibitem[\citeproctext]{ref-Gadar2018}
+\CSLLeftMargin{4. }%
+\CSLRightInline{Gadár L, Abonyi J. Graph configuration model based
+evaluation of the education-occupation match. PloS One. 2018;13:
+e0192427.
+doi:\href{https://doi.org/10.1371/journal.pone.0192427}{10.1371/journal.pone.0192427}}
+
+\bibitem[\citeproctext]{ref-Vista2020}
+\CSLLeftMargin{5. }%
+\CSLRightInline{Vista A. {Data-Driven Identification of Skills for the
+Future: 21st-Century Skills for the 21st-Century Workforce}. Sage Open.
+2020;10: 2158244020915904.
+doi:\href{https://doi.org/10.1177/2158244020915904}{10.1177/2158244020915904}}
+
+\end{CSLReferences}
+
+\nolinenumbers
+
+
+
+\end{document}
