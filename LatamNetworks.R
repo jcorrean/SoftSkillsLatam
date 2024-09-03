@@ -1,3 +1,4 @@
+library(igraph)
 library(network)
 load("ARG.RData")#bn6 Argentina (369)
 load("BRA.RData")#bn4 Brazil (441)
