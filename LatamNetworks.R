@@ -18,14 +18,14 @@ BiM6 <- as_biadjacency_matrix(bn6, types = V(bn6)$type, names = TRUE)
 BiM7 <- as_biadjacency_matrix(bn7, types = V(bn7)$type, names = TRUE)
 BiM8 <- as_biadjacency_matrix(bn8, types = V(bn8)$type, names = TRUE)
 
-TotalPrograms <- nrow(BiM1) +
-  nrow(BiM2) +
-  nrow(BiM3) +
-  nrow(BiM4) +
-  nrow(BiM5) +
-  nrow(BiM6) +
-  nrow(BiM7) +
-  nrow(BiM8)
+TotalPrograms <- ncol(BiM1) +
+  ncol(BiM2) +
+  ncol(BiM3) +
+  ncol(BiM4) +
+  ncol(BiM5) +
+  ncol(BiM6) +
+  ncol(BiM7) +
+  ncol(BiM8)
 TotalPrograms
 
 red1 <- network(BiM1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
