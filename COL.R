@@ -152,7 +152,7 @@ SkillsCO <- data.frame(Country = "Colombia",
                                  "persua*",
                                  "convencer"))
 
-networkCO <- SS[c(1,8)]
+networkCO <- SS[c(8,1)]
 head(networkCO, 3)
 
 library(igraph)

@@ -152,7 +152,7 @@ SkillsCL <- data.frame(Country = "Chile",
                                   "persua*",
                                   "convencer"))
 
-networkCL <- SS[c(1,8)]
+networkCL <- SS[c(8,1)]
 head(networkCL, 3)
 
 library(igraph)
@@ -197,72 +197,3 @@ ProgramsCL <- ProgramsCL[1:4]
 colnames(ProgramsCL)[4] <- "Eigenvector"
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/CHL.RData")
-
-library(psych)
-
-pairs.panels(ProgramsCL, 
-             method = "spearman", 
-             hist.col = "#0A3A7E",
-             density = TRUE,  
-             ellipses = TRUE,
-             pch = 15,
-             cex = 1,
-             cex.axis = 1.8,
-             cex.labels = 1.5,
-             lwd = 2,
-             rug = TRUE,
-             stars = TRUE, 
-             main = "Chile")
-
-IMCL <- as_biadjacency_matrix(BNCL, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNCL)$type)
-IMCL2 <- as.matrix(IMCL)
-
-rownames(ProgramsCL)[order(ProgramsCL$Eigenvector, decreasing = TRUE)]
-selected_columns <- head(rownames(ProgramsCL)[order(ProgramsCL$Eigenvector, decreasing = TRUE)], 10)
-# Let's pick the most important soft skills
-# as per their eigenvector centrality
-
-current_column_names <- colnames(IMCL2)
-
-# Subset the matrix by column names
-IMCL3 <- IMCL2[, selected_columns, drop = FALSE]
-
-current_column_names <- colnames(IMCL3)
-
-
-# Create a vector to hold the mapped skill names
-mapped_skill_names <- character(length(current_column_names))
-
-
-for (i in seq_along(current_column_names)) {
-  
-  skill_index <- match(current_column_names[i], SkillsCL$SkillCode)
-  
-  # If a match is found, map the skill code to its name
-  if (!is.na(skill_index)) {
-    mapped_skill_names[i] <- SkillsCL$Skill[skill_index]
-  } else {
-    # Handle unmatched column names as needed
-    # For example, assign a default value or leave blank
-    mapped_skill_names[i] <- "Unmatched"
-  }
-}
-
-# Replace the column names of IM3 with the mapped skill names
-colnames(IMCL3) <- mapped_skill_names
-colnames(IMCL3)
-
-library(bipartite)
-plotweb(IMCL3, method = "normal", 
-        col.high = "#0032A0", 
-        bor.col.high = "#0032A0",
-        col.low = "#DA291C", 
-        bor.col.low = "#DA291C",
-        col.interaction = "grey90",
-        bor.col.interaction = "grey90",
-        low.lablength = 0,
-        text.rot = 80,
-        high.y = 1,
-        ybig = 0.8,
-        labsize = 2)
-
