@@ -153,7 +153,7 @@ SkillsMEX <- data.frame(Country = "Mexico",
                                  "persua*",
                                  "convencer"))
 
-networkMEX <- SS[c(1,8)]
+networkMEX <- SS[c(8,1)]
 head(networkMEX, 3)
 
 library(igraph)

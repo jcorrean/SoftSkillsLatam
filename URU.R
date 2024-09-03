@@ -153,7 +153,7 @@ SkillsURU <- data.frame(Country = "Uruguay",
                                   "persua*",
                                   "convencer"))
 
-networkURU <- SS[c(1,8)]
+networkURU <- SS[c(8,1)]
 head(networkURU, 3)
 
 library(igraph)

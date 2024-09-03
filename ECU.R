@@ -152,7 +152,7 @@ SkillsEC <- data.frame(Country = "Ecuador",
                                  "persua*",
                                  "convencer"))
 
-networkEC <- SS[c(1,8)]
+networkEC <- SS[c(8,1)]
 head(networkEC, 3)
 
 library(igraph)

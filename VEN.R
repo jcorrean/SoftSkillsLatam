@@ -155,7 +155,7 @@ SkillsVEN <- data.frame(Country = "Venezuela",
                                   "persua*",
                                   "convencer"))
 
-networkVEN <- SS[c(1,8)]
+networkVEN <- SS[c(8,1)]
 head(networkVEN, 3)
 
 library(igraph)
