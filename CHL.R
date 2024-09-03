@@ -196,7 +196,7 @@ ProgramsCL <- ProgramsCL[grepl("s", ProgramsCL$SS), ]
 ProgramsCL <- ProgramsCL[1:4]
 colnames(ProgramsCL)[4] <- "Eigenvector"
 
-
+save.image("~/Documents/GitHub/SoftSkillsLatam/CHL.RData")
 
 library(psych)
 

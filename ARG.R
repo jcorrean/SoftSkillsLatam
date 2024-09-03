@@ -153,11 +153,11 @@ SkillsARG <- data.frame(Country = "Argentina",
                                   "persua*",
                                   "convencer"))
 
-networkARG <- SS[c(1,8)]
+networkARG <- SS[c(8,1)]
 head(networkARG, 3)
 
 library(igraph)
-bn6 <- graph.data.frame(networkARG,directed=FALSE)
+bn6 <- graph_from_data_frame(networkARG,directed=FALSE)
 bipartite_mapping(bn6)
 V(bn6)$type <- bipartite_mapping(bn6)$type
 V(bn6)$shape <- ifelse(V(bn6)$type, "circle", "square")
@@ -197,73 +197,4 @@ ProgramsARG <- ProgramsARG[grepl("s", ProgramsARG$SS), ]
 ProgramsARG <- ProgramsARG[1:4]
 colnames(ProgramsARG)[4] <- "Eigenvector"
 
-
-
-library(psych)
-
-pairs.panels(ProgramsARG, 
-             method = "spearman", 
-             hist.col = "#0A3A7E",
-             density = TRUE,  
-             ellipses = TRUE,
-             pch = 15,
-             cex = 1,
-             cex.axis = 1.8,
-             cex.labels = 1.5,
-             lwd = 2,
-             rug = TRUE,
-             stars = TRUE, 
-             main = "Argentina")
-
-IMARG <- as_biadjacency_matrix(BNARG, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNARG)$type)
-IMARG2 <- as.matrix(IMARG)
-
-rownames(ProgramsARG)[order(ProgramsARG$Eigenvector, decreasing = TRUE)]
-selected_columns <- head(rownames(ProgramsARG)[order(ProgramsARG$Eigenvector, decreasing = TRUE)], 10)
-# Let's pick the most important soft skills
-# as per their eigenvector centrality
-
-current_column_names <- colnames(IMARG2)
-
-# Subset the matrix by column names
-IMARG3 <- IMARG2[, selected_columns, drop = FALSE]
-
-current_column_names <- colnames(IMARG3)
-
-
-# Create a vector to hold the mapped skill names
-mapped_skill_names <- character(length(current_column_names))
-
-
-for (i in seq_along(current_column_names)) {
-  
-  skill_index <- match(current_column_names[i], SkillsARG$SkillCode)
-  
-  # If a match is found, map the skill code to its name
-  if (!is.na(skill_index)) {
-    mapped_skill_names[i] <- SkillsARG$Skill[skill_index]
-  } else {
-    # Handle unmatched column names as needed
-    # For example, assign a default value or leave blank
-    mapped_skill_names[i] <- "Unmatched"
-  }
-}
-
-# Replace the column names of IM3 with the mapped skill names
-colnames(IMARG3) <- mapped_skill_names
-colnames(IMARG3)
-
-library(bipartite)
-plotweb(IMARG3, method = "normal", 
-        col.high = "#006847", 
-        bor.col.high = "#006847",
-        col.low = "#CE1125", 
-        bor.col.low = "#CE1125",
-        col.interaction = "grey90",
-        bor.col.interaction = "grey90",
-        low.lablength = 0,
-        text.rot = 80,
-        high.y = 1,
-        ybig = 0.8,
-        labsize = 2)
-
+save.image("~/Documents/GitHub/SoftSkillsLatam/ARG.RData")

@@ -1,14 +1,23 @@
-library(igraph)
 library(network)
-load("ARG.RData")#bn6
-load("BRA.RData")#bn4
-load("CHL.RData")#bn5
-load("COL.RData")#bn1
-load("ECU.RData")#bn3
-load("MEX.RData")#bn8
-load("URU.RData")#bn7
-load("VEN.RData")#bn2
+load("ARG.RData")#bn6 Argentina (369)
+load("BRA.RData")#bn4 Brazil (441)
+load("CHL.RData")#bn5 Chile (181)
+load("COL.RData")#bn1 Colombia (204)
+load("ECU.RData")#bn3 Ecuador (370)
+load("MEX.RData")#bn8 Mexico (112)
+load("URU.RData")#bn7 Uruguay (114)
+load("VEN.RData")#bn2 Venezuela (119)
 rm(list=setdiff(ls(), c("bn1","bn2","bn3","bn4","bn5","bn6","bn7","bn8")))
+
+TotalPrograms <- nrow(BiM1) +
+  nrow(BiM2) +
+  nrow(BiM3) +
+  nrow(BiM4) +
+  nrow(BiM5) +
+  nrow(BiM6) +
+  nrow(BiM7) +
+  nrow(BiM8)
+TotalPrograms
 
 BiM1 <- as_biadjacency_matrix(bn1, types = V(bn1)$type, names = TRUE)
 BiM2 <- as_biadjacency_matrix(bn2, types = V(bn2)$type, names = TRUE)
@@ -36,4 +45,4 @@ class(red5)
 class(red6)
 class(red7)
 class(red8)
-get.vertex.attribute(red1, "vertex.names")
+network::get.vertex.attribute(red1, "vertex.names")

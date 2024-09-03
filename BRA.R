@@ -152,7 +152,7 @@ SkillsBRA <- data.frame(Country = "Brazil",
                                   "persua*",
                                   "convencer"))
 
-networkBRA <- SS[c(1,8)]
+networkBRA <- SS[c(8,1)]
 head(networkBRA, 3)
 
 library(igraph)
@@ -195,74 +195,4 @@ ProgramsBRA <- ProgramsBRA[order(ProgramsBRA$SS), ]
 ProgramsBRA <- ProgramsBRA[grepl("s", ProgramsBRA$SS), ]
 ProgramsBRA <- ProgramsBRA[1:4]
 colnames(ProgramsBRA)[4] <- "Eigenvector"
-
-
-
-library(psych)
-
-pairs.panels(ProgramsBRA, 
-             method = "spearman", 
-             hist.col = "#0A3A7E",
-             density = TRUE,  
-             ellipses = TRUE,
-             pch = 15,
-             cex = 1,
-             cex.axis = 1.8,
-             cex.labels = 1.5,
-             lwd = 2,
-             rug = TRUE,
-             stars = TRUE, 
-             main = "Brazil")
-
-IMBRA <- as_biadjacency_matrix(BNBRA, names = TRUE, sparse = TRUE, types = bipartite_mapping(BNBRA)$type)
-IMBRA2 <- as.matrix(IMBRA)
-
-rownames(ProgramsBRA)[order(ProgramsBRA$Eigenvector, decreasing = TRUE)]
-selected_columns <- head(rownames(ProgramsBRA)[order(ProgramsBRA$Eigenvector, decreasing = TRUE)], 10)
-# Let's pick the most important soft skills
-# as per their eigenvector centrality
-
-current_column_names <- colnames(IMBRA2)
-
-# Subset the matrix by column names
-IMBRA3 <- IMBRA2[, selected_columns, drop = FALSE]
-
-current_column_names <- colnames(IMBRA3)
-
-
-# Create a vector to hold the mapped skill names
-mapped_skill_names <- character(length(current_column_names))
-
-
-for (i in seq_along(current_column_names)) {
-  
-  skill_index <- match(current_column_names[i], SkillsBRA$SkillCode)
-  
-  # If a match is found, map the skill code to its name
-  if (!is.na(skill_index)) {
-    mapped_skill_names[i] <- SkillsBRA$Skill[skill_index]
-  } else {
-    # Handle unmatched column names as needed
-    # For example, assign a default value or leave blank
-    mapped_skill_names[i] <- "Unmatched"
-  }
-}
-
-# Replace the column names of IM3 with the mapped skill names
-colnames(IMBRA3) <- mapped_skill_names
-colnames(IMBRA3)
-
-library(bipartite)
-plotweb(IMBRA3, method = "normal", 
-        col.high = "#006847", 
-        bor.col.high = "#006847",
-        col.low = "#CE1125", 
-        bor.col.low = "#CE1125",
-        col.interaction = "grey90",
-        bor.col.interaction = "grey90",
-        low.lablength = 0,
-        text.rot = 80,
-        high.y = 1,
-        ybig = 0.8,
-        labsize = 2)
-
+save.image("~/Documents/GitHub/SoftSkillsLatam/BRA.RData")
