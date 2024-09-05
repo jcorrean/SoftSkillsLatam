@@ -196,4 +196,4 @@ ProgramsCR <- ProgramsCR[grepl("s", ProgramsCR$SS), ]
 ProgramsCR <- ProgramsCR[1:4]
 colnames(ProgramsCR)[4] <- "Eigenvector"
 
-save.image("~/Documents/GitHub/SoftSkillsLatam/COL.RData")
+save.image("~/Documents/GitHub/SoftSkillsLatam/CORI.RData")
