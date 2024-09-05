@@ -8,7 +8,7 @@ load("ECU.RData")#bn3 Ecuador (370)
 load("MEX.RData")#bn8 Mexico (112)
 load("URU.RData")#bn7 Uruguay (114)
 load("VEN.RData")#bn2 Venezuela (119)
-load("CR.RData")#bn9 Costa Rica ()
+load("CORI.RData")#bn9 Costa Rica ()
 rm(list=setdiff(ls(), c("bn1","bn2","bn3","bn4","bn5","bn6","bn7","bn8")))
 
 BiM1 <- as_biadjacency_matrix(bn1, types = V(bn1)$type, names = TRUE)
