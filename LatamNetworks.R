@@ -40,6 +40,8 @@ red5 <- network(BiM5, directed = FALSE, hyper = FALSE, loops = FALSE, multiple =
 red6 <- network(BiM6, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 red7 <- network(BiM7, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 red8 <- network(BiM8, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+red9 <- network(BiM9, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+
 
 class(red1)
 class(red2)
@@ -49,4 +51,5 @@ class(red5)
 class(red6)
 class(red7)
 class(red8)
-network::get.vertex.attribute(red1, "vertex.names")
+class(red9)
+network::get.vertex.attribute(red9, "vertex.names")
