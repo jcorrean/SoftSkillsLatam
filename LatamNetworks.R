@@ -70,7 +70,7 @@ ClusteringChile <- clustering_tm(BiM5) # Chile
 ClusteringArgentina <- clustering_tm(BiM6) # Argentina
 ClusteringUruguay <- clustering_tm(BiM7) # Uruguay
 ClusteringMexico <- clustering_tm(BiM8) # Mexico
-ClusteringVenezuela <- clustering_tm(BiM9) # Costa Rica
+ClusteringCostaRica <- clustering_tm(BiM9) # Costa Rica
 
 
 network::get.vertex.attribute(red9, "vertex.names")
