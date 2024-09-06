@@ -43,14 +43,23 @@ Mexico <- network(BiM8, directed = FALSE, hyper = FALSE, loops = FALSE, multiple
 CostaRica <- network(BiM9, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 
 sna::gden(Argentina)
+network::network.size(Argentina)
 sna::gden(Brazil)
+network::network.size(Brazil)
 sna::gden(Chile)
+network::network.size(Chile)
 sna::gden(Colombia)
+network::network.size(Colombia)
 sna::gden(CostaRica)
+network::network.size(CostaRica)
 sna::gden(Ecuador)
+network::network.size(Ecuador)
 sna::gden(Mexico)
+network::network.size(Mexico)
 sna::gden(Uruguay)
+network::network.size(Uruguay)
 sna::gden(Venezuela)
+network::network.size(Venezuela)
 
 
 
