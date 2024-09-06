@@ -61,7 +61,16 @@ network::network.size(Uruguay)
 sna::gden(Venezuela)
 network::network.size(Venezuela)
 
-
+library(tnet)
+ClusteringColombia <- clustering_tm(BiM1) # Colombia
+ClusteringVenezuela <- clustering_tm(BiM2) # Venezuela
+ClusteringEcuador <- clustering_tm(BiM3) # Ecuador
+ClusteringBrazil <- clustering_tm(BiM4) # Brazil 
+ClusteringChile <- clustering_tm(BiM5) # Chile
+ClusteringArgentina <- clustering_tm(BiM6) # Argentina
+ClusteringUruguay <- clustering_tm(BiM7) # Uruguay
+ClusteringMexico <- clustering_tm(BiM8) # Mexico
+ClusteringVenezuela <- clustering_tm(BiM9) # Costa Rica
 
 
 network::get.vertex.attribute(red9, "vertex.names")
