@@ -42,14 +42,17 @@ Uruguay <- network(BiM7, directed = FALSE, hyper = FALSE, loops = FALSE, multipl
 Mexico <- network(BiM8, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica <- network(BiM9, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 
+sna::gden(Argentina)
+sna::gden(Brazil)
+sna::gden(Chile)
+sna::gden(Colombia)
+sna::gden(CostaRica)
+sna::gden(Ecuador)
+sna::gden(Mexico)
+sna::gden(Uruguay)
+sna::gden(Venezuela)
 
-class(red1)
-class(red2)
-class(red3)
-class(red4)
-class(red5)
-class(red6)
-class(red7)
-class(red8)
-class(red9)
+
+
+
 network::get.vertex.attribute(red9, "vertex.names")
