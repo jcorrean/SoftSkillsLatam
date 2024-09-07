@@ -68,4 +68,6 @@ colnames(ProgramsARG)[4] <- "Eigenvector"
 library(network)
 Argentina <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina
+network::network.size(Argentina)
+network::network.density(Argentina)
 tnet::clustering_tm(Matriz)

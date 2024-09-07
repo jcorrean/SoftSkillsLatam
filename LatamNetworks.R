@@ -44,6 +44,7 @@ CostaRica <- network(BiM9, directed = FALSE, hyper = FALSE, loops = FALSE, multi
 
 sna::gden(Argentina)
 network::network.size(Argentina)
+tnet::
 sna::gden(Brazil)
 network::network.size(Brazil)
 sna::gden(Chile)
