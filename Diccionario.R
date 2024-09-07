@@ -53,26 +53,6 @@ V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 
-bnARG.pr <- bipartite_projection(bnARG)
-Terms <- bnARG.pr$proj2
-Terms
-pave <- data.frame(igraph::betweenness(Terms))
-
-centrality_scores <- igraph::eigen_centrality(Terms)
-centrality_scores <- centrality_scores$vector
-
-color_palette <- colorRampPalette(c("#CE1127", "white", "#0A3A7E"))(length(unique(centrality_scores)))
-
-# Assign ARGors to nodes based on their normalized centrality scores
-node_colors <- color_palette[rank(centrality_scores)]
-
-# Plot the network with node ARGors based on centrality
-set.seed(915)
-
-
-plot(Terms, vertex.label.color = "black", vertex.label.cex = 0.8, vertex.color = node_colors, vertex.size = 15, edge.width = 0.5, edge.color = "lightgray", layout = layout_as_star, main = "")
-
-
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
                           Betweennes = igraph::betweenness(bnARG),
@@ -80,7 +60,7 @@ ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
 ProgramsARG <- ProgramsARG[ -c(5:25) ]
 rownames(ProgramsARG)
 ProgramsARG$SS <- rownames(ProgramsARG)
-ProgramsARG <- ProgramsARG[order(ProgramsARG$SS), ]
+ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
 #ProgramsARG <- ProgramsARG[!grepl("text", ProgramsARG$SS), ]
 ProgramsARG <- ProgramsARG[1:4]
 colnames(ProgramsARG)[4] <- "Eigenvector"
