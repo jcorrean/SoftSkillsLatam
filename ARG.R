@@ -44,8 +44,33 @@ ProgramsARG <- tokens(TextsARG,
                      remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish"))
 
-s1 <- data.frame(kwic(ProgramsARG, pattern = phrase("pensamiento crítico")))
-s2 <- data.frame(kwic(ProgramsARG, pattern = phrase("solucionar problemas")))
+
+s1 <- data.frame(kwic(ProgramsARG, pattern = c(phrase("escucha activamente"),
+                                               phrase("comprende"),
+                                               phrase("silencio"),
+                                               phrase("verbalmente"),
+                                            phrase("entiende la situación"),
+                                            phrase("plantea preguntas"),
+                                            phrase("seguir"),
+                                            phrase("dar seguimiento"),
+                                            phrase("se cuestiona"),
+                                            phrase("se pregunta"),
+                                            phrase("atiende"),
+                                            phrase("interrumpir"),
+                                            phrase("no interrumpe"),
+                                            phrase("discute"),
+                                            phrase("prestar atención"),
+                                            phrase("oye"),
+                                            phrase("voz"),
+                                            phrase("escuchar"),
+                                            phrase("oyendo"),
+                                            phrase("se toma tiempo para entender"),
+                                            phrase("escuchando"))))
+
+
+
+
+s2 <- data.frame(kwic(ProgramsARG, pattern = phrase("oyendo")))
 s3 <- data.frame(kwic(ProgramsARG, pattern = "comunicar"))
 s4 <- data.frame(kwic(ProgramsARG, pattern = "creatividad"))
 s5 <- data.frame(kwic(ProgramsARG, pattern = "paciencia"))
@@ -54,48 +79,9 @@ s7 <- data.frame(kwic(ProgramsARG, pattern = "liderar"))
 s8 <- data.frame(kwic(ProgramsARG, pattern = "resolver"))
 s9 <- data.frame(kwic(ProgramsARG, pattern = "comprometer"))
 s10 <- data.frame(kwic(ProgramsARG, pattern = "comprometerse"))
-s11 <- data.frame(kwic(ProgramsARG, pattern = "gestionar"))
-s12 <- data.frame(kwic(ProgramsARG, pattern = "reflexionar"))
-s13 <- data.frame(kwic(ProgramsARG, pattern = "controlar"))
-s14 <- data.frame(kwic(ProgramsARG, pattern = "ético"))
-s15 <- data.frame(kwic(ProgramsARG, pattern = "tolerar"))
-s16 <- data.frame(kwic(ProgramsARG, pattern = "argumentar"))
-s17 <- data.frame(kwic(ProgramsARG, pattern = "conflictos"))
-s18 <- data.frame(kwic(ProgramsARG, pattern = "negociar"))
-s19 <- data.frame(kwic(ProgramsARG, pattern = "comprender"))
-s20 <- data.frame(kwic(ProgramsARG, pattern = "equipos"))
-s21 <- data.frame(kwic(ProgramsARG, pattern = "planificar"))
-s22 <- data.frame(kwic(ProgramsARG, pattern = "generar"))
-s23 <- data.frame(kwic(ProgramsARG, pattern = "empatía"))
-s24 <- data.frame(kwic(ProgramsARG, pattern = "compartir"))
-s25 <- data.frame(kwic(ProgramsARG, pattern = "analizar"))
-s26 <- data.frame(kwic(ProgramsARG, pattern = "reconocer"))
-s27 <- data.frame(kwic(ProgramsARG, pattern = "orientar"))
-s28 <- data.frame(kwic(ProgramsARG, pattern = "respetar"))
-s29 <- data.frame(kwic(ProgramsARG, pattern = "motivar"))
-s30 <- data.frame(kwic(ProgramsARG, pattern = "cooperar"))
-s31 <- data.frame(kwic(ProgramsARG, pattern = "fortalecer"))
-s32 <- data.frame(kwic(ProgramsARG, pattern = "impulsar"))
-s33 <- data.frame(kwic(ProgramsARG, pattern = "acercar"))
-s34 <- data.frame(kwic(ProgramsARG, pattern = "ayudar"))
-s35 <- data.frame(kwic(ProgramsARG, pattern = "cambiar"))
-s36 <- data.frame(kwic(ProgramsARG, pattern = "apreciar"))
-s37 <- data.frame(kwic(ProgramsARG, pattern = "dirigir"))
-s38 <- data.frame(kwic(ProgramsARG, pattern = "fomentar"))
-s39 <- data.frame(kwic(ProgramsARG, pattern = "interactuar"))
-s40 <- data.frame(kwic(ProgramsARG, pattern = "identificar"))
-s41 <- data.frame(kwic(ProgramsARG, pattern = "competir"))
-s42 <- data.frame(kwic(ProgramsARG, pattern = "manifestar"))
-s43 <- data.frame(kwic(ProgramsARG, pattern = "responsable"))
-s44 <- data.frame(kwic(ProgramsARG, pattern = "evaluar"))
-s45 <- data.frame(kwic(ProgramsARG, pattern = "innovar"))
-s46 <- data.frame(kwic(ProgramsARG, pattern = "decidir"))
-s47 <- data.frame(kwic(ProgramsARG, pattern = phrase("tomar decisiones")))
-s48 <- data.frame(kwic(ProgramsARG, pattern = "flexibilidad"))
-s49 <- data.frame(kwic(ProgramsARG, pattern = "persua*"))
-s50 <- data.frame(kwic(ProgramsARG, pattern = "convencer"))
 
-df_list <- mget(paste0("s", 1:50))
+
+df_list <- mget(paste0("s", 1:10))
 SS <- do.call(rbind, df_list)
 SS$Skill <- rownames(SS)
 SS$Skill <- gsub("\\..*", "", SS$Skill)

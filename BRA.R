@@ -43,7 +43,17 @@ ProgramsBRA <- tokens(TextsBRA,
                      remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("portuguese"))
 
-s1 <- data.frame(kwic(ProgramsBRA, pattern = phrase("pensamento crítico")))
+s1 <- data.frame(kwic(ProgramsBRA, pattern = phrase("ouça com atenção"),
+                                             phrase("entender"),
+                                             phrase("silêncio"),
+                                             phrase("verbalmente"),
+                                             phrase("entenda a situação"),
+                                             phrase("levanta questões"),
+                                             phrase("seguir"),
+                                             phrase("é questionado"),
+                                             phrase("se pergunta"),
+                                             phrase("")
+                      ))
 s2 <- data.frame(kwic(ProgramsBRA, pattern = phrase("solução problemas")))
 s3 <- data.frame(kwic(ProgramsBRA, pattern = "comunicar"))
 s4 <- data.frame(kwic(ProgramsBRA, pattern = "criatividade"))
