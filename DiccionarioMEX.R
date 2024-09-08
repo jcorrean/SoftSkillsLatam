@@ -46,6 +46,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnMEX <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListMEX <- as_edgelist(bnMEX)
+edges_mx <- data.frame(
+  Source = paste0("MEX_", EdgeListMEX[, 1]),
+  Target = EdgeListMEX[, 2],
+  Country = "Mexico"
+)
 bipartite_mapping(bnMEX)
 V(bnMEX)$type <- bipartite_mapping(bnMEX)$type
 V(bnMEX)$shape <- ifelse(V(bnMEX)$type, "circle", "square")
@@ -67,6 +73,6 @@ colnames(ProgramsMEX)[4] <- "Eigenvector"
 library(network)
 Mexico <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico
-network::network.size(Mexico)
-network::network.density(Mexico)
-tnet::clustering_tm(Matriz)
+SizeMEX <- network::network.size(Mexico)
+DensityMEX <- network::network.density(Mexico)
+ClusteringMEX <- tnet::clustering_tm(Matriz)
