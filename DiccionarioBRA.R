@@ -43,6 +43,7 @@ ProgramsBRA <- tokens(TextsBRA,
 
 ProgramsBRA
 Matriz <- as.matrix(t(ProgramsBRA))
+DataVenezuela <- data.frame(t(Matriz))
 rowSums(Matriz)
 
 library(igraph)
