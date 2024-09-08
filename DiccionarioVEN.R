@@ -46,6 +46,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnVEN <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListVE <- as_edgelist(bnVEN)
+edges_df <- data.frame(
+  Source = EdgeListVE[, 1],
+  Target = EdgeListVE[, 2],
+  Country = "Venezuela"
+)
 bipartite_mapping(bnVEN)
 V(bnVEN)$type <- bipartite_mapping(bnVEN)$type
 V(bnVEN)$shape <- ifelse(V(bnVEN)$type, "circle", "square")
