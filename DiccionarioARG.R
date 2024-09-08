@@ -47,7 +47,7 @@ rowSums(Matriz)
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListAR <- as_edgelist(bnARG)
-edges_br <- data.frame(
+edges_ar <- data.frame(
   Source = paste0("ARG_", EdgeListAR[, 1]),
   Target = EdgeListAR[, 2],
   Country = "Argentina"
