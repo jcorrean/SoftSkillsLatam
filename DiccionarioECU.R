@@ -46,6 +46,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnECU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListECU <- as_edgelist(bnECU)
+edges_cr <- data.frame(
+  Source = paste0("ECU_", EdgeListECU[, 1]),
+  Target = EdgeListECU[, 2],
+  Country = "Ecuador"
+)
 bipartite_mapping(bnECU)
 V(bnECU)$type <- bipartite_mapping(bnECU)$type
 V(bnECU)$shape <- ifelse(V(bnECU)$type, "circle", "square")
@@ -67,6 +73,6 @@ colnames(ProgramsECU)[4] <- "Eigenvector"
 library(network)
 Ecuador <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador
-network::network.size(Ecuador)
-network::network.density(Ecuador)
-tnet::clustering_tm(Matriz)
+SizeECU <- network::network.size(Ecuador)
+DensityECU <- network::network.density(Ecuador)
+ClusteringECU <- tnet::clustering_tm(Matriz)

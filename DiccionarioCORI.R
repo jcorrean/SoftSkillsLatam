@@ -46,6 +46,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnCORI <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListCORI <- as_edgelist(bnCORI)
+edges_cr <- data.frame(
+  Source = paste0("CR_", EdgeListCORI[, 1]),
+  Target = EdgeListCORI[, 2],
+  Country = "Costa Rica"
+)
 bipartite_mapping(bnCORI)
 V(bnCORI)$type <- bipartite_mapping(bnCORI)$type
 V(bnCORI)$shape <- ifelse(V(bnCORI)$type, "circle", "square")
@@ -67,6 +73,6 @@ colnames(ProgramsCORI)[4] <- "Eigenvector"
 library(network)
 CostaRica <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica
-network::network.size(CostaRica)
-network::network.density(CostaRica)
-tnet::clustering_tm(Matriz)
+SizeCR <- network::network.size(CostaRica)
+DensityCR <- network::network.density(CostaRica)
+ClusteringCR <- tnet::clustering_tm(Matriz)
