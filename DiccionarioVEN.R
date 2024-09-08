@@ -30,7 +30,7 @@ Dictionary <- dictionary(list(
   active_learning = c("implicaciones", "comprende", "decisión", "futur*", "nueva información"),
   critical_thinking = c("crítico", "pensamiento crítico", "lógic*", "razona*"),
   learning_strategy = c("aprend*", "enseñ*", "instrucci*"),
-  monitoring = c("auto-evalu*",  "reflexi*", "desempeñ", "ejMEXción")
+  monitoring = c("auto-evalu*",  "reflexi*", "desempeñ", "ejecución")
 ))
 ProgramsVEN <- tokens(TextsVEN, 
                       remove_numbers = TRUE, 
