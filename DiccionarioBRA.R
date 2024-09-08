@@ -48,6 +48,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListBR <- as_edgelist(bnBRA)
+edges_br <- data.frame(
+  Source = paste0("BRA_", EdgeListBR[, 1]),
+  Target = EdgeListBR[, 2],
+  Country = "Brazil"
+)
 bipartite_mapping(bnBRA)
 V(bnBRA)$type <- bipartite_mapping(bnBRA)$type
 V(bnBRA)$shape <- ifelse(V(bnBRA)$type, "circle", "square")
@@ -69,6 +75,6 @@ colnames(ProgramsBRA)[4] <- "Eigenvector"
 library(network)
 Brazil <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil
-network::network.size(Brazil)
-network::network.density(Brazil)
-tnet::clustering_tm(Matriz)
+SizeBR <- network::network.size(Brazil)
+DensityBR <- network::network.density(Brazil)
+ClusteringBR <- tnet::clustering_tm(Matriz)

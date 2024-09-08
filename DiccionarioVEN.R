@@ -47,8 +47,8 @@ rowSums(Matriz)
 library(igraph)
 bnVEN <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListVE <- as_edgelist(bnVEN)
-edges_df <- data.frame(
-  Source = EdgeListVE[, 1],
+edges_ve <- data.frame(
+  Source = paste0("VEN_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Venezuela"
 )
@@ -73,6 +73,6 @@ colnames(ProgramsVEN)[4] <- "Eigenvector"
 library(network)
 Venezuela <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela
-network::network.size(Venezuela)
-network::network.density(Venezuela)
-tnet::clustering_tm(Matriz)
+SizeVE <- network::network.size(Venezuela)
+DensityVE <- network::network.density(Venezuela)
+ClusteringVE <- tnet::clustering_tm(Matriz)
