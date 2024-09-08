@@ -46,6 +46,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnURU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListURU <- as_edgelist(bnURU)
+edges_ur <- data.frame(
+  Source = paste0("URU_", EdgeListURU[, 1]),
+  Target = EdgeListURU[, 2],
+  Country = "Uruguay"
+)
 bipartite_mapping(bnURU)
 V(bnURU)$type <- bipartite_mapping(bnURU)$type
 V(bnURU)$shape <- ifelse(V(bnURU)$type, "circle", "square")
@@ -67,6 +73,6 @@ colnames(ProgramsURU)[4] <- "Eigenvector"
 library(network)
 Uruguay <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Uruguay
-network::network.size(Uruguay)
-network::network.density(Uruguay)
-tnet::clustering_tm(Matriz)
+SizeURU <- network::network.size(Uruguay)
+DensityURU <- network::network.density(Uruguay)
+ClusteringURU <- tnet::clustering_tm(Matriz)
