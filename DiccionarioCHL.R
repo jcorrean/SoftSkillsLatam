@@ -46,6 +46,13 @@ rowSums(Matriz)
 
 library(igraph)
 bnCHL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListCHL <- as_edgelist(bnCHL)
+edges_chl <- data.frame(
+  Source = paste0("CHL_", EdgeListCHL[, 1]),
+  Target = EdgeListCHL[, 2],
+  Country = "Chile"
+)
+
 bipartite_mapping(bnCHL)
 V(bnCHL)$type <- bipartite_mapping(bnCHL)$type
 V(bnCHL)$shape <- ifelse(V(bnCHL)$type, "circle", "square")
@@ -68,6 +75,6 @@ colnames(ProgramsCHL)[4] <- "Eigenvector"
 library(network)
 Chile <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile
-network::network.size(Chile)
-network::network.density(Chile)
-tnet::clustering_tm(Matriz)
+SizeCHL <- network::network.size(Chile)
+DensityCHL <- network::network.density(Chile)
+ClusteringCHL <- tnet::clustering_tm(Matriz)

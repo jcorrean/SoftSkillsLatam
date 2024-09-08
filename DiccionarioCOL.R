@@ -46,6 +46,12 @@ rowSums(Matriz)
 
 library(igraph)
 bnCOL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+EdgeListCOL <- as_edgelist(bnCOL)
+edges_col <- data.frame(
+  Source = paste0("COL_", EdgeListCOL[, 1]),
+  Target = EdgeListCOL[, 2],
+  Country = "Colombia"
+)
 bipartite_mapping(bnCOL)
 V(bnCOL)$type <- bipartite_mapping(bnCOL)$type
 V(bnCOL)$shape <- ifelse(V(bnCOL)$type, "circle", "square")
@@ -67,6 +73,6 @@ colnames(ProgramsCOL)[4] <- "Eigenvector"
 library(network)
 Colombia <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia
-network::network.size(Colombia)
-network::network.density(Colombia)
-tnet::clustering_tm(Matriz)
+SizeCOL <- network::network.size(Colombia)
+SizeCOL <- network::network.density(Colombia)
+SizeCOL <- tnet::clustering_tm(Matriz)
