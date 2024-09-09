@@ -22,6 +22,10 @@ RegionNetwork <- RegionNetwork[,c(2,1,3)]
 colnames(RegionNetwork)[1] <- "Skill"
 colnames(RegionNetwork)[2] <- "Brochure"
 
+library(dplyr)
+RegionNetwork %>%
+  group_by(Country) %>%
+  summarize(count = length(unique(Brochure)))
 
 library(igraph)
 bnR <- graph_from_data_frame(RegionNetwork,directed=FALSE)
