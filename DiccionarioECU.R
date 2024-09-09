@@ -47,7 +47,7 @@ rowSums(Matriz)
 library(igraph)
 bnECU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListECU <- as_edgelist(bnECU)
-edges_cr <- data.frame(
+edges_ec <- data.frame(
   Source = paste0("ECU_", EdgeListECU[, 1]),
   Target = EdgeListECU[, 2],
   Country = "Ecuador"
