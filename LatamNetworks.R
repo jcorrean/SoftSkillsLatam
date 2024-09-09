@@ -32,6 +32,10 @@ V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
+Matrix <- as.matrix(as_adjacency_matrix(bnR))
+nrow(Matrix) - 10
+Matrix <- Matrix[1:10,11:3165]
+
 
 Centralities <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
@@ -45,9 +49,11 @@ Centralities <- Centralities[order(-Centralities$Degree), ]
 Centralities <- Centralities[1:4]
 colnames(Centralities)[4] <- "Eigenvector"
 
+
+
 library(network)
-RegionNetwork <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+RegionNetwork <- network(Matrix, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 RegionNetwork
-SizeARG <- network::network.size(RegionNetwork)
-DensityARG <- network::network.density(RegionNetwork)
-ClusteringARG <- tnet::clustering_tm(Matriz)
+SizeRN <- network::network.size(RegionNetwork)
+DensityRN <- network::network.density(RegionNetwork)
+ClusteringRN <- tnet::clustering_tm(Matrix)
