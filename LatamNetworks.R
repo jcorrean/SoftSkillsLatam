@@ -1,4 +1,3 @@
-
 load("Results/Argentina.RData")
 load("Results/Brazil.RData")
 load("Results/Chile.RData")
@@ -19,3 +18,36 @@ RegionNetwork <- do.call(rbind, list(edges_ar,
                                      edges_ur, 
                                      edges_ve))
 rm(list=setdiff(ls(), c("RegionNetwork")))
+RegionNetwork <- RegionNetwork[,c(2,1,3)]
+colnames(RegionNetwork)[1] <- "Skill"
+colnames(RegionNetwork)[2] <- "Brochure"
+
+
+library(igraph)
+bnR <- graph_from_data_frame(RegionNetwork,directed=FALSE)
+bipartite_mapping(bnR)
+V(bnR)$type <- bipartite_mapping(bnR)$type
+V(bnR)$type <- bipartite_mapping(bnR)$type
+V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
+V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
+V(bnR)$size <- sqrt(igraph::degree(bnR))
+E(bnR)$color <- "lightgrey"
+
+Centralities <- data.frame(Degree = igraph::degree(bnR),
+                          Closeness = igraph::closeness(bnR),
+                          Betweennes = igraph::betweenness(bnR),
+                          Eigen = igraph::eigen_centrality(bnR))
+Centralities <- Centralities[ -c(5:25) ]
+rownames(Centralities)
+Centralities$SS <- rownames(Centralities)
+Centralities <- Centralities[order(-Centralities$Degree), ]
+#Centralities <- Centralities[!grepl("text", Centralities$SS), ]
+Centralities <- Centralities[1:4]
+colnames(Centralities)[4] <- "Eigenvector"
+
+library(network)
+RegionNetwork <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+RegionNetwork
+SizeARG <- network::network.size(RegionNetwork)
+DensityARG <- network::network.density(RegionNetwork)
+ClusteringARG <- tnet::clustering_tm(Matriz)
