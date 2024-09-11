@@ -64,3 +64,12 @@ RegionNetwork
 SizeRN <- network::network.size(RegionNetwork)
 DensityRN <- network::network.density(RegionNetwork)
 ClusteringRN <- tnet::clustering_tm(Matrix)
+
+library(ggplot2)
+library(ggridges)
+ggplot(Centralities, aes(x=Eigenvector, y=Partition, fill = 0.5 - abs(0.5 - stat(ecdf)))) +
+  stat_density_ridges(geom = "density_ridges_gradient", calc_ecdf = TRUE) +
+  scale_fill_viridis_c(name = "Probability", direction = 1) +
+  theme_classic() +
+  ylab("Network Partition") +
+  xlab("Eigenvector centrality")
