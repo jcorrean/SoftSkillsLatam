@@ -69,6 +69,13 @@ ProgramsMEX$SS <- rownames(ProgramsMEX)
 ProgramsMEX <- ProgramsMEX[order(-ProgramsMEX$Degree), ]
 #ProgramsMEX <- ProgramsMEX[!grepl("text", ProgramsMEX$SS), ]
 colnames(ProgramsMEX)[4] <- "Eigenvector"
+ProgramsMEX$Node <- rownames(ProgramsMEX)
+ProgramsMEX$Partition <- "Skill"
+ProgramsMEX$Partition[c(11:563)] <- "Program"
+ProgramsMEX$Country <- "Mexico"
+
+library(psych)
+describeBy(ProgramsMEX$Degree, group = ProgramsMEX$Partition, mat = TRUE, digits = 2)
 
 library(network)
 Mexico <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -76,3 +83,4 @@ Mexico
 SizeMEX <- network::network.size(Mexico)
 DensityMEX <- network::network.density(Mexico)
 ClusteringMEX <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Mexico.RData")
