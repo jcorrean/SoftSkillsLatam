@@ -43,7 +43,7 @@ ProgramsBRA <- tokens(TextsBRA,
 
 ProgramsBRA
 Matriz <- as.matrix(t(ProgramsBRA))
-DataVenezuela <- data.frame(t(Matriz))
+DataBrazil <- data.frame(t(Matriz))
 rowSums(Matriz)
 
 library(igraph)
@@ -71,6 +71,14 @@ ProgramsBRA$SS <- rownames(ProgramsBRA)
 ProgramsBRA <- ProgramsBRA[order(-ProgramsBRA$Degree), ]
 #ProgramsBRA <- ProgramsBRA[!grepl("text", ProgramsBRA$SS), ]
 colnames(ProgramsBRA)[4] <- "Eigenvector"
+ProgramsBRA$Node <- rownames(ProgramsBRA)
+ProgramsBRA$Partition <- "Skill"
+ProgramsBRA$Partition[c(11:932)] <- "Program"
+ProgramsBRA$Country <- "Brazil"
+
+library(psych)
+describeBy(ProgramsBRA$Degree, group = ProgramsBRA$Partition, mat = TRUE, digits = 2)
+
 
 library(network)
 Brazil <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -78,3 +86,4 @@ Brazil
 SizeBR <- network::network.size(Brazil)
 DensityBR <- network::network.density(Brazil)
 ClusteringBR <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Brazil.RData")

@@ -69,6 +69,13 @@ ProgramsCORI$SS <- rownames(ProgramsCORI)
 ProgramsCORI <- ProgramsCORI[order(-ProgramsCORI$Degree), ]
 #ProgramsCORI <- ProgramsCORI[!grepl("text", ProgramsCORI$SS), ]
 colnames(ProgramsCORI)[4] <- "Eigenvector"
+ProgramsCORI$Node <- rownames(ProgramsCORI)
+ProgramsCORI$Partition <- "Skill"
+ProgramsCORI$Partition[c(11:130)] <- "Program"
+ProgramsCORI$Country <- "Costa Rica"
+
+library(psych)
+describeBy(ProgramsCORI$Degree, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
 
 library(network)
 CostaRica <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -76,3 +83,4 @@ CostaRica
 SizeCR <- network::network.size(CostaRica)
 DensityCR <- network::network.density(CostaRica)
 ClusteringCR <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/CostaRica.RData")

@@ -70,6 +70,13 @@ ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
 #ProgramsARG <- ProgramsARG[!grepl("text", ProgramsARG$SS), ]
 ProgramsARG <- ProgramsARG[1:4]
 colnames(ProgramsARG)[4] <- "Eigenvector"
+ProgramsARG$Node <- rownames(ProgramsARG)
+ProgramsARG$Partition <- "Skill"
+ProgramsARG$Partition[c(11:524)] <- "Program"
+ProgramsARG$Country <- "Argentina"
+
+library(psych)
+describeBy(ProgramsARG$Degree, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
 
 library(network)
 Argentina <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)

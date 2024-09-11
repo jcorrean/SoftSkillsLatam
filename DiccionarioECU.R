@@ -69,10 +69,17 @@ ProgramsECU$SS <- rownames(ProgramsECU)
 ProgramsECU <- ProgramsECU[order(-ProgramsECU$Degree), ]
 #ProgramsECU <- ProgramsECU[!grepl("text", ProgramsECU$SS), ]
 colnames(ProgramsECU)[4] <- "Eigenvector"
+ProgramsECU$Node <- rownames(ProgramsECU)
+ProgramsECU$Partition <- "Skill"
+ProgramsECU$Partition[c(11:741)] <- "Program"
+ProgramsECU$Country <- "Ecuador"
 
+library(psych)
+describeBy(ProgramsECU$Degree, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
 library(network)
 Ecuador <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador
 SizeECU <- network::network.size(Ecuador)
 DensityECU <- network::network.density(Ecuador)
 ClusteringECU <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Ecuador.RData")

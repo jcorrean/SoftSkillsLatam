@@ -69,6 +69,14 @@ ProgramsCOL$SS <- rownames(ProgramsCOL)
 ProgramsCOL <- ProgramsCOL[order(-ProgramsCOL$Degree), ]
 #ProgramsCOL <- ProgramsCOL[!grepl("text", ProgramsCOL$SS), ]
 colnames(ProgramsCOL)[4] <- "Eigenvector"
+ProgramsCOL$Node <- rownames(ProgramsCOL)
+ProgramsCOL$Partition <- "Skill"
+ProgramsCOL$Partition[c(11:240)] <- "Program"
+ProgramsCOL$Country <- "Colombia"
+
+library(psych)
+describeBy(ProgramsCOL$Degree, group = ProgramsCOL$Partition, mat = TRUE, digits = 2)
+
 
 library(network)
 Colombia <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -76,3 +84,4 @@ Colombia
 SizeCOL <- network::network.size(Colombia)
 SizeCOL <- network::network.density(Colombia)
 SizeCOL <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Colombia.RData")
