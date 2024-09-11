@@ -47,11 +47,14 @@ Centralities <- data.frame(Degree = igraph::degree(bnR),
                           Eigen = igraph::eigen_centrality(bnR))
 Centralities <- Centralities[ -c(5:25) ]
 rownames(Centralities)
-Centralities$SS <- rownames(Centralities)
+Centralities$Node <- rownames(Centralities)
 Centralities <- Centralities[order(-Centralities$Degree), ]
 #Centralities <- Centralities[!grepl("text", Centralities$SS), ]
-Centralities <- Centralities[1:4]
+#Centralities <- Centralities[1:4]
 colnames(Centralities)[4] <- "Eigenvector"
+Centralities$Partition <- "Skill" 
+Centralities$Partition[c(11:3155)] <- "Program" 
+
 
 
 
