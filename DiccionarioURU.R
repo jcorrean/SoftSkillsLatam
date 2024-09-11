@@ -69,10 +69,17 @@ ProgramsURU$SS <- rownames(ProgramsURU)
 ProgramsURU <- ProgramsURU[order(-ProgramsURU$Degree), ]
 #ProgramsURU <- ProgramsURU[!grepl("text", ProgramsURU$SS), ]
 colnames(ProgramsURU)[4] <- "Eigenvector"
+ProgramsURU$Node <- rownames(ProgramsURU)
+ProgramsURU$Partition <- "Skill"
+ProgramsURU$Partition[c(11:147)] <- "Program"
+ProgramsURU$Country <- "Uruguay"
 
+library(psych)
+describeBy(ProgramsURU$Degree, group = ProgramsURU$Partition, mat = TRUE, digits = 2)
 library(network)
 Uruguay <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Uruguay
 SizeURU <- network::network.size(Uruguay)
 DensityURU <- network::network.density(Uruguay)
 ClusteringURU <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Uruguay.RData")

@@ -69,10 +69,17 @@ ProgramsVEN$SS <- rownames(ProgramsVEN)
 ProgramsVEN <- ProgramsVEN[order(-ProgramsVEN$Degree), ]
 #ProgramsVEN <- ProgramsVEN[!grepl("text", ProgramsVEN$SS), ]
 colnames(ProgramsVEN)[4] <- "Eigenvector"
+ProgramsVEN$Node <- rownames(ProgramsVEN)
+ProgramsVEN$Partition <- "Skill"
+ProgramsVEN$Partition[c(11:220)] <- "Program"
+ProgramsVEN$Country <- "Venezuela"
 
+library(psych)
+describeBy(ProgramsVEN$Degree, group = ProgramsVEN$Partition, mat = TRUE, digits = 2)
 library(network)
 Venezuela <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela
 SizeVE <- network::network.size(Venezuela)
 DensityVE <- network::network.density(Venezuela)
 ClusteringVE <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Venezuela.RData")
