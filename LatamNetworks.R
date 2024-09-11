@@ -24,8 +24,8 @@ colnames(RegionNetwork)[2] <- "Brochure"
 
 library(dplyr)
 RegionNetwork %>%
-  group_by(Skill) %>%
-  summarize(count = length(unique(Country)))
+  group_by(Country) %>%
+  summarize(count = length(unique(Skill)))
 
 library(igraph)
 bnR <- graph_from_data_frame(RegionNetwork,directed=FALSE)
@@ -53,9 +53,9 @@ Centralities <- Centralities[order(-Centralities$Degree), ]
 #Centralities <- Centralities[1:4]
 colnames(Centralities)[4] <- "Eigenvector"
 Centralities$Partition <- "Skill" 
-Centralities$Partition[c(11:3155)] <- "Program" 
+Centralities$Partition[c(11:3165)] <- "Program" 
 
-
+table(Centralities$Partition)
 
 
 library(network)
@@ -67,9 +67,21 @@ ClusteringRN <- tnet::clustering_tm(Matrix)
 
 library(ggplot2)
 library(ggridges)
-ggplot(Centralities, aes(x=Eigenvector, y=Partition, fill = 0.5 - abs(0.5 - stat(ecdf)))) +
-  stat_density_ridges(geom = "density_ridges_gradient", calc_ecdf = TRUE) +
-  scale_fill_viridis_c(name = "Probability", direction = 1) +
+ggplot(Centralities, aes(x = Eigenvector, y = Partition, fill = Partition)) +
+  stat_density_ridges(quantile_lines = TRUE, alpha = 0.35) +
   theme_classic() +
   ylab("Network Partition") +
-  xlab("Eigenvector centrality")
+  xlab("Eigenvector centrality")+
+  theme(axis.text.x = element_text(size = 14, color = "black"),
+        axis.text.y = element_text(size = 14, color = "black"),
+        axis.title.x = element_text(size= 16),
+        axis.title.y = element_text(size = 16),
+        legend.position = "none") +
+  annotate("text", x = 0.2, y = 1.9, label = "Average centrality = 3.5", hjust = 0, vjust = 1) +
+  annotate("text", x = 0.2, y = 1.8, label = "Standard deviation centrality = 3.5", hjust = 0, vjust = 1) +
+  annotate("text", x = 0.2, y = 0.9, label = "Average centrality = 1.7", hjust = 0, vjust = 1) +
+  annotate("text", x = 0.2, y = 0.8, label = "Standard deviation centrality = 1.7", hjust = 0, vjust = 1)
+
+
+library(psych)
+describeBy(Centralities$Eigenvector, group = Centralities$Partition, mat = TRUE, digits = 2)
