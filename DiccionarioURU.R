@@ -75,7 +75,7 @@ ProgramsURU$Partition[c(11:147)] <- "Program"
 ProgramsURU$Country <- "Uruguay"
 
 library(psych)
-describeBy(ProgramsURU$Degree, group = ProgramsURU$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsURU$Eigenvector, group = ProgramsURU$Partition, mat = TRUE, digits = 2)
 library(network)
 Uruguay <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Uruguay

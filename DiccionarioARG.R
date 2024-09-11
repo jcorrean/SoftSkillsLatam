@@ -76,7 +76,7 @@ ProgramsARG$Partition[c(11:524)] <- "Program"
 ProgramsARG$Country <- "Argentina"
 
 library(psych)
-describeBy(ProgramsARG$Degree, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
 
 library(network)
 Argentina <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -84,3 +84,4 @@ Argentina
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::clustering_tm(Matriz)
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Argentina.RData")

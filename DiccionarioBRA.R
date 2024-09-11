@@ -77,7 +77,7 @@ ProgramsBRA$Partition[c(11:932)] <- "Program"
 ProgramsBRA$Country <- "Brazil"
 
 library(psych)
-describeBy(ProgramsBRA$Degree, group = ProgramsBRA$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsBRA$Eigenvector, group = ProgramsBRA$Partition, mat = TRUE, digits = 2)
 
 
 library(network)

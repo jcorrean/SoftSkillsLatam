@@ -75,7 +75,7 @@ ProgramsCOL$Partition[c(11:240)] <- "Program"
 ProgramsCOL$Country <- "Colombia"
 
 library(psych)
-describeBy(ProgramsCOL$Degree, group = ProgramsCOL$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsCOL$Eigenvector, group = ProgramsCOL$Partition, mat = TRUE, digits = 2)
 
 
 library(network)

@@ -77,7 +77,7 @@ ProgramsCHL$Partition[c(11:218)] <- "Program"
 ProgramsCHL$Country <- "Chile"
 
 library(psych)
-describeBy(ProgramsCHL$Degree, group = ProgramsCHL$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsCHL$Eigenvector, group = ProgramsCHL$Partition, mat = TRUE, digits = 2)
 
 
 library(network)
@@ -86,4 +86,4 @@ Chile
 SizeCHL <- network::network.size(Chile)
 DensityCHL <- network::network.density(Chile)
 ClusteringCHL <- tnet::clustering_tm(Matriz)
-
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Chile.RData")

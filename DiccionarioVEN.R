@@ -75,7 +75,7 @@ ProgramsVEN$Partition[c(11:220)] <- "Program"
 ProgramsVEN$Country <- "Venezuela"
 
 library(psych)
-describeBy(ProgramsVEN$Degree, group = ProgramsVEN$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsVEN$Eigenvector, group = ProgramsVEN$Partition, mat = TRUE, digits = 2)
 library(network)
 Venezuela <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela

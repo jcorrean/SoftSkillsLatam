@@ -75,7 +75,7 @@ ProgramsCORI$Partition[c(11:130)] <- "Program"
 ProgramsCORI$Country <- "Costa Rica"
 
 library(psych)
-describeBy(ProgramsCORI$Degree, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsCORI$Eigenvector, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
 
 library(network)
 CostaRica <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)

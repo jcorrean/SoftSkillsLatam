@@ -75,7 +75,7 @@ ProgramsECU$Partition[c(11:741)] <- "Program"
 ProgramsECU$Country <- "Ecuador"
 
 library(psych)
-describeBy(ProgramsECU$Degree, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsECU$Eigenvector, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
 library(network)
 Ecuador <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador

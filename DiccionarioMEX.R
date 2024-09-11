@@ -75,7 +75,7 @@ ProgramsMEX$Partition[c(11:563)] <- "Program"
 ProgramsMEX$Country <- "Mexico"
 
 library(psych)
-describeBy(ProgramsMEX$Degree, group = ProgramsMEX$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsMEX$Eigenvector, group = ProgramsMEX$Partition, mat = TRUE, digits = 2)
 
 library(network)
 Mexico <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
