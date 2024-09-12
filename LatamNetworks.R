@@ -111,3 +111,28 @@ RegionNetwork <- do.call(rbind, list(ProgramsARG,
                                      ProgramsVEN))
 
 rm(list=setdiff(ls(), c("RegionNetwork")))
+
+Promedios <- RegionNetwork %>%
+  group_by(Country) %>%
+  group_by(Node) %>% 
+  summarize(Average = mean(Eigenvector))
+Connectivity <- data.frame(Country = c("Argentina",
+                                       "Brazil",
+                                       "Chile",
+                                       "Colombia",
+                                       "Costa Rica",
+                                       "Ecuador",
+                                       "Mexico",
+                                       "Uruguay",
+                                       "Venezuela"),
+                           Brochures = c(514,922,208,230,120,731,553,147,210),
+                           Universities = c(146,1258,128,297,68,111,1105,40,71),
+                           Connectivity = c(0.37/0.06,
+                                            0.34/0.04,
+                                            0.47/0.11,
+                                            0.42/0.09,
+                                            0.57/0.13,
+                                            0.37/0.04,
+                                            0.52/0.07,
+                                            0.18/0.11,
+                                            0.54/0.10))
