@@ -68,7 +68,7 @@ rownames(ProgramsARG)
 ProgramsARG$SS <- rownames(ProgramsARG)
 ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
 #ProgramsARG <- ProgramsARG[!grepl("text", ProgramsARG$SS), ]
-ProgramsARG <- ProgramsARG[1:4]
+
 colnames(ProgramsARG)[4] <- "Eigenvector"
 ProgramsARG$Node <- rownames(ProgramsARG)
 ProgramsARG$Partition <- "Skill"
