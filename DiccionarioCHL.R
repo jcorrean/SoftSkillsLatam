@@ -69,7 +69,6 @@ rownames(ProgramsCHL)
 ProgramsCHL$SS <- rownames(ProgramsCHL)
 ProgramsCHL <- ProgramsCHL[order(-ProgramsCHL$Degree), ]
 #ProgramsCHL <- ProgramsCHL[!grepl("text", ProgramsCHL$SS), ]
-ProgramsCHL <- ProgramsCHL[1:4]
 colnames(ProgramsCHL)[4] <- "Eigenvector"
 ProgramsCHL$Node <- rownames(ProgramsCHL)
 ProgramsCHL$Partition <- "Skill"
