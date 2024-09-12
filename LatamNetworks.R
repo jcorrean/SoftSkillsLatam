@@ -67,9 +67,10 @@ DensityRN <- network::network.density(RegionNetwork)
 
 library(ggplot2)
 library(ggridges)
+png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 ggplot(Centralities, aes(x = Eigenvector, y = Partition, fill = Partition)) +
   stat_density_ridges(quantile_lines = TRUE, alpha = 0.35) +
-  theme_classic() +
+  theme_minimal() +
   ylab("Network Partition") +
   xlab("Eigenvector centrality degree") +
   coord_cartesian(xlim = c(0, 1.1)) +
@@ -78,11 +79,11 @@ ggplot(Centralities, aes(x = Eigenvector, y = Partition, fill = Partition)) +
         axis.title.x = element_text(size= 16),
         axis.title.y = element_text(size = 16),
         legend.position = "none") +
-  annotate("text", x = 0.2, y = 1.9, label = "Average centrality = 0.41", hjust = 0, vjust = 1) +
-  annotate("text", x = 0.2, y = 1.8, label = "Standard deviation centrality = 0.26", hjust = 0, vjust = 1) +
-  annotate("text", x = 0.2, y = 0.9, label = "Average centrality = 0.02", hjust = 0, vjust = 1) +
-  annotate("text", x = 0.2, y = 0.8, label = "Standard deviation centrality = 0.01", hjust = 0, vjust = 1)
-
+  annotate("text", x = 0.35, y = 1.9, label = "Average centrality = 0.41", hjust = 0, vjust = 1) +
+  annotate("text", x = 0.35, y = 1.8, label = "Standard deviation centrality = 0.26", hjust = 0, vjust = 1) +
+  annotate("text", x = 0.02, y = 0.9, label = "Average centrality = 0.02", hjust = 0, vjust = 1) +
+  annotate("text", x = 0.02, y = 0.8, label = "Standard deviation centrality = 0.01", hjust = 0, vjust = 1)
+dev.off()
 
 library(psych)
 describeBy(Centralities$Eigenvector, group = Centralities$Partition, mat = TRUE, digits = 2)
