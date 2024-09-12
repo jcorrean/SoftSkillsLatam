@@ -70,12 +70,12 @@ library(ggridges)
 png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 ggplot(Centralities, aes(x = Eigenvector, y = Partition, fill = Partition)) +
   stat_density_ridges(quantile_lines = TRUE, alpha = 0.35) +
-  theme_minimal() +
+  theme_bw() +
   ylab("Network Partition") +
   xlab("Eigenvector centrality degree") +
   coord_cartesian(xlim = c(0, 1.1)) +
-  theme(axis.text.x = element_text(size = 14, color = "black"),
-        axis.text.y = element_text(size = 14, color = "black"),
+  theme(axis.text.x = element_text(size = 16, color = "black"),
+        axis.text.y = element_text(size = 16, color = "black"),
         axis.title.x = element_text(size= 16),
         axis.title.y = element_text(size = 16),
         legend.position = "none") +
