@@ -109,13 +109,22 @@ RegionNetwork <- do.call(rbind, list(ProgramsARG,
                                      ProgramsMEX, 
                                      ProgramsURU, 
                                      ProgramsVEN))
-
+SkillsRegion <- RegionNetwork %>% filter(., Partition == "Skill")
+RegionalSkills <- describeBy(SkillsRegion$Eigenvector, group = SkillsRegion$Country, mat = TRUE, digits = 2)
+mean(RegionalSkills$mean)
+mean(RegionalSkills$sd)
+ProgramsRegion <- RegionNetwork %>% filter(., Partition == "Program")
+RegionalPrograms <- describeBy(ProgramsRegion$Eigenvector, group = ProgramsRegion$Country, mat = TRUE, digits = 2)
+mean(RegionalPrograms$mean)
+mean(RegionalPrograms$sd)
+0.42/0.08
 rm(list=setdiff(ls(), c("RegionNetwork")))
 
 Promedios <- RegionNetwork %>%
   group_by(Country) %>%
   group_by(Node) %>% 
   summarize(Average = mean(Eigenvector))
+describeBy(RegionNetwork$Eigenvector, group = RegionNetwork$Country, mat = TRUE, digits = 2)
 Connectivity <- data.frame(Country = c("Argentina",
                                        "Brazil",
                                        "Chile",
