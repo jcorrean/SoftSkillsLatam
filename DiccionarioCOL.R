@@ -18,7 +18,9 @@ docvars(TextsCOL, "Program") <- COL$Program
 docvars(TextsCOL, "Country") <- "Colombia"
 head(summary(TextsCOL), 10)
 COLTexts <- data.frame(summary(TextsCOL, length(TextsCOL)))
-
+COLSpec <- corpus_subset(TextsCOL, Program == "Especialización")
+COLMS <- corpus_subset(TextsCOL, Program == "Maestría")
+COLPhD <- corpus_subset(TextsCOL, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
