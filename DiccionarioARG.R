@@ -18,7 +18,9 @@ docvars(TextsARG, "Program") <- ARG$Program
 docvars(TextsARG, "Country") <- "Argentina"
 head(summary(TextsARG), 10)
 ARGTexts <- data.frame(summary(TextsARG, length(TextsARG)))
-
+ARGSpec <- corpus_subset(TextsARG, Program == "Especialización")
+ARGMS <- corpus_subset(TextsARG, Program == "Maestría")
+ARGPhD <- corpus_subset(TextsARG, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
@@ -39,6 +41,8 @@ ProgramsARG <- tokens(TextsARG,
                       remove_symbols = TRUE) %>%  
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
+
+
 
 ProgramsARG
 Matriz <- as.matrix(t(ProgramsARG))
