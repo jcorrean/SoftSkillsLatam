@@ -18,7 +18,9 @@ docvars(TextsECU, "Program") <- ECU$Program
 docvars(TextsECU, "Country") <- "Ecuador"
 head(summary(TextsECU), 10)
 ECUTexts <- data.frame(summary(TextsECU, length(TextsECU)))
-
+ECUSpec <- corpus_subset(TextsECU, Program == "Especialización")
+ECUMS <- corpus_subset(TextsECU, Program == "Maestría")
+ECUPhD <- corpus_subset(TextsECU, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
