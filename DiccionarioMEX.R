@@ -18,7 +18,9 @@ docvars(TextsMEX, "Program") <- MEX$Program
 docvars(TextsMEX, "Country") <- "Mexico"
 head(summary(TextsMEX), 10)
 MEXTexts <- data.frame(summary(TextsMEX, length(TextsMEX)))
-
+MEXSpec <- corpus_subset(TextsMEX, Program == "Especialización")
+MEXMS <- corpus_subset(TextsMEX, Program == "Maestría")
+MEXPhD <- corpus_subset(TextsMEX, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
