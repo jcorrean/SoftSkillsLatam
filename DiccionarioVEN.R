@@ -18,7 +18,9 @@ docvars(TextsVEN, "Program") <- VEN$Program
 docvars(TextsVEN, "Country") <- "Venezuela"
 head(summary(TextsVEN), 10)
 VENTexts <- data.frame(summary(TextsVEN, length(TextsVEN)))
-
+VENSpec <- corpus_subset(TextsVEN, Program == "Especialización")
+VENMS <- corpus_subset(TextsVEN, Program == "Maestría")
+VENPhD <- corpus_subset(TextsVEN, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
