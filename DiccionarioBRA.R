@@ -18,7 +18,9 @@ docvars(TextsBRA, "Program") <- BRA$Program
 docvars(TextsBRA, "Country") <- "Brazil"
 head(summary(TextsBRA), 10)
 BRATexts <- data.frame(summary(TextsBRA, length(TextsBRA)))
-
+BRASpec <- corpus_subset(TextsBRA, Program == "Especialização")
+BRAMS <- corpus_subset(TextsBRA, Program == "Maestría")
+BRAPhD <- corpus_subset(TextsBRA, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escuta*", "pergunta*", "questiona*", "entende*", "compreende*", "silêncio"),
