@@ -18,7 +18,9 @@ docvars(TextsCHL, "Program") <- CHL$Program
 docvars(TextsCHL, "Country") <- "Chile"
 head(summary(TextsCHL), 10)
 CHLTexts <- data.frame(summary(TextsCHL, length(TextsCHL)))
-
+CHLSpec <- corpus_subset(TextsCHL, Program == "Especialización")
+CHLMS <- corpus_subset(TextsCHL, Program == "Maestría")
+CHLPhD <- corpus_subset(TextsCHL, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
