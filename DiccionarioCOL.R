@@ -224,18 +224,17 @@ ProgramsCOL3$Country <- "Colombia"
 ProgramsCOL3$Level <- "PhD"
 
 
-library(psych)
-describeBy(ProgramsCOL3$Eigenvector, group = ProgramsCOL3$Partition, mat = TRUE, digits = 2)
+psych::describeBy(ProgramsCOL3$Eigenvector, group = ProgramsCOL3$Partition, mat = TRUE, digits = 2)
 library(network)
 Colombia3 <- network(MatrizCOPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia3
-SizeVE3 <- network::network.size(Colombia3)
-DensityVE3 <- network::network.density(Colombia3)
-ClusteringVE3 <- tnet::clustering_tm(MatrizCOPHD)
+SizeCOL3 <- network::network.size(Colombia3)
+DensityCOL3 <- network::network.density(Colombia3)
+ClusteringCOL3 <- tnet::clustering_tm(MatrizCOPHD)
 
-MatrizCOSPEC <- as.matrix(t(VEN_Spec))
-MatrizCOMS <- as.matrix(t(VEN_MS))
-MatrizCOPHD <- as.matrix(t(VEN_PhD))
+MatrizCOSPEC <- as.matrix(t(COL_Spec))
+MatrizCOMS <- as.matrix(t(COL_MS))
+MatrizCOPHD <- as.matrix(t(COL_PhD))
 
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Colombia.RData")
