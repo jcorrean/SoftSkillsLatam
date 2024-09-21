@@ -6,8 +6,8 @@ library(dplyr)
 CORI <- mutate(CORI, 
                Program = ifelse(
                  grepl("Doctorado en", text), "Doctorado",
-                 ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
-                        "Especialización")))
+                 ifelse(grepl("ESPECIALIDAD|ESPECIALIZACIÓN|Especialidad", text), "Especialización", 
+                        "Maestría")))
 Programas <- data.frame(table(CORI$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
@@ -16,9 +16,11 @@ library(quanteda)
 TextsCORI <- corpus(CORI$text)
 docvars(TextsCORI, "Program") <- CORI$Program
 docvars(TextsCORI, "Country") <- "Costa Rica"
-head(summary(TextsCORI), 10)
+tail(summary(TextsCORI), 10)
 CORITexts <- data.frame(summary(TextsCORI, length(TextsCORI)))
-
+CORISpec <- corpus_subset(TextsCORI, Program == "Especialización")
+CORIMS <- corpus_subset(TextsCORI, Program == "Maestría")
+CORIPhD <- corpus_subset(TextsCORI, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
