@@ -42,8 +42,33 @@ ProgramsARG <- tokens(TextsARG,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
+ARG_Spec <- tokens(ARGSpec, 
+                   remove_numbers = TRUE, 
+                   remove_punct = TRUE, 
+                   remove_url = TRUE, 
+                   remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
 
+ARG_MS <- tokens(ARGMS, 
+                 remove_numbers = TRUE, 
+                 remove_punct = TRUE, 
+                 remove_url = TRUE, 
+                 remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
 
+ARG_PhD <- tokens(ARGPhD, 
+                  remove_numbers = TRUE, 
+                  remove_punct = TRUE, 
+                  remove_url = TRUE, 
+                  remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+MatrizARGSPEC <- as.matrix(t(ARG_Spec))
+MatrizARGMS <- as.matrix(t(ARG_MS))
+MatrizARGPHD <- as.matrix(t(ARG_PhD))
 ProgramsARG
 Matriz <- as.matrix(t(ProgramsARG))
 rowSums(Matriz)
