@@ -18,7 +18,9 @@ docvars(TextsURU, "Program") <- URU$Program
 docvars(TextsURU, "Country") <- "Uruguay"
 head(summary(TextsURU), 10)
 URUTexts <- data.frame(summary(TextsURU, length(TextsURU)))
-
+URUSpec <- corpus_subset(TextsURU, Program == "Especialización")
+URUMS <- corpus_subset(TextsURU, Program == "Maestría")
+URUPhD <- corpus_subset(TextsURU, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
