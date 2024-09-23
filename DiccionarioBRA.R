@@ -189,49 +189,49 @@ Brazil2 <- network(MatrizBRAMS, directed = FALSE, hyper = FALSE, loops = FALSE, 
 Brazil2
 SizeBRA2 <- network::network.size(Brazil2)
 DensityBRA2 <- network::network.density(Brazil2)
-ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
+ClusteringBRA2 <- tnet::clustering_tm(MatrizBRASPEC)
 
-bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCORI3)
+bnBRA3 <- graph_from_biadjacency_matrix(t(MatrizBRAPHD), directed = FALSE)
+EdgeListCOL <- as_edgelist(bnBRA3)
 edges_ve <- data.frame(
-  Source = paste0("CR_", EdgeListCOL[, 1]),
+  Source = paste0("BRA_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
-  Country = "CostaRica"
+  Country = "Brazil"
 )
-bipartite_mapping(bnCORI3)
-V(bnCORI3)$type <- bipartite_mapping(bnCORI3)$type
-V(bnCORI3)$shape <- ifelse(V(bnCORI3)$type, "circle", "square")
-V(bnCORI3)$label.cex <- ifelse(V(bnCORI3)$type, 0.5, 1)
-V(bnCORI3)$size <- sqrt(igraph::degree(bnCORI3))
-E(bnCORI3)$color <- "lightgrey"
+bipartite_mapping(bnBRA3)
+V(bnBRA3)$type <- bipartite_mapping(bnBRA3)$type
+V(bnBRA3)$shape <- ifelse(V(bnBRA3)$type, "circle", "square")
+V(bnBRA3)$label.cex <- ifelse(V(bnBRA3)$type, 0.5, 1)
+V(bnBRA3)$size <- sqrt(igraph::degree(bnBRA3))
+E(bnBRA3)$color <- "lightgrey"
 
-ProgramsCORI3 <- data.frame(Degree = igraph::degree(bnCORI3),
-                            Closeness = igraph::closeness(bnCORI3),
-                            Betweennes = igraph::betweenness(bnCORI3),
-                            Eigen = igraph::eigen_centrality(bnCORI3))
-ProgramsCORI3 <- ProgramsCORI3[ -c(5:25) ]
-rownames(ProgramsCORI3)
-ProgramsCORI3$SS <- rownames(ProgramsCORI3)
-ProgramsCORI3 <- ProgramsCORI3[order(-ProgramsCORI3$Degree), ]
-#ProgramsCORI3 <- ProgramsCORI3[!grepl("text", ProgramsCORI3$SS), ]
-colnames(ProgramsCORI3)[4] <- "Eigenvector"
-ProgramsCORI3$Node <- rownames(ProgramsCORI3)
-ProgramsCORI3 <- mutate(ProgramsCORI3, 
+ProgramsBRA3 <- data.frame(Degree = igraph::degree(bnBRA3),
+                            Closeness = igraph::closeness(bnBRA3),
+                            Betweennes = igraph::betweenness(bnBRA3),
+                            Eigen = igraph::eigen_centrality(bnBRA3))
+ProgramsBRA3 <- ProgramsBRA3[ -c(5:25) ]
+rownames(ProgramsBRA3)
+ProgramsBRA3$SS <- rownames(ProgramsBRA3)
+ProgramsBRA3 <- ProgramsBRA3[order(-ProgramsBRA3$Degree), ]
+#ProgramsBRA3 <- ProgramsBRA3[!grepl("text", ProgramsBRA3$SS), ]
+colnames(ProgramsBRA3)[4] <- "Eigenvector"
+ProgramsBRA3$Node <- rownames(ProgramsBRA3)
+ProgramsBRA3 <- mutate(ProgramsBRA3, 
                         Partition = ifelse(
                           grepl("text", Node), "Program", "Skill"))
-ProgramsCORI3$Country <- "Costa Rica"
-ProgramsCORI3$Level <- "PhD"
+ProgramsBRA3$Country <- "Brazil"
+ProgramsBRA3$Level <- "PhD"
 
 
-psych::describeBy(ProgramsCORI3$Eigenvector, group = ProgramsCORI3$Partition, mat = TRUE, digits = 2)
+psych::describeBy(ProgramsBRA3$Eigenvector, group = ProgramsBRA3$Partition, mat = TRUE, digits = 2)
 library(network)
-CostaRica3 <- network(MatrizCORIPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-CostaRica3
-SizeCOL3 <- network::network.size(CostaRica3)
-DensityCOL3 <- network::network.density(CostaRica3)
-ClusteringCOL3 <- tnet::clustering_tm(MatrizCORIPHD)
+Brazil3 <- network(MatrizBRAPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil3
+SizeBRA3 <- network::network.size(Brazil3)
+DensityBRA3 <- network::network.density(Brazil3)
+ClusteringBRA3 <- tnet::clustering_tm(MatrizBRAPHD)
 
-MatrizBRASPEC <- as.matrix(t(CORI_Spec))
-MatrizBRAMS <- as.matrix(t(CORI_MS))
-MatrizCORIPHD <- as.matrix(t(CORI_PhD))
+MatrizBRASPEC <- as.matrix(t(BRA_Spec))
+MatrizBRAMS <- as.matrix(t(BRA_MS))
+MatrizBRAPHD <- as.matrix(t(BRA_PhD))
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Brazil.RData")
