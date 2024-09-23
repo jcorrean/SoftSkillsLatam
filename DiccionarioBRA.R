@@ -42,12 +42,36 @@ ProgramsBRA <- tokens(TextsBRA,
                       remove_symbols = TRUE) %>%
   tokens_remove(stopwords("portuguese")) %>% tokens_lookup(dictionary = Dictionary) %>%
   dfm()
+BRA_Spec <- tokens(BRASpec, 
+                    remove_numbers = TRUE, 
+                    remove_punct = TRUE, 
+                    remove_url = TRUE, 
+                    remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
 
+BRA_MS <- tokens(BRAMS, 
+                  remove_numbers = TRUE, 
+                  remove_punct = TRUE, 
+                  remove_url = TRUE, 
+                  remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+BRA_PhD <- tokens(BRAPhD, 
+                   remove_numbers = TRUE, 
+                   remove_punct = TRUE, 
+                   remove_url = TRUE, 
+                   remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+MatrizBRASPEC <- as.matrix(t(BRA_Spec))
+MatrizBRAMS <- as.matrix(t(BRA_MS))
+MatrizBRAPHD <- as.matrix(t(BRA_PhD))
 ProgramsBRA
 Matriz <- as.matrix(t(ProgramsBRA))
-DataBrazil <- data.frame(t(Matriz))
 rowSums(Matriz)
-
 library(igraph)
 bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListBR <- as_edgelist(bnBRA)
@@ -74,8 +98,9 @@ ProgramsBRA <- ProgramsBRA[order(-ProgramsBRA$Degree), ]
 #ProgramsBRA <- ProgramsBRA[!grepl("text", ProgramsBRA$SS), ]
 colnames(ProgramsBRA)[4] <- "Eigenvector"
 ProgramsBRA$Node <- rownames(ProgramsBRA)
-ProgramsBRA$Partition <- "Skill"
-ProgramsBRA$Partition[c(11:932)] <- "Program"
+ProgramsBRA <- mutate(ProgramsBRA, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
 ProgramsBRA$Country <- "Brazil"
 
 library(psych)
