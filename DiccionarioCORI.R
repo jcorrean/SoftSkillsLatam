@@ -182,6 +182,13 @@ ProgramsCORI2 <- mutate(ProgramsCORI2,
                          grepl("text", Node), "Program", "Skill"))
 ProgramsCORI2$Country <- "Costa Rica"
 ProgramsCORI2$Level <- "Master"
+psych::describeBy(ProgramsCORI2$Eigenvector, group = ProgramsCORI2$Partition, mat = TRUE, digits = 2)
+library(network)
+CostaRica1 <- network(MatrizCORISPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+CostaRica1
+SizeCORI1 <- network::network.size(CostaRica1)
+DensityCORI1 <- network::network.density(CostaRica1)
+ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI3)
