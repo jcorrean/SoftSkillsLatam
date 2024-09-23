@@ -183,6 +183,13 @@ ProgramsBRA2 <- mutate(ProgramsBRA2,
                           grepl("text", Node), "Program", "Skill"))
 ProgramsBRA2$Country <- "Brazil"
 ProgramsBRA2$Level <- "Master"
+psych::describeBy(ProgramsBRA2$Eigenvector, group = ProgramsBRA2$Partition, mat = TRUE, digits = 2)
+library(network)
+Brazil2 <- network(MatrizBRAMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil2
+SizeBRA2 <- network::network.size(Brazil2)
+DensityBRA2 <- network::network.density(Brazil2)
+ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI3)
