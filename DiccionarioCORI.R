@@ -42,10 +42,36 @@ ProgramsCORI <- tokens(TextsCORI,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-ProgramsCORI
-Matriz <- as.matrix(t(ProgramsCORI))
-rowSums(Matriz)
+CORI_Spec <- tokens(CORISpec, 
+                   remove_numbers = TRUE, 
+                   remove_punct = TRUE, 
+                   remove_url = TRUE, 
+                   remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
 
+CORI_MS <- tokens(CORIMS, 
+                 remove_numbers = TRUE, 
+                 remove_punct = TRUE, 
+                 remove_url = TRUE, 
+                 remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+CORI_PhD <- tokens(CORIPhD, 
+                  remove_numbers = TRUE, 
+                  remove_punct = TRUE, 
+                  remove_url = TRUE, 
+                  remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+MatrizCOSPEC <- as.matrix(t(COL_Spec))
+MatrizCOMS <- as.matrix(t(COL_MS))
+MatrizCOPHD <- as.matrix(t(COL_PhD))
+ProgramsCOL
+Matriz <- as.matrix(t(ProgramsCOL))
+rowSums(Matriz)
 library(igraph)
 bnCORI <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListCORI <- as_edgelist(bnCORI)
