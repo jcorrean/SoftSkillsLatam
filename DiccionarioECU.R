@@ -42,6 +42,34 @@ ProgramsECU <- tokens(TextsECU,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
+ECU_Spec <- tokens(ECUSpec, 
+                    remove_numbers = TRUE, 
+                    remove_punct = TRUE, 
+                    remove_url = TRUE, 
+                    remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+ECU_MS <- tokens(ECUMS, 
+                  remove_numbers = TRUE, 
+                  remove_punct = TRUE, 
+                  remove_url = TRUE, 
+                  remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+ECU_PhD <- tokens(ECUPhD, 
+                   remove_numbers = TRUE, 
+                   remove_punct = TRUE, 
+                   remove_url = TRUE, 
+                   remove_symbols = TRUE) %>%  
+  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
+  dfm()
+
+MatrizECUSPEC <- as.matrix(t(ECU_Spec))
+MatrizECUMS <- as.matrix(t(ECU_MS))
+MatrizECUPHD <- as.matrix(t(ECU_PhD))
+
 ProgramsECU
 Matriz <- as.matrix(t(ProgramsECU))
 rowSums(Matriz)
