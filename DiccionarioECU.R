@@ -100,16 +100,137 @@ ProgramsECU <- ProgramsECU[order(-ProgramsECU$Degree), ]
 #ProgramsECU <- ProgramsECU[!grepl("text", ProgramsECU$SS), ]
 colnames(ProgramsECU)[4] <- "Eigenvector"
 ProgramsECU$Node <- rownames(ProgramsECU)
-ProgramsECU$Partition <- "Skill"
-ProgramsECU$Partition[c(11:741)] <- "Program"
+ProgramsECU <- mutate(ProgramsECU, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
 ProgramsECU$Country <- "Ecuador"
 
-library(psych)
-describeBy(ProgramsECU$Eigenvector, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
+psych::describeBy(ProgramsECU$Eigenvector, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
 library(network)
 Ecuador <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador
 SizeECU <- network::network.size(Ecuador)
 DensityECU <- network::network.density(Ecuador)
 ClusteringECU <- tnet::clustering_tm(Matriz)
+
+bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
+EdgeListVE <- as_edgelist(bnECU1)
+edges_ve <- data.frame(
+  Source = paste0("ECU_", EdgeListVE[, 1]),
+  Target = EdgeListVE[, 2],
+  Country = "Ecuador"
+)
+bipartite_mapping(bnECU1)
+V(bnECU1)$type <- bipartite_mapping(bnECU1)$type
+V(bnECU1)$shape <- ifelse(V(bnECU1)$type, "circle", "square")
+V(bnECU1)$label.cex <- ifelse(V(bnECU1)$type, 0.5, 1)
+V(bnECU1)$size <- sqrt(igraph::degree(bnECU1))
+E(bnECU1)$color <- "lightgrey"
+
+ProgramsECU1 <- data.frame(Degree = igraph::degree(bnECU1),
+                           Closeness = igraph::closeness(bnECU1),
+                           Betweennes = igraph::betweenness(bnECU1),
+                           Eigen = igraph::eigen_centrality(bnECU1))
+ProgramsECU1 <- ProgramsECU1[ -c(5:25) ]
+rownames(ProgramsECU1)
+ProgramsECU1$SS <- rownames(ProgramsECU1)
+ProgramsECU1 <- ProgramsECU1[order(-ProgramsECU1$Degree), ]
+#ProgramsECU1 <- ProgramsECU1[!grepl("text", ProgramsECU1$SS), ]
+colnames(ProgramsECU1)[4] <- "Eigenvector"
+ProgramsECU1$Node <- rownames(ProgramsECU1)
+ProgramsECU1 <- mutate(ProgramsECU1, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
+ProgramsECU1$Country <- "Ecuador"
+ProgramsECU1$Level <- "Specialization"
+
+psych::describeBy(ProgramsECU1$Eigenvector, group = ProgramsECU1$Partition, mat = TRUE, digits = 2)
+library(network)
+Ecuador1 <- network(MatrizECUSPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador1
+SizeECU1 <- network::network.size(Ecuador1)
+DensityECU1 <- network::network.density(Ecuador1)
+ClusteringECU1 <- tnet::clustering_tm(MatrizECUSPEC)
+
+bnECU2 <- graph_from_biadjacency_matrix(t(MatrizECUMS), directed = FALSE)
+EdgeListVE <- as_edgelist(bnECU2)
+edges_ve <- data.frame(
+  Source = paste0("ECU_", EdgeListVE[, 1]),
+  Target = EdgeListVE[, 2],
+  Country = "Ecuador"
+)
+bipartite_mapping(bnECU2)
+V(bnECU2)$type <- bipartite_mapping(bnECU2)$type
+V(bnECU2)$shape <- ifelse(V(bnECU2)$type, "circle", "square")
+V(bnECU2)$label.cex <- ifelse(V(bnECU2)$type, 0.5, 1)
+V(bnECU2)$size <- sqrt(igraph::degree(bnECU2))
+E(bnECU2)$color <- "lightgrey"
+
+ProgramsECU2 <- data.frame(Degree = igraph::degree(bnECU2),
+                           Closeness = igraph::closeness(bnECU2),
+                           Betweennes = igraph::betweenness(bnECU2),
+                           Eigen = igraph::eigen_centrality(bnECU2))
+ProgramsECU2 <- ProgramsECU2[ -c(5:25) ]
+rownames(ProgramsECU2)
+ProgramsECU2$SS <- rownames(ProgramsECU2)
+ProgramsECU2 <- ProgramsECU2[order(-ProgramsECU2$Degree), ]
+#ProgramsECU2 <- ProgramsECU2[!grepl("text", ProgramsECU2$SS), ]
+colnames(ProgramsECU2)[4] <- "Eigenvector"
+ProgramsECU2$Node <- rownames(ProgramsECU2)
+ProgramsECU2 <- mutate(ProgramsECU2, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
+ProgramsECU2$Country <- "Ecuador"
+ProgramsECU2$Level <- "Master"
+psych::describeBy(ProgramsECU2$Eigenvector, group = ProgramsECU2$Partition, mat = TRUE, digits = 2)
+library(network)
+Ecuador2 <- network(MatrizECUMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador2
+SizeECU2 <- network::network.size(Ecuador2)
+DensityECU2 <- network::network.density(Ecuador2)
+ClusteringECU2 <- tnet::clustering_tm(MatrizECUMS)
+
+bnECU3 <- graph_from_biadjacency_matrix(t(MatrizECUPHD), directed = FALSE)
+EdgeListVE <- as_edgelist(bnECU3)
+edges_ve <- data.frame(
+  Source = paste0("ECU_", EdgeListVE[, 1]),
+  Target = EdgeListVE[, 2],
+  Country = "Ecuador"
+)
+bipartite_mapping(bnECU3)
+V(bnECU3)$type <- bipartite_mapping(bnECU3)$type
+V(bnECU3)$shape <- ifelse(V(bnECU3)$type, "circle", "square")
+V(bnECU3)$label.cex <- ifelse(V(bnECU3)$type, 0.5, 1)
+V(bnECU3)$size <- sqrt(igraph::degree(bnECU3))
+E(bnECU3)$color <- "lightgrey"
+
+ProgramsECU3 <- data.frame(Degree = igraph::degree(bnECU3),
+                           Closeness = igraph::closeness(bnECU3),
+                           Betweennes = igraph::betweenness(bnECU3),
+                           Eigen = igraph::eigen_centrality(bnECU3))
+ProgramsECU3 <- ProgramsECU3[ -c(5:25) ]
+rownames(ProgramsECU3)
+ProgramsECU3$SS <- rownames(ProgramsECU3)
+ProgramsECU3 <- ProgramsECU3[order(-ProgramsECU3$Degree), ]
+#ProgramsECU3 <- ProgramsECU3[!grepl("text", ProgramsECU3$SS), ]
+colnames(ProgramsECU3)[4] <- "Eigenvector"
+ProgramsECU3$Node <- rownames(ProgramsECU3)
+ProgramsECU3 <- mutate(ProgramsECU3, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
+ProgramsECU3$Country <- "Ecuador"
+ProgramsECU3$Level <- "PhD"
+
+psych::describeBy(ProgramsECU3$Eigenvector, group = ProgramsECU3$Partition, mat = TRUE, digits = 2)
+
+Ecuador3 <- network(MatrizECUPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador3
+SizeECU3 <- network::network.size(Ecuador3)
+DensityECU3 <- network::network.density(Ecuador3)
+ClusteringECU3 <- tnet::clustering_tm(MatrizECUPHD)
+
+MatrizECUSPEC <- as.matrix(t(ECU_Spec))
+MatrizECUMS <- as.matrix(t(ECU_MS))
+MatrizECUPHD <- as.matrix(t(ECU_PhD))
+
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Ecuador.RData")
