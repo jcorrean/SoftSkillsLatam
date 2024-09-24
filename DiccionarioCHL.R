@@ -73,8 +73,9 @@ ProgramsCHL <- ProgramsCHL[order(-ProgramsCHL$Degree), ]
 #ProgramsCHL <- ProgramsCHL[!grepl("text", ProgramsCHL$SS), ]
 colnames(ProgramsCHL)[4] <- "Eigenvector"
 ProgramsCHL$Node <- rownames(ProgramsCHL)
-ProgramsCHL$Partition <- "Skill"
-ProgramsCHL$Partition[c(11:218)] <- "Program"
+ProgramsCHL <- mutate(ProgramsCHL, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
 ProgramsCHL$Country <- "Chile"
 
 library(psych)
@@ -87,4 +88,5 @@ Chile
 SizeCHL <- network::network.size(Chile)
 DensityCHL <- network::network.density(Chile)
 ClusteringCHL <- tnet::clustering_tm(Matriz)
+
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Chile.RData")
