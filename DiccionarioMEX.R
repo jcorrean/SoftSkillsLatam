@@ -118,7 +118,7 @@ ClusteringMEX <- tnet::clustering_tm(Matriz)
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX1)
 edges_ve <- data.frame(
-  Source = paste0("ECU_", EdgeListVE[, 1]),
+  Source = paste0("MEX_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Mexico"
 )
@@ -157,7 +157,7 @@ ClusteringMEX1 <- tnet::clustering_tm(MatrizMEXSPEC)
 bnMEX2 <- graph_from_biadjacency_matrix(t(MatrizMEXMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX2)
 edges_ve <- data.frame(
-  Source = paste0("ECU_", EdgeListVE[, 1]),
+  Source = paste0("MEX_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Mexico"
 )
