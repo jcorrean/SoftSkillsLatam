@@ -224,7 +224,7 @@ ProgramsVEN3 <- mutate(ProgramsVEN3,
                        Partition = ifelse(
                          grepl("text", Node), "Program", "Skill"))
 ProgramsVEN3$Country <- "Venezuela"
-ProgramsVEN3Level <- "PhD"
+ProgramsVEN3$Level <- "PhD"
 
 library(psych)
 describeBy(ProgramsVEN3$Eigenvector, group = ProgramsVEN3$Partition, mat = TRUE, digits = 2)
