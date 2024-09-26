@@ -7,42 +7,15 @@ load("Results/Ecuador.RData")
 load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
-Argentina1, Argentina2, Argentina3
-Brazil1, Brazil2, Brazil3
-Chile1, Chile2, Chile3
-Colombia1, Colombia2, Colombia3
-CostaRica1
-Ecuador1, Ecuador2, Ecuador3
-Mexico1, Mexico2, Mexico3
-Uruguay1, Uruguay2, Uruguay3
-Venezuela1, Venezuela2, Venezuela3
 
-rm(list=setdiff(ls(), c("Arg",
-"ARGMS",
-"ARGPhD",
-"BRASpec",
-"BRAMS",
-"BRAPhD",
-"CHLSpec",
-"CHLMS",
-"CHLPhD",
-"COLSpec",
-"COLMS",
-"COLPhD",
-"CORISpec",
-"CORIMS",
-"CORIPhD",
-"ECUSpec",
-"ECUMS",
-"ECUPhD",
-"MEXSpec",
-"MEXMS",
-"MEXPhD",
-"URUSpec",
-"URUMS",
-"URUPhD",
-"VENSpec",
-"VENMS",
-"VENPhD")))
+rm(list=setdiff(ls(), c("ProgramsARG1", "ProgramsARG1", "ProgramsARG3",
+                        "ProgramsBRA1", "ProgramsBRA2", "ProgramsBRA3",
+                        "ProgramsCHL1", "ProgramsCHL2", "ProgramsCHL3",
+                        "ProgramsCOL1", "ProgramsCOL2", "ProgramsCOL3",
+                        "ProgramsCORI1", "ProgramsCORI2", "ProgramsCORI3",
+                        "ProgramsECU1", "ProgramsECU2", "ProgramsECU3",
+                        "ProgramsMEX1", "ProgramsMEX2", "ProgramsMEX3",
+                        "ProgramsURU1", "ProgramsURU2", "ProgramsURU3",
+                        "ProgramsVEN1", "ProgramsVEN2", "ProgramsVEN3")))
 
 
