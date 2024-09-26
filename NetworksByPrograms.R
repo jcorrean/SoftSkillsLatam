@@ -7,7 +7,17 @@ load("Results/Ecuador.RData")
 load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
-rm(list=setdiff(ls(), c("ARGSpec",
+Argentina1, Argentina2, Argentina3
+Brazil1, Brazil2, Brazil3
+Chile1, Chile2, Chile3
+Colombia1, Colombia2, Colombia3
+CostaRica1
+Ecuador1, Ecuador2, Ecuador3
+Mexico1, Mexico2, Mexico3
+Uruguay1, Uruguay2, Uruguay3
+Venezuela1, Venezuela2, Venezuela3
+
+rm(list=setdiff(ls(), c("Arg",
 "ARGMS",
 "ARGPhD",
 "BRASpec",
@@ -34,45 +44,5 @@ rm(list=setdiff(ls(), c("ARGSpec",
 "VENSpec",
 "VENMS",
 "VENPhD")))
-library(quanteda)
-Dictionary <- dictionary(list(
-  active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
-  mathematics = c("matemática", "resolver problemas matemáticos", "cálculos", "calcular"),
-  reading_comprehension = c("lectura", "leer", "oraciones", "párrafo*", "textos", "documento*"),
-  science = c("ciencia*", "científic*", "método*", "resolver problemas", "investiga*"),
-  speaking = c("oratoria", "comunica*"),
-  writing = c("escrib*", "redact*", "escrito"),
-  active_learning = c("implicaciones", "comprende", "decisión", "futur*", "nueva información"),
-  critical_thinking = c("crítico", "pensamiento crítico", "lógic*", "razona*"),
-  learning_strategy = c("aprend*", "enseñ*", "instrucci*"),
-  monitoring = c("auto-evalu*",  "reflexi*", "desempeñ", "ejecución")
-))
-VEN_Spec <- tokens(VENSpec, 
-                      remove_numbers = TRUE, 
-                      remove_punct = TRUE, 
-                      remove_url = TRUE, 
-                      remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-VEN_MS <- tokens(VENMS, 
-                 remove_numbers = TRUE, 
-                 remove_punct = TRUE, 
-                 remove_url = TRUE, 
-                 remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-VEN_PhD <- tokens(VENPhD, 
-       remove_numbers = TRUE, 
-       remove_punct = TRUE, 
-       remove_url = TRUE, 
-       remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-MatrizVESPEC <- as.matrix(t(VEN_Spec))
-MatrizVEMS <- as.matrix(t(VEN_MS))
-MatrizVEPHD <- as.matrix(t(VEN_PhD))
 
 
