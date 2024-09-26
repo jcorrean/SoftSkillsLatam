@@ -103,8 +103,7 @@ ProgramsCORI <- mutate(ProgramsCORI,
                         grepl("text", Node), "Program", "Skill"))
 ProgramsCORI$Country <- "Costa Rica"
 
-library(psych)
-describeBy(ProgramsCORI$Eigenvector, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
+psych::describeBy(ProgramsCORI$Eigenvector, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
 
 library(network)
 CostaRica <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -184,11 +183,11 @@ ProgramsCORI2$Country <- "Costa Rica"
 ProgramsCORI2$Level <- "Master"
 psych::describeBy(ProgramsCORI2$Eigenvector, group = ProgramsCORI2$Partition, mat = TRUE, digits = 2)
 library(network)
-CostaRica1 <- network(MatrizCORISPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-CostaRica1
-SizeCORI1 <- network::network.size(CostaRica1)
-DensityCORI1 <- network::network.density(CostaRica1)
-ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
+CostaRica2 <- network(MatrizCORIMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+CostaRica2
+SizeCORI2 <- network::network.size(CostaRica2)
+DensityCORI2 <- network::network.density(CostaRica2)
+ClusteringCORI2 <- tnet::clustering_tm(MatrizCORIMS)
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI3)
@@ -226,9 +225,9 @@ psych::describeBy(ProgramsCORI3$Eigenvector, group = ProgramsCORI3$Partition, ma
 library(network)
 CostaRica3 <- network(MatrizCORIPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica3
-SizeCOL3 <- network::network.size(CostaRica3)
-DensityCOL3 <- network::network.density(CostaRica3)
-ClusteringCOL3 <- tnet::clustering_tm(MatrizCORIPHD)
+SizeCORI3 <- network::network.size(CostaRica3)
+DensityCORI3 <- network::network.density(CostaRica3)
+ClusteringCORI3 <- tnet::clustering_tm(MatrizCORIPHD)
 
 MatrizCORISPEC <- as.matrix(t(CORI_Spec))
 MatrizCORIMS <- as.matrix(t(CORI_MS))
