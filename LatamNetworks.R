@@ -58,7 +58,7 @@ Centralities <- mutate(Centralities,
                         grepl("text", Node), "Program", "Skill"))
 
 table(Centralities$Partition)
-
+table(Centralities$)
 
 library(network)
 RegionNetwork <- network(Matrix, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
