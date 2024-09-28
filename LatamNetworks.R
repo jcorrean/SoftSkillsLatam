@@ -71,6 +71,13 @@ Centralities <- mutate(Centralities,
 
 table(Centralities$Partition)
 
+library(dplyr)
+result <- Centralities %>%
+  group_by(Country, Level, Partition) %>%
+  summarize(
+    Mean = mean(Eigenvector),
+    SD = sd(Eigenvector)
+  )
 
 library(network)
 RegionNetwork <- network(Matrix, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
