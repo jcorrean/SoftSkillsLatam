@@ -76,7 +76,7 @@ rowSums(Matriz)
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListAR <- as_edgelist(bnARG)
-edges_ar <- data.frame(
+edges_arg <- data.frame(
   Source = paste0("ARG_", EdgeListAR[, 1]),
   Target = EdgeListAR[, 2],
   Country = "Argentina"
@@ -117,7 +117,7 @@ ClusteringARG <- tnet::clustering_tm(Matriz)
 library(igraph)
 bnARG1 <- graph_from_biadjacency_matrix(t(MatrizARGSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnARG1)
-edges_ve <- data.frame(
+edges_arg1 <- data.frame(
   Source = paste0("ARG_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Argentina"
@@ -158,7 +158,7 @@ ClusteringARG1 <- tnet::clustering_tm(MatrizARGSPEC)
 library(igraph)
 bnARG2 <- graph_from_biadjacency_matrix(t(MatrizARGMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnARG2)
-edges_ve <- data.frame(
+edges_arg2 <- data.frame(
   Source = paste0("ARG_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Argentina"
@@ -198,7 +198,7 @@ ClusteringARG2 <- tnet::clustering_tm(MatrizARGMS)
 library(igraph)
 bnARG3 <- graph_from_biadjacency_matrix(t(MatrizARGPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnARG3)
-edges_ve <- data.frame(
+edges_arg3 <- data.frame(
   Source = paste0("ARG_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Argentina"
