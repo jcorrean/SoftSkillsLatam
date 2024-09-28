@@ -40,6 +40,7 @@ Matrix <- as.matrix(as_adjacency_matrix(bnR))
 nrow(Matrix) - 10
 ncol(Matrix)
 Matrix <- Matrix[1:10,11:ncol(Matrix)]
+summary(bnR)
 
 
 Centralities <- data.frame(Degree = igraph::degree(bnR),
@@ -56,9 +57,20 @@ colnames(Centralities)[4] <- "Eigenvector"
 Centralities <- mutate(Centralities, 
                       Partition = ifelse(
                         grepl("text", Node), "Program", "Skill"))
+Centralities <- mutate(Centralities, 
+                       Country = ifelse(
+                         grepl("ARG_text", Node), "Argentina", 
+                         ifelse(grepl("BRA_text", Node), "Brazil",
+                         ifelse(grepl("CHL_text", Node), "Chile",
+                         ifelse(grepl("COL_text", Node), "Colombia",
+                         ifelse(grepl("CORI_text", Node), "Costa Rica",
+                         ifelse(grepl("ECU_text", Node), "Ecuador",
+                         ifelse(grepl("MEX_text", Node), "Mexico",
+                         ifelse(grepl("URU_text", Node), "Uruguay",
+                         ifelse(grepl("VEN_text", Node), "Venezuela", ""))))))))))
 
 table(Centralities$Partition)
-table(Centralities$)
+
 
 library(network)
 RegionNetwork <- network(Matrix, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
