@@ -40,7 +40,7 @@ Matrix <- as.matrix(as_adjacency_matrix(bnR))
 nrow(Matrix) - 10
 ncol(Matrix)
 Matrix <- Matrix[1:10,11:ncol(Matrix)]
-summary(bnR)
+Columnas <- data.frame(colnames(Matrix))
 
 
 Centralities <- data.frame(Degree = igraph::degree(bnR),
@@ -63,7 +63,7 @@ Centralities <- mutate(Centralities,
                          ifelse(grepl("BRA_text", Node), "Brazil",
                          ifelse(grepl("CHL_text", Node), "Chile",
                          ifelse(grepl("COL_text", Node), "Colombia",
-                         ifelse(grepl("CORI_text", Node), "Costa Rica",
+                         ifelse(grepl("CR_text", Node), "Costa Rica",
                          ifelse(grepl("ECU_text", Node), "Ecuador",
                          ifelse(grepl("MEX_text", Node), "Mexico",
                          ifelse(grepl("URU_text", Node), "Uruguay",
