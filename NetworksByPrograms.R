@@ -27,6 +27,14 @@ Specializations <- do.call(rbind, list(ProgramsARG1,
                                        ProgramsMEX1,
                                        ProgramsURU1,
                                        ProgramsVEN1))
+library(dplyr)
+result <- Specializations %>%
+  group_by(Country, Partition) %>%
+  summarize(
+    Mean = mean(Eigenvector),
+    SD = sd(Eigenvector)
+  )
+  
 
 Masters <- do.call(rbind, list(ProgramsARG2,
                                ProgramsBRA2,
