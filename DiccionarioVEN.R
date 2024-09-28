@@ -100,8 +100,9 @@ ProgramsVEN <- ProgramsVEN[order(-ProgramsVEN$Degree), ]
 #ProgramsVEN <- ProgramsVEN[!grepl("text", ProgramsVEN$SS), ]
 colnames(ProgramsVEN)[4] <- "Eigenvector"
 ProgramsVEN$Node <- rownames(ProgramsVEN)
-ProgramsVEN$Partition <- "Skill"
-ProgramsVEN$Partition[c(11:220)] <- "Program"
+ProgramsVEN <- mutate(ProgramsVEN, 
+                       Partition = ifelse(
+                         grepl("text", Node), "Program", "Skill"))
 ProgramsVEN$Country <- "Venezuela"
 
 library(psych)
