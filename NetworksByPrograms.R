@@ -27,4 +27,21 @@ Specializations <- do.call(rbind, list(ProgramsARG1,
                                        ProgramsMEX1,
                                        ProgramsURU1,
                                        ProgramsVEN1))
-Masters <- 
+Masters <- do.call(rbind, list(ProgramsARG2,
+                               ProgramsBRA2,
+                               ProgramsCHL2,
+                               ProgramsCOL2,
+                               ProgramsCORI2,
+                               ProgramsECU2,
+                               ProgramsMEX2,
+                               ProgramsURU2,
+                               ProgramsVEN2))
+PhD <- do.call(rbind, list(ProgramsARG3,
+                           ProgramsBRA3,
+                           ProgramsCHL3,
+                           ProgramsCOL3,
+                           ProgramsCORI3,
+                           ProgramsECU3,
+                           ProgramsMEX3,
+                           ProgramsURU3,
+                           ProgramsVEN3))
