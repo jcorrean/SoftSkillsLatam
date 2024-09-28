@@ -38,7 +38,8 @@ V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
 Matrix <- as.matrix(as_adjacency_matrix(bnR))
 nrow(Matrix) - 10
-Matrix <- Matrix[1:10,11:3165]
+ncol(Matrix)
+Matrix <- Matrix[1:10,11:ncol(Matrix)]
 
 
 Centralities <- data.frame(Degree = igraph::degree(bnR),
@@ -52,8 +53,9 @@ Centralities <- Centralities[order(-Centralities$Degree), ]
 #Centralities <- Centralities[!grepl("text", Centralities$SS), ]
 #Centralities <- Centralities[1:4]
 colnames(Centralities)[4] <- "Eigenvector"
-Centralities$Partition <- "Skill" 
-Centralities$Partition[c(11:3165)] <- "Program" 
+Centralities <- mutate(Centralities, 
+                      Partition = ifelse(
+                        grepl("text", Node), "Program", "Skill"))
 
 table(Centralities$Partition)
 
