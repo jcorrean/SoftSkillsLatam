@@ -115,7 +115,7 @@ ClusteringECU <- tnet::clustering_tm(Matriz)
 
 bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnECU1)
-edges_ve <- data.frame(
+edges_ec1 <- data.frame(
   Source = paste0("ECU_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Ecuador"
@@ -154,7 +154,7 @@ ClusteringECU1 <- tnet::clustering_tm(MatrizECUSPEC)
 
 bnECU2 <- graph_from_biadjacency_matrix(t(MatrizECUMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnECU2)
-edges_ve <- data.frame(
+edges_ec2 <- data.frame(
   Source = paste0("ECU_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Ecuador"
@@ -192,7 +192,7 @@ ClusteringECU2 <- tnet::clustering_tm(MatrizECUMS)
 
 bnECU3 <- graph_from_biadjacency_matrix(t(MatrizECUPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnECU3)
-edges_ve <- data.frame(
+edges_ec3 <- data.frame(
   Source = paste0("ECU_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Ecuador"

@@ -114,7 +114,7 @@ DensityCOL <- network::network.density(Colombia)
 ClusteringCOL <- tnet::clustering_tm(Matriz)
 bnCOL1 <- graph_from_biadjacency_matrix(t(MatrizCOSPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL1)
-edges_ve <- data.frame(
+edges_col1 <- data.frame(
   Source = paste0("COL_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Colombia"
@@ -154,7 +154,7 @@ ClusteringCO1 <- tnet::clustering_tm(MatrizCOSPEC)
 library(igraph)
 bnCOL2 <- graph_from_biadjacency_matrix(t(MatrizCOMS), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL2)
-edges_ve <- data.frame(
+edges_col2 <- data.frame(
   Source = paste0("COL_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Colombia"
@@ -194,7 +194,7 @@ ClusteringCO2 <- tnet::clustering_tm(MatrizCOMS)
 library(igraph)
 bnCOL3 <- graph_from_biadjacency_matrix(t(MatrizCOPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL3)
-edges_ve <- data.frame(
+edges_col3 <- data.frame(
   Source = paste0("COL_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Colombia"
@@ -235,6 +235,5 @@ ClusteringCOL3 <- tnet::clustering_tm(MatrizCOPHD)
 MatrizCOSPEC <- as.matrix(t(COL_Spec))
 MatrizCOMS <- as.matrix(t(COL_MS))
 MatrizCOPHD <- as.matrix(t(COL_PhD))
-
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Colombia.RData")

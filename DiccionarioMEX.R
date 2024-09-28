@@ -114,10 +114,9 @@ SizeMEX <- network::network.size(Mexico)
 DensityMEX <- network::network.density(Mexico)
 ClusteringMEX <- tnet::clustering_tm(Matriz)
 
-
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX1)
-edges_ve <- data.frame(
+edges_mx1 <- data.frame(
   Source = paste0("MEX_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Mexico"
@@ -156,7 +155,7 @@ ClusteringMEX1 <- tnet::clustering_tm(MatrizMEXSPEC)
 
 bnMEX2 <- graph_from_biadjacency_matrix(t(MatrizMEXMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX2)
-edges_ve <- data.frame(
+edges_mx2 <- data.frame(
   Source = paste0("MEX_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Mexico"
@@ -194,7 +193,7 @@ ClusteringMEX2 <- tnet::clustering_tm(MatrizMEXMS)
 
 bnMEX3 <- graph_from_biadjacency_matrix(t(MatrizMEXPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX3)
-edges_ve <- data.frame(
+edges_mx3 <- data.frame(
   Source = paste0("MEX_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Mexico"

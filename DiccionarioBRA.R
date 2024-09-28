@@ -116,7 +116,7 @@ ClusteringBR <- tnet::clustering_tm(Matriz)
 
 bnBRA1 <- graph_from_biadjacency_matrix(t(MatrizBRASPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnBRA1)
-edges_ve <- data.frame(
+edges_br1 <- data.frame(
   Source = paste0("BRA_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Costa Rica"
@@ -155,7 +155,7 @@ ClusteringBRA1 <- tnet::clustering_tm(MatrizBRASPEC)
 
 bnBRA2 <- graph_from_biadjacency_matrix(t(MatrizBRAMS), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnBRA2)
-edges_ve <- data.frame(
+edges_br2 <- data.frame(
   Source = paste0("BR_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Brazil"
@@ -193,7 +193,7 @@ ClusteringBRA2 <- tnet::clustering_tm(MatrizBRASPEC)
 
 bnBRA3 <- graph_from_biadjacency_matrix(t(MatrizBRAPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnBRA3)
-edges_ve <- data.frame(
+edges_br3 <- data.frame(
   Source = paste0("BRA_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Brazil"

@@ -115,7 +115,7 @@ ClusteringURU <- tnet::clustering_tm(Matriz)
 library(igraph)
 bnURU1 <- graph_from_biadjacency_matrix(t(MatrizURUSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnURU1)
-edges_ve <- data.frame(
+edges_ur1 <- data.frame(
   Source = paste0("URU_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Uruguay"
@@ -155,7 +155,7 @@ ClusteringURU1 <- tnet::clustering_tm(MatrizURUSPEC)
 library(igraph)
 bnURU2 <- graph_from_biadjacency_matrix(t(MatrizURUMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnURU2)
-edges_ve <- data.frame(
+edges_ur2 <- data.frame(
   Source = paste0("URU_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Uruguay"
@@ -194,7 +194,7 @@ ClusteringURU2 <- tnet::clustering_tm(MatrizURUMS)
 library(igraph)
 bnURU3 <- graph_from_biadjacency_matrix(t(MatrizURUPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnURU3)
-edges_ve <- data.frame(
+edges_ur3 <- data.frame(
   Source = paste0("URU_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Uruguay"

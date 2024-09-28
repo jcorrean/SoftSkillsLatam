@@ -114,7 +114,7 @@ ClusteringCR <- tnet::clustering_tm(Matriz)
 
 bnCORI1 <- graph_from_biadjacency_matrix(t(MatrizCORISPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI1)
-edges_ve <- data.frame(
+edges_cr1 <- data.frame(
   Source = paste0("CR_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Costa Rica"
@@ -153,7 +153,7 @@ ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
 
 bnCORI2 <- graph_from_biadjacency_matrix(t(MatrizCORIMS), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI2)
-edges_ve <- data.frame(
+edges_cr2 <- data.frame(
   Source = paste0("CR_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "Costa Rica"
@@ -191,7 +191,7 @@ ClusteringCORI2 <- tnet::clustering_tm(MatrizCORIMS)
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI3)
-edges_ve <- data.frame(
+edges_cr3 <- data.frame(
   Source = paste0("CR_", EdgeListCOL[, 1]),
   Target = EdgeListCOL[, 2],
   Country = "CostaRica"
@@ -232,6 +232,5 @@ ClusteringCORI3 <- tnet::clustering_tm(MatrizCORIPHD)
 MatrizCORISPEC <- as.matrix(t(CORI_Spec))
 MatrizCORIMS <- as.matrix(t(CORI_MS))
 MatrizCORIPHD <- as.matrix(t(CORI_PhD))
-
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/CostaRica.RData")

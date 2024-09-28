@@ -121,7 +121,7 @@ ClusteringCHL <- tnet::clustering_tm(Matriz)
 
 bnCHL1 <- graph_from_biadjacency_matrix(t(MatrizCHLSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnCHL1)
-edges_ve <- data.frame(
+edges_chl1 <- data.frame(
   Source = paste0("CHL_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Chile"
@@ -162,7 +162,7 @@ ClusteringCHL1 <- tnet::clustering_tm(MatrizCHLSPEC)
 
 bnCHL2 <- graph_from_biadjacency_matrix(t(MatrizCHLMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnCHL2)
-edges_ve <- data.frame(
+edges_chl2 <- data.frame(
   Source = paste0("CHL_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Chile"
@@ -201,7 +201,7 @@ ClusteringCHL2 <- tnet::clustering_tm(MatrizCHLMS)
 
 bnCHL3 <- graph_from_biadjacency_matrix(t(MatrizCHLPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnCHL3)
-edges_ve <- data.frame(
+edges_chl3 <- data.frame(
   Source = paste0("CHL_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Chile"

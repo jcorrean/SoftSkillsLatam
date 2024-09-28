@@ -116,7 +116,7 @@ ClusteringVE <- tnet::clustering_tm(Matriz)
 
 bnVEN1 <- graph_from_biadjacency_matrix(t(MatrizVESPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnVEN1)
-edges_ve <- data.frame(
+edges_ve1 <- data.frame(
   Source = paste0("VEN_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Venezuela"
@@ -157,7 +157,7 @@ ClusteringVE1 <- tnet::clustering_tm(MatrizVESPEC)
 library(igraph)
 bnVEN2 <- graph_from_biadjacency_matrix(t(MatrizVEMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnVEN2)
-edges_ve <- data.frame(
+edges_ve2 <- data.frame(
   Source = paste0("VEN_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Venezuela"
@@ -198,7 +198,7 @@ ClusteringVE2 <- tnet::clustering_tm(MatrizVEMS)
 library(igraph)
 bnVEN3 <- graph_from_biadjacency_matrix(t(MatrizVEPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnVEN3)
-edges_ve <- data.frame(
+edges_ve3 <- data.frame(
   Source = paste0("VEN_", EdgeListVE[, 1]),
   Target = EdgeListVE[, 2],
   Country = "Venezuela"
