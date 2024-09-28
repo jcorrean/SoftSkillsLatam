@@ -8,7 +8,7 @@ load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
 
-RegionNetwork <- do.call(rbind, list(edges_ar, 
+RegionNetwork <- do.call(rbind, list(edges_arg, 
                                      edges_br, 
                                      edges_chl, 
                                      edges_col, 
