@@ -54,6 +54,7 @@ result <- AllPrograms %>%
     SD = sd(Eigenvector)
   )
 result  
+psych::describeBy(result$Mean, group = result$Partition, mat = TRUE, digits = 3)
 
 library(ggplot2)
 
