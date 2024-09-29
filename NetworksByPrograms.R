@@ -57,12 +57,16 @@ result
 
 library(ggplot2)
 
-ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Level)) + 
+ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) + 
   geom_boxplot() + 
   scale_x_discrete(limits = c("Specialization", "Master", "PhD")) +
   facet_wrap(~Country) +
-  theme_gray() +
-  theme(legend.position = "none")
+  theme_bw() +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(color = "black"),
+        axis.text.y = element_text(color = "black"))+
+  xlab("") + ylab("Eigenvector centrality degree") +
+  scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "#FFFFFF"))
 
 library(ggridges)
 ggplot(AllPrograms, aes(x = Eigenvector, y = Country, fill = Level)) + 
