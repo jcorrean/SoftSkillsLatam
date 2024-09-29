@@ -35,3 +35,4 @@ result <- AllCountries %>%
     SD = sd(Eigenvector)
   )
 result
+
