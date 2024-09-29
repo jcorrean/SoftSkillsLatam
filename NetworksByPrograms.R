@@ -46,7 +46,7 @@ AllPrograms <- do.call(rbind, list(ProgramsARG1,
                                    ProgramsVEN2,
                                    ProgramsVEN3))
 library(dplyr)
-result <- Centralities %>%
+result <- AllPrograms %>%
   group_by(Partition,Country) %>%
   summarize(
     N = length(Node),
