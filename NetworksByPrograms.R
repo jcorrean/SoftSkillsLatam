@@ -47,11 +47,11 @@ AllPrograms <- do.call(rbind, list(ProgramsARG1,
                                    ProgramsVEN3))
 library(dplyr)
 result <- AllPrograms %>%
-  group_by(Partition,Country) %>%
+  group_by(Partition,Country,Level) %>%
   summarize(
     N = length(Node),
     Mean = mean(Eigenvector),
     SD = sd(Eigenvector)
   )
-  
+result  
 
