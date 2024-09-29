@@ -67,12 +67,3 @@ ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
         axis.text.y = element_text(color = "black"))+
   xlab("") + ylab("Eigenvector centrality degree") +
   scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "#FFFFFF"))
-
-library(ggridges)
-ggplot(AllPrograms, aes(x = Eigenvector, y = Country, fill = Level)) + 
-  geom_density_ridges(scale = 4, alpha = 0.7) + 
-  scale_fill_cyclical(
-    name = "Level",
-    values = c("blue4", "green4", "red3"),
-    guide = "legend") +
-  theme_bw()
