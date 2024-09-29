@@ -55,3 +55,20 @@ result <- AllPrograms %>%
   )
 result  
 
+library(ggplot2)
+
+ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Level)) + 
+  geom_boxplot() + 
+  scale_x_discrete(limits = c("Specialization", "Master", "PhD")) +
+  facet_wrap(~Country) +
+  theme_gray() +
+  theme(legend.position = "none")
+
+library(ggridges)
+ggplot(AllPrograms, aes(x = Eigenvector, y = Country, fill = Level)) + 
+  geom_density_ridges(scale = 4, alpha = 0.7) + 
+  scale_fill_cyclical(
+    name = "Level",
+    values = c("blue4", "green4", "red3"),
+    guide = "legend") +
+  theme_bw()
