@@ -58,13 +58,14 @@ psych::describeBy(result$Mean, group = result$Partition, mat = TRUE, digits = 3)
 
 library(ggplot2)
 
-ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) + 
-  geom_boxplot() + 
+
+ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
+  geom_boxplot(notch = TRUE) +
   scale_x_discrete(limits = c("Specialization", "Master", "PhD")) +
   facet_wrap(~Country) +
   theme_bw() +
   theme(legend.position = "bottom",
         axis.text.x = element_text(color = "black"),
-        axis.text.y = element_text(color = "black"))+
+        axis.text.y = element_text(color = "black")) +
   xlab("") + ylab("Eigenvector centrality degree") +
   scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "#FFFFFF"))
