@@ -358,7 +358,72 @@ Offering</h1>
 </div>
 
 
+<div id="data-loading" class="section level1">
+<h1>1 Data loading</h1>
+<pre class="r"><code>load(&quot;Results/Argentina.RData&quot;)
+load(&quot;Results/Brazil.RData&quot;)
+load(&quot;Results/Chile.RData&quot;)
+load(&quot;Results/Colombia.RData&quot;)
+load(&quot;Results/CostaRica.RData&quot;)
+load(&quot;Results/Ecuador.RData&quot;)
+load(&quot;Results/Mexico.RData&quot;)
+load(&quot;Results/Uruguay.RData&quot;)
+load(&quot;Results/Venezuela.RData&quot;)</code></pre>
+</div>
+<div id="pre-processing-data-for-all-sampled-countries" class="section level1">
+<h1>2. Pre-processing data for all sampled countries</h1>
+<pre class="r"><code>rm(list=setdiff(ls(), c(&quot;ProgramsARG&quot;,
+                        &quot;ProgramsBRA&quot;,
+                        &quot;ProgramsCHL&quot;,
+                        &quot;ProgramsCOL&quot;,
+                        &quot;ProgramsCORI&quot;,
+                        &quot;ProgramsECU&quot;,
+                        &quot;ProgramsMEX&quot;,
+                        &quot;ProgramsURU&quot;,
+                        &quot;ProgramsVEN&quot;)))
+AllCountries &lt;- do.call(rbind, list(ProgramsARG,
+                                   ProgramsBRA,
+                                   ProgramsCHL,
+                                   ProgramsCOL,
+                                   ProgramsCORI,
+                                   ProgramsECU,
+                                   ProgramsMEX,
+                                   ProgramsURU,
+                                   ProgramsVEN))
 
+result &lt;- AllCountries %&gt;%
+  group_by(Partition,Country) %&gt;%
+  summarize(
+    N = length(Node),
+    Mean = mean(Eigenvector),
+    SD = sd(Eigenvector)
+  )</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;Partition&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>result</code></pre>
+<pre><code>## # A tibble: 18 × 5
+## # Groups:   Partition [2]
+##    Partition Country        N   Mean     SD
+##    &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Program   Argentina    514 0.0584 0.0220
+##  2 Program   Brazil       922 0.0407 0.0205
+##  3 Program   Chile        208 0.106  0.0464
+##  4 Program   Colombia     230 0.0907 0.0392
+##  5 Program   Costa Rica   120 0.161  0.0414
+##  6 Program   Ecuador      731 0.0396 0.0345
+##  7 Program   Mexico       553 0.0674 0.0379
+##  8 Program   Uruguay      147 0.103  0.0519
+##  9 Program   Venezuela    210 0.102  0.0704
+## 10 Skill     Argentina     10 0.370  0.264 
+## 11 Skill     Brazil        10 0.340  0.290 
+## 12 Skill     Chile         10 0.466  0.260 
+## 13 Skill     Colombia      10 0.392  0.281 
+## 14 Skill     Costa Rica    10 0.460  0.363 
+## 15 Skill     Ecuador       10 0.360  0.282 
+## 16 Skill     Mexico        10 0.519  0.260 
+## 17 Skill     Uruguay       10 0.354  0.280 
+## 18 Skill     Venezuela     10 0.522  0.231</code></pre>
+</div>
 
 
 
