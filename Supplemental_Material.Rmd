@@ -5,7 +5,55 @@ date: "2024-12-14"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, echo = FALSE, warning = FALSE}
+# Packages
+suppressPackageStartupMessages(library(dplyr))
+```
+
+
+# 1 Data loading
+```{r}
+load("Results/Argentina.RData")
+load("Results/Brazil.RData")
+load("Results/Chile.RData")
+load("Results/Colombia.RData")
+load("Results/CostaRica.RData")
+load("Results/Ecuador.RData")
+load("Results/Mexico.RData")
+load("Results/Uruguay.RData")
+load("Results/Venezuela.RData")
+```
+
+# 2. Pre-processing data for all sampled countries
+```{r}
+
+
+rm(list=setdiff(ls(), c("ProgramsARG",
+                        "ProgramsBRA",
+                        "ProgramsCHL",
+                        "ProgramsCOL",
+                        "ProgramsCORI",
+                        "ProgramsECU",
+                        "ProgramsMEX",
+                        "ProgramsURU",
+                        "ProgramsVEN")))
+AllCountries <- do.call(rbind, list(ProgramsARG,
+                                   ProgramsBRA,
+                                   ProgramsCHL,
+                                   ProgramsCOL,
+                                   ProgramsCORI,
+                                   ProgramsECU,
+                                   ProgramsMEX,
+                                   ProgramsURU,
+                                   ProgramsVEN))
+
+result <- AllCountries %>%
+  group_by(Partition,Country) %>%
+  summarize(
+    N = length(Node),
+    Mean = mean(Eigenvector),
+    SD = sd(Eigenvector)
+  )
+result
 ```
 
