@@ -113,6 +113,10 @@ Venezuela
 SizeVE <- network::network.size(Venezuela)
 DensityVE <- network::network.density(Venezuela)
 ClusteringVE <- tnet::clustering_tm(Matriz)
+set.network.attribute(Venezuela, "Size", SizeVE)
+set.network.attribute(Venezuela, "Density", DensityVE)
+set.network.attribute(Venezuela, "Clustering", ClusteringVE)
+Venezuela
 
 bnVEN1 <- graph_from_biadjacency_matrix(t(MatrizVESPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnVEN1)
