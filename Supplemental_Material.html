@@ -370,8 +370,108 @@ load(&quot;Results/Mexico.RData&quot;)
 load(&quot;Results/Uruguay.RData&quot;)
 load(&quot;Results/Venezuela.RData&quot;)</code></pre>
 </div>
-<div id="pre-processing-data-for-all-sampled-countries" class="section level1">
-<h1>2. Pre-processing data for all sampled countries</h1>
+<div id="network-general-characteristics-of-skills-programs-academic-offering-by-country" class="section level1">
+<h1>2. Network general characteristics of skills-programs academic
+offering by country</h1>
+<pre class="r"><code>Argentina</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 524 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = 10 
+##   Size = 524 
+##   Density = 0.01148687 
+##   Clustering = 1 
+##   total edges= 1574 
+##     missing edges= 0 
+##     non-missing edges= 1574 
+## 
+##  Vertex attribute names: 
+##     vertex.names 
+## 
+##  Edge attribute names not shown</code></pre>
+<pre class="r"><code>Brazil</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 932 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = 10 
+##   Size = 932 
+##   Density = 0.005167732 
+##   Clustering = 1 
+##   total edges= 2242 
+##     missing edges= 0 
+##     non-missing edges= 2242 
+## 
+##  Vertex attribute names: 
+##     vertex.names 
+## 
+##  Edge attribute names not shown</code></pre>
+<pre class="r"><code>Chile</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 218 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = 10 
+##   Size = 218 
+##   Density = 0.03225806 
+##   Clustering = 0.9999569 
+##   total edges= 763 
+##     missing edges= 0 
+##     non-missing edges= 763 
+## 
+##  Vertex attribute names: 
+##     vertex.names 
+## 
+## No edge attributes</code></pre>
+<pre class="r"><code>Colombia</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 240 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = 10 
+##   Size = 240 
+##   Density = 0.02451185 
+##   Clustering = 0.995655 
+##   total edges= 703 
+##     missing edges= 0 
+##     non-missing edges= 703 
+## 
+##  Vertex attribute names: 
+##     vertex.names 
+## 
+## No edge attributes</code></pre>
+<pre class="r"><code>CostaRica</code></pre>
+<pre><code>##  Network attributes:
+##   vertices = 130 
+##   directed = FALSE 
+##   hyper = FALSE 
+##   loops = FALSE 
+##   multiple = FALSE 
+##   bipartite = 10 
+##   Size = 130 
+##   Density = 0.0608229 
+##   Clustering = 0.9982433 
+##   total edges= 510 
+##     missing edges= 0 
+##     non-missing edges= 510 
+## 
+##  Vertex attribute names: 
+##     vertex.names 
+## 
+## No edge attributes</code></pre>
+</div>
+<div id="eigenvector-centrality-degree-distributions-for-skills-and-programs" class="section level1">
+<h1>3. Eigenvector centrality degree distributions for skills and
+programs</h1>
 <pre class="r"><code>AllCountries &lt;- do.call(rbind, list(ProgramsARG,
                                    ProgramsBRA,
                                    ProgramsCHL,

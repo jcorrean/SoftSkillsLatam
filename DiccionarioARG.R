@@ -113,6 +113,10 @@ Argentina
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::clustering_tm(Matriz)
+set.network.attribute(Argentina, "Size", SizeARG)
+set.network.attribute(Argentina, "Density", DensityARG)
+set.network.attribute(Argentina, "Clustering", ClusteringARG)
+Argentina
 
 library(igraph)
 bnARG1 <- graph_from_biadjacency_matrix(t(MatrizARGSPEC), directed = FALSE)

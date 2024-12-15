@@ -111,7 +111,10 @@ CostaRica
 SizeCR <- network::network.size(CostaRica)
 DensityCR <- network::network.density(CostaRica)
 ClusteringCR <- tnet::clustering_tm(Matriz)
-
+set.network.attribute(CostaRica, "Size", SizeCR)
+set.network.attribute(CostaRica, "Density", DensityCR)
+set.network.attribute(CostaRica, "Clustering", ClusteringCR)
+CostaRica
 bnCORI1 <- graph_from_biadjacency_matrix(t(MatrizCORISPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI1)
 edges_cr1 <- data.frame(
@@ -234,3 +237,4 @@ MatrizCORIMS <- as.matrix(t(CORI_MS))
 MatrizCORIPHD <- as.matrix(t(CORI_PhD))
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/CostaRica.RData")
+

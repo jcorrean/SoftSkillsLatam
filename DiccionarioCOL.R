@@ -112,6 +112,10 @@ Colombia
 SizeCOL <- network::network.size(Colombia)
 DensityCOL <- network::network.density(Colombia)
 ClusteringCOL <- tnet::clustering_tm(Matriz)
+set.network.attribute(Colombia, "Size", SizeCOL)
+set.network.attribute(Colombia, "Density", DensityCOL)
+set.network.attribute(Colombia, "Clustering", ClusteringCOL)
+Colombia
 bnCOL1 <- graph_from_biadjacency_matrix(t(MatrizCOSPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL1)
 edges_col1 <- data.frame(

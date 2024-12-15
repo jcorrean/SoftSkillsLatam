@@ -113,6 +113,10 @@ Brazil
 SizeBR <- network::network.size(Brazil)
 DensityBR <- network::network.density(Brazil)
 ClusteringBR <- tnet::clustering_tm(Matriz)
+set.network.attribute(Brazil, "Size", SizeBR)
+set.network.attribute(Brazil, "Density", DensityBR)
+set.network.attribute(Brazil, "Clustering", ClusteringBR)
+Brazil
 
 bnBRA1 <- graph_from_biadjacency_matrix(t(MatrizBRASPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnBRA1)

@@ -9,6 +9,8 @@ output: html_document
 # Packages
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(network))
+suppressPackageStartupMessages(library(igraph))
 ```
 
 
@@ -26,7 +28,19 @@ load("Results/Venezuela.RData")
 
 ```
 
-# 2. Pre-processing data for all sampled countries
+# 2. Network general characteristics of skills-programs academic offering by country
+
+```{r}
+Argentina
+Brazil
+Chile
+Colombia
+CostaRica
+```
+
+
+
+# 3. Eigenvector centrality degree distributions for skills and programs
 ```{r}
 AllCountries <- do.call(rbind, list(ProgramsARG,
                                    ProgramsBRA,
