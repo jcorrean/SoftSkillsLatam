@@ -8,6 +8,7 @@ output: html_document
 ```{r, echo = FALSE, warning = FALSE}
 # Packages
 suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
 ```
 
 
@@ -22,21 +23,11 @@ load("Results/Ecuador.RData")
 load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
+
 ```
 
 # 2. Pre-processing data for all sampled countries
 ```{r}
-
-
-rm(list=setdiff(ls(), c("ProgramsARG",
-                        "ProgramsBRA",
-                        "ProgramsCHL",
-                        "ProgramsCOL",
-                        "ProgramsCORI",
-                        "ProgramsECU",
-                        "ProgramsMEX",
-                        "ProgramsURU",
-                        "ProgramsVEN")))
 AllCountries <- do.call(rbind, list(ProgramsARG,
                                    ProgramsBRA,
                                    ProgramsCHL,
@@ -47,17 +38,46 @@ AllCountries <- do.call(rbind, list(ProgramsARG,
                                    ProgramsURU,
                                    ProgramsVEN))
 
-result <- AllCountries %>%
+AllCountries %>%
   group_by(Partition,Country) %>%
   summarize(
     N = length(Node),
     Mean = mean(Eigenvector),
     SD = sd(Eigenvector)
   )
-result
+
+AllPrograms <- do.call(rbind, list(ProgramsARG1,
+                                   ProgramsARG2,
+                                   ProgramsARG3,
+                                   ProgramsBRA1,
+                                   ProgramsBRA2,
+                                   ProgramsBRA3,
+                                   ProgramsCHL1,
+                                   ProgramsCHL2,
+                                   ProgramsCHL3,
+                                   ProgramsCOL1,
+                                   ProgramsCOL2,
+                                   ProgramsCOL3,
+                                   ProgramsCORI1,
+                                   ProgramsCORI2,
+                                   ProgramsCORI3,
+                                   ProgramsECU1,
+                                   ProgramsECU2,
+                                   ProgramsECU3,
+                                   ProgramsMEX1,
+                                   ProgramsMEX2,
+                                   ProgramsMEX3,
+                                   ProgramsURU1,
+                                   ProgramsURU2,
+                                   ProgramsURU3,
+                                   ProgramsVEN1,
+                                   ProgramsVEN2,
+                                   ProgramsVEN3))
 ```
 
-```{r}
+
+
+```{r, message = FALSE, warning = FALSE}
 ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
   geom_boxplot(notch = TRUE) +
   scale_x_discrete(limits = c("Specialization", "Master", "PhD")) +
