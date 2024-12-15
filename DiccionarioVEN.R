@@ -246,3 +246,4 @@ MatrizVEPHD <- as.matrix(t(VEN_PhD))
 
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Venezuela.RData")
+

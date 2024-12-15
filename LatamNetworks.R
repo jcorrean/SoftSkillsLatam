@@ -44,8 +44,10 @@ URU %>%
 
 VEN %>%
   mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
-  count(initial_digit)
+  count(initial_digit) #17
 
+Sampled.Universities <- 29+268+51+50+2+29+62+8+17
+Sampled.Universities
 
 RegionNetwork <- do.call(rbind, list(edges_arg, 
                                      edges_br, 
