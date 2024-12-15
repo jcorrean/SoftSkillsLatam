@@ -8,6 +8,32 @@ load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
 
+library(stringr)
+
+ARG %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) #29
+
+BRA %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) #268
+
+CHL %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) #51
+
+COL %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) #50
+
+CORI %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) # 2
+
+ECU %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) #29
+
 RegionNetwork <- do.call(rbind, list(edges_arg, 
                                      edges_br, 
                                      edges_chl, 
