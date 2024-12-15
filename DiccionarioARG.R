@@ -8,6 +8,8 @@ ARG <- mutate(ARG,
                 grepl("Doctor|Doctorado en", text), "Doctorado",
                 ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
                        "Especialización")))
+ARG <- mutate(ARG, University = str_extract(doc_id, "^\\d+")) 
+
 Programas <- data.frame(table(ARG$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
