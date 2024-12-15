@@ -40,7 +40,12 @@ MEX %>%
 
 URU %>%
   mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
+  count(initial_digit) #8
+
+VEN %>%
+  mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
   count(initial_digit)
+
 
 RegionNetwork <- do.call(rbind, list(edges_arg, 
                                      edges_br, 
