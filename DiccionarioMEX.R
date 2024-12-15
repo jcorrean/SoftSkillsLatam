@@ -113,6 +113,10 @@ Mexico
 SizeMEX <- network::network.size(Mexico)
 DensityMEX <- network::network.density(Mexico)
 ClusteringMEX <- tnet::clustering_tm(Matriz)
+set.network.attribute(Mexico, "Size", SizeMEX)
+set.network.attribute(Mexico, "Density", DensityMEX)
+set.network.attribute(Mexico, "Clustering", ClusteringMEX)
+Mexico
 
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX1)
@@ -235,3 +239,4 @@ MatrizMEXMS <- as.matrix(t(MEX_MS))
 MatrizMEXPHD <- as.matrix(t(MEX_PhD))
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Mexico.RData")
+

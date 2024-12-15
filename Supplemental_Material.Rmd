@@ -36,6 +36,10 @@ Brazil
 Chile
 Colombia
 CostaRica
+Ecuador
+Mexico
+Uruguay
+Venezuela
 ```
 
 

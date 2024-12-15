@@ -111,6 +111,10 @@ Uruguay
 SizeURU <- network::network.size(Uruguay)
 DensityURU <- network::network.density(Uruguay)
 ClusteringURU <- tnet::clustering_tm(Matriz)
+set.network.attribute(Uruguay, "Size", SizeURU)
+set.network.attribute(Uruguay, "Density", DensityURU)
+set.network.attribute(Uruguay, "Clustering", ClusteringURU)
+Uruguay
 
 library(igraph)
 bnURU1 <- graph_from_biadjacency_matrix(t(MatrizURUSPEC), directed = FALSE)
@@ -232,3 +236,4 @@ DensityURU3 <- network::network.density(Uruguay3)
 ClusteringURU3 <- tnet::clustering_tm(MatrizURUPHD)
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Uruguay.RData")
+

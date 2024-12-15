@@ -112,6 +112,10 @@ Ecuador
 SizeECU <- network::network.size(Ecuador)
 DensityECU <- network::network.density(Ecuador)
 ClusteringECU <- tnet::clustering_tm(Matriz)
+set.network.attribute(Ecuador, "Size", SizeECU)
+set.network.attribute(Ecuador, "Density", DensityECU)
+set.network.attribute(Ecuador, "Clustering", ClusteringECU)
+Ecuador
 
 bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
 EdgeListVE <- as_edgelist(bnECU1)
@@ -234,3 +238,4 @@ MatrizECUMS <- as.matrix(t(ECU_MS))
 MatrizECUPHD <- as.matrix(t(ECU_PhD))
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Ecuador.RData")
+
