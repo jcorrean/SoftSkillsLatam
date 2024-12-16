@@ -156,6 +156,10 @@ Mexico1
 SizeMEX1 <- network::network.size(Mexico1)
 DensityMEX1 <- network::network.density(Mexico1)
 ClusteringMEX1 <- tnet::clustering_tm(MatrizMEXSPEC)
+set.network.attribute(Mexico1, "Size", SizeMEX1)
+set.network.attribute(Mexico1, "Density", DensityMEX1)
+set.network.attribute(Mexico1, "Clustering", ClusteringMEX1)
+Mexico1
 
 bnMEX2 <- graph_from_biadjacency_matrix(t(MatrizMEXMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX2)
@@ -194,6 +198,10 @@ Mexico2
 SizeMEX2 <- network::network.size(Mexico2)
 DensityMEX2 <- network::network.density(Mexico2)
 ClusteringMEX2 <- tnet::clustering_tm(MatrizMEXMS)
+set.network.attribute(Mexico2, "Size", SizeMEX2)
+set.network.attribute(Mexico2, "Density", DensityMEX2)
+set.network.attribute(Mexico2, "Clustering", ClusteringMEX2)
+Mexico2
 
 bnMEX3 <- graph_from_biadjacency_matrix(t(MatrizMEXPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnMEX3)
@@ -233,6 +241,10 @@ Mexico3
 SizeMEX3 <- network::network.size(Mexico3)
 DensityMEX3 <- network::network.density(Mexico3)
 ClusteringMEX3 <- tnet::clustering_tm(MatrizMEXPHD)
+set.network.attribute(Mexico3, "Size", SizeMEX3)
+set.network.attribute(Mexico3, "Density", DensityMEX3)
+set.network.attribute(Mexico3, "Clustering", ClusteringMEX3)
+Mexico3
 
 MatrizMEXSPEC <- as.matrix(t(MEX_Spec))
 MatrizMEXMS <- as.matrix(t(MEX_MS))
