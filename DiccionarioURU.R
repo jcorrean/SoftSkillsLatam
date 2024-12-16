@@ -155,6 +155,10 @@ Uruguay1
 SizeURU1 <- network::network.size(Uruguay1)
 DensityURU1 <- network::network.density(Uruguay1)
 ClusteringURU1 <- tnet::clustering_tm(MatrizURUSPEC)
+set.network.attribute(Uruguay1, "Size", SizeURU1)
+set.network.attribute(Uruguay1, "Density", DensityURU1)
+set.network.attribute(Uruguay1, "Clustering", ClusteringURU1)
+Uruguay1
 
 library(igraph)
 bnURU2 <- graph_from_biadjacency_matrix(t(MatrizURUMS), directed = FALSE)
@@ -194,6 +198,10 @@ Uruguay2
 SizeURU2 <- network::network.size(Uruguay2)
 DensityURU2 <- network::network.density(Uruguay2)
 ClusteringURU2 <- tnet::clustering_tm(MatrizURUMS)
+set.network.attribute(Uruguay2, "Size", SizeURU2)
+set.network.attribute(Uruguay2, "Density", DensityURU2)
+set.network.attribute(Uruguay2, "Clustering", ClusteringURU2)
+Uruguay2
 
 library(igraph)
 bnURU3 <- graph_from_biadjacency_matrix(t(MatrizURUPHD), directed = FALSE)
@@ -234,6 +242,10 @@ Uruguay3
 SizeURU3 <- network::network.size(Uruguay3)
 DensityURU3 <- network::network.density(Uruguay3)
 ClusteringURU3 <- tnet::clustering_tm(MatrizURUPHD)
+set.network.attribute(Uruguay3, "Size", SizeURU3)
+set.network.attribute(Uruguay3, "Density", DensityURU3)
+set.network.attribute(Uruguay3, "Clustering", ClusteringURU3)
+Uruguay3
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Uruguay.RData")
 
