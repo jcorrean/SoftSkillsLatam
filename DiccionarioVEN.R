@@ -157,6 +157,10 @@ Venezuela1
 SizeVE1 <- network::network.size(Venezuela1)
 DensityVE1 <- network::network.density(Venezuela1)
 ClusteringVE1 <- tnet::clustering_tm(MatrizVESPEC)
+set.network.attribute(Venezuela1, "Size", SizeVE1)
+set.network.attribute(Venezuela1, "Density", DensityVE1)
+set.network.attribute(Venezuela1, "Clustering", ClusteringVE1)
+Venezuela1
 
 library(igraph)
 bnVEN2 <- graph_from_biadjacency_matrix(t(MatrizVEMS), directed = FALSE)
@@ -198,6 +202,10 @@ Venezuela2
 SizeVE2 <- network::network.size(Venezuela2)
 DensityVE2 <- network::network.density(Venezuela2)
 ClusteringVE2 <- tnet::clustering_tm(MatrizVEMS)
+set.network.attribute(Venezuela2, "Size", SizeVE2)
+set.network.attribute(Venezuela2, "Density", DensityVE2)
+set.network.attribute(Venezuela2, "Clustering", ClusteringVE2)
+Venezuela2
 
 library(igraph)
 bnVEN3 <- graph_from_biadjacency_matrix(t(MatrizVEPHD), directed = FALSE)
@@ -239,6 +247,10 @@ Venezuela3
 SizeVE3 <- network::network.size(Venezuela3)
 DensityVE3 <- network::network.density(Venezuela3)
 ClusteringVE3 <- tnet::clustering_tm(MatrizVEPHD)
+set.network.attribute(Venezuela3, "Size", SizeVE3)
+set.network.attribute(Venezuela3, "Density", DensityVE3)
+set.network.attribute(Venezuela3, "Clustering", ClusteringVE3)
+Venezuela3
 
 MatrizVESPEC <- as.matrix(t(VEN_Spec))
 MatrizVEMS <- as.matrix(t(VEN_MS))
