@@ -160,6 +160,10 @@ Argentina1
 SizeARG1 <- network::network.size(Argentina1)
 DensityARG1 <- network::network.density(Argentina1)
 ClusteringARG1 <- tnet::clustering_tm(MatrizARGSPEC)
+set.network.attribute(Argentina1, "Size", SizeARG1)
+set.network.attribute(Argentina1, "Density", DensityARG1)
+set.network.attribute(Argentina1, "Clustering", ClusteringARG1)
+Argentina1
 
 library(igraph)
 bnARG2 <- graph_from_biadjacency_matrix(t(MatrizARGMS), directed = FALSE)
@@ -200,6 +204,10 @@ Argentina2
 SizeARG2 <- network::network.size(Argentina2)
 DensityARG2 <- network::network.density(Argentina2)
 ClusteringARG2 <- tnet::clustering_tm(MatrizARGMS)
+set.network.attribute(Argentina2, "Size", SizeARG2)
+set.network.attribute(Argentina2, "Density", DensityARG2)
+set.network.attribute(Argentina2, "Clustering", ClusteringARG2)
+Argentina2
 
 library(igraph)
 bnARG3 <- graph_from_biadjacency_matrix(t(MatrizARGPHD), directed = FALSE)
@@ -241,6 +249,10 @@ Argentina3
 SizeARG3 <- network::network.size(Argentina3)
 DensityARG3 <- network::network.density(Argentina3)
 ClusteringARG3 <- tnet::clustering_tm(MatrizARGPHD)
+set.network.attribute(Argentina3, "Size", SizeARG3)
+set.network.attribute(Argentina3, "Density", DensityARG3)
+set.network.attribute(Argentina3, "Clustering", ClusteringARG3)
+Argentina3
 
 MatrizARGSPEC <- as.matrix(t(ARG_Spec))
 MatrizARGMS <- as.matrix(t(ARG_MS))
