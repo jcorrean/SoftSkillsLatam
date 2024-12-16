@@ -161,7 +161,10 @@ Chile1
 SizeCHL1 <- network::network.size(Chile)
 DensityCHL1 <- network::network.density(Chile)
 ClusteringCHL1 <- tnet::clustering_tm(MatrizCHLSPEC)
-
+set.network.attribute(Chile1, "Size", SizeCHL1)
+set.network.attribute(Chile1, "Density", DensityCHL1)
+set.network.attribute(Chile1, "Clustering", ClusteringCHL1)
+Chile1
 
 bnCHL2 <- graph_from_biadjacency_matrix(t(MatrizCHLMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnCHL2)
@@ -200,6 +203,10 @@ Chile2
 SizeCHL2 <- network::network.size(Chile2)
 DensityCHL2 <- network::network.density(Chile2)
 ClusteringCHL2 <- tnet::clustering_tm(MatrizCHLMS)
+set.network.attribute(Chile2, "Size", SizeCHL2)
+set.network.attribute(Chile2, "Density", DensityCHL2)
+set.network.attribute(Chile2, "Clustering", ClusteringCHL2)
+Chile2
 
 
 bnCHL3 <- graph_from_biadjacency_matrix(t(MatrizCHLPHD), directed = FALSE)
@@ -240,5 +247,9 @@ Chile3
 SizeCHL3 <- network::network.size(Chile3)
 DensityCHL3 <- network::network.density(Chile3)
 ClusteringCHL3 <- tnet::clustering_tm(MatrizCHLPHD)
+set.network.attribute(Chile3, "Size", SizeCHL3)
+set.network.attribute(Chile3, "Density", DensityCHL3)
+set.network.attribute(Chile3, "Clustering", ClusteringCHL3)
+Chile3
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Chile.RData")
 
