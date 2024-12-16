@@ -156,6 +156,10 @@ Brazil1
 SizeBRA1 <- network::network.size(Brazil1)
 DensityBRA1 <- network::network.density(Brazil1)
 ClusteringBRA1 <- tnet::clustering_tm(MatrizBRASPEC)
+set.network.attribute(Brazil1, "Size", SizeBRA1)
+set.network.attribute(Brazil1, "Density", DensityBRA1)
+set.network.attribute(Brazil1, "Clustering", ClusteringBRA1)
+Brazil1
 
 bnBRA2 <- graph_from_biadjacency_matrix(t(MatrizBRAMS), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnBRA2)
@@ -194,6 +198,10 @@ Brazil2
 SizeBRA2 <- network::network.size(Brazil2)
 DensityBRA2 <- network::network.density(Brazil2)
 ClusteringBRA2 <- tnet::clustering_tm(MatrizBRASPEC)
+set.network.attribute(Brazil2, "Size", SizeBRA2)
+set.network.attribute(Brazil2, "Density", DensityBRA2)
+set.network.attribute(Brazil2, "Clustering", ClusteringBRA2)
+Brazil2
 
 bnBRA3 <- graph_from_biadjacency_matrix(t(MatrizBRAPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnBRA3)
@@ -234,6 +242,10 @@ Brazil3
 SizeBRA3 <- network::network.size(Brazil3)
 DensityBRA3 <- network::network.density(Brazil3)
 ClusteringBRA3 <- tnet::clustering_tm(MatrizBRAPHD)
+set.network.attribute(Brazil3, "Size", SizeBRA3)
+set.network.attribute(Brazil3, "Density", DensityBRA3)
+set.network.attribute(Brazil3, "Clustering", ClusteringBRA3)
+Brazil3
 
 MatrizBRASPEC <- as.matrix(t(BRA_Spec))
 MatrizBRAMS <- as.matrix(t(BRA_MS))
