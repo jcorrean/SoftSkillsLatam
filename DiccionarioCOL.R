@@ -154,6 +154,10 @@ Colombia1
 SizeCO1 <- network::network.size(Colombia1)
 DensityCO1 <- network::network.density(Colombia1)
 ClusteringCO1 <- tnet::clustering_tm(MatrizCOSPEC)
+set.network.attribute(Colombia1, "Size", SizeCO1)
+set.network.attribute(Colombia1, "Density", DensityCO1)
+set.network.attribute(Colombia1, "Clustering", ClusteringCO1)
+Colombia1
 
 library(igraph)
 bnCOL2 <- graph_from_biadjacency_matrix(t(MatrizCOMS), directed = FALSE)
@@ -194,6 +198,10 @@ Colombia2
 SizeCO2 <- network::network.size(Colombia2)
 DensityCO2 <- network::network.density(Colombia2)
 ClusteringCO2 <- tnet::clustering_tm(MatrizCOMS)
+set.network.attribute(Colombia2, "Size", SizeCO2)
+set.network.attribute(Colombia2, "Density", DensityCO2)
+set.network.attribute(Colombia2, "Clustering", ClusteringCO2)
+Colombia2
 
 library(igraph)
 bnCOL3 <- graph_from_biadjacency_matrix(t(MatrizCOPHD), directed = FALSE)
@@ -235,6 +243,10 @@ Colombia3
 SizeCOL3 <- network::network.size(Colombia3)
 DensityCOL3 <- network::network.density(Colombia3)
 ClusteringCOL3 <- tnet::clustering_tm(MatrizCOPHD)
+set.network.attribute(Colombia3, "Size", SizeCOL3)
+set.network.attribute(Colombia3, "Density", DensityCOL3)
+set.network.attribute(Colombia3, "Clustering", ClusteringCOL3)
+Colombia3
 
 MatrizCOSPEC <- as.matrix(t(COL_Spec))
 MatrizCOMS <- as.matrix(t(COL_MS))
