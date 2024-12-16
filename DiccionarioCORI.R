@@ -153,6 +153,10 @@ CostaRica1
 SizeCORI1 <- network::network.size(CostaRica1)
 DensityCORI1 <- network::network.density(CostaRica1)
 ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
+set.network.attribute(CostaRica1, "Size", SizeCORI1)
+set.network.attribute(CostaRica1, "Density", DensityCORI1)
+set.network.attribute(CostaRica1, "Clustering", ClusteringCORI1)
+CostaRica1
 
 bnCORI2 <- graph_from_biadjacency_matrix(t(MatrizCORIMS), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI2)
@@ -191,6 +195,10 @@ CostaRica2
 SizeCORI2 <- network::network.size(CostaRica2)
 DensityCORI2 <- network::network.density(CostaRica2)
 ClusteringCORI2 <- tnet::clustering_tm(MatrizCORIMS)
+set.network.attribute(CostaRica2, "Size", SizeCORI2)
+set.network.attribute(CostaRica2, "Density", DensityCORI2)
+set.network.attribute(CostaRica2, "Clustering", ClusteringCORI2)
+CostaRica2
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI3)
@@ -231,6 +239,10 @@ CostaRica3
 SizeCORI3 <- network::network.size(CostaRica3)
 DensityCORI3 <- network::network.density(CostaRica3)
 ClusteringCORI3 <- tnet::clustering_tm(MatrizCORIPHD)
+set.network.attribute(CostaRica3, "Size", SizeCORI3)
+set.network.attribute(CostaRica3, "Density", DensityCORI3)
+set.network.attribute(CostaRica3, "Clustering", ClusteringCORI3)
+CostaRica3
 
 MatrizCORISPEC <- as.matrix(t(CORI_Spec))
 MatrizCORIMS <- as.matrix(t(CORI_MS))
