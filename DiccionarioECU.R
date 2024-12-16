@@ -155,6 +155,10 @@ Ecuador1
 SizeECU1 <- network::network.size(Ecuador1)
 DensityECU1 <- network::network.density(Ecuador1)
 ClusteringECU1 <- tnet::clustering_tm(MatrizECUSPEC)
+set.network.attribute(Ecuador1, "Size", SizeECU1)
+set.network.attribute(Ecuador1, "Density", DensityECU1)
+set.network.attribute(Ecuador1, "Clustering", ClusteringECU1)
+Ecuador1
 
 bnECU2 <- graph_from_biadjacency_matrix(t(MatrizECUMS), directed = FALSE)
 EdgeListVE <- as_edgelist(bnECU2)
@@ -193,6 +197,10 @@ Ecuador2
 SizeECU2 <- network::network.size(Ecuador2)
 DensityECU2 <- network::network.density(Ecuador2)
 ClusteringECU2 <- tnet::clustering_tm(MatrizECUMS)
+set.network.attribute(Ecuador2, "Size", SizeECU2)
+set.network.attribute(Ecuador2, "Density", DensityECU2)
+set.network.attribute(Ecuador2, "Clustering", ClusteringECU2)
+Ecuador2
 
 bnECU3 <- graph_from_biadjacency_matrix(t(MatrizECUPHD), directed = FALSE)
 EdgeListVE <- as_edgelist(bnECU3)
@@ -232,6 +240,10 @@ Ecuador3
 SizeECU3 <- network::network.size(Ecuador3)
 DensityECU3 <- network::network.density(Ecuador3)
 ClusteringECU3 <- tnet::clustering_tm(MatrizECUPHD)
+set.network.attribute(Ecuador3, "Size", SizeECU3)
+set.network.attribute(Ecuador3, "Density", DensityECU3)
+set.network.attribute(Ecuador3, "Clustering", ClusteringECU3)
+Ecuador3
 
 MatrizECUSPEC <- as.matrix(t(ECU_Spec))
 MatrizECUMS <- as.matrix(t(ECU_MS))
