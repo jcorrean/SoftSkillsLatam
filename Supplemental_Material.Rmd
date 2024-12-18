@@ -14,6 +14,7 @@ suppressPackageStartupMessages(library(igraph))
 ```
 
 
+
 # 1 Data loading
 ```{r}
 load("Results/Argentina.RData")
@@ -28,7 +29,9 @@ load("Results/Venezuela.RData")
 
 ```
 
-# 2. Network general characteristics of skills-programs academic offering by country
+# 2. Description of Network Data
+
+## 2.1 Network general characteristics of skills-programs academic offering by country
 
 ```{r}
 Argentina
@@ -44,7 +47,7 @@ Venezuela
 
 
 
-# 3. Eigenvector centrality degree distributions for skills and programs
+## 2.2. Eigenvector centrality degree distributions for skills and programs
 ```{r}
 AllCountries <- do.call(rbind, list(ProgramsARG,
                                    ProgramsBRA,
@@ -107,4 +110,5 @@ ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
   xlab("") + ylab("Eigenvector centrality degree") +
   scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "#FFFFFF"))
 ```
+
 
