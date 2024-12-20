@@ -10,6 +10,10 @@ ARG <- mutate(ARG,
                        "Especialización")))
 ARG <- mutate(ARG, University = str_extract(doc_id, "^\\d+")) 
 
+library(stringr)
+ARG <- ARG %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+")) 
+
 Programas <- data.frame(table(ARG$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
