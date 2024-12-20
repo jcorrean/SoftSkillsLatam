@@ -12,6 +12,10 @@ Programas <- data.frame(table(COL$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
+library(tidyverse)
+COL <- COL %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
+
 library(quanteda)
 TextsCOL <- corpus(COL$text)
 docvars(TextsCOL, "Program") <- COL$Program
@@ -115,6 +119,7 @@ ClusteringCOL <- tnet::clustering_tm(Matriz)
 set.network.attribute(Colombia, "Size", SizeCOL)
 set.network.attribute(Colombia, "Density", DensityCOL)
 set.network.attribute(Colombia, "Clustering", ClusteringCOL)
+set.network.attribute(Colombia, "Country", "Colombia")
 Colombia
 bnCOL1 <- graph_from_biadjacency_matrix(t(MatrizCOSPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL1)
@@ -157,6 +162,7 @@ ClusteringCO1 <- tnet::clustering_tm(MatrizCOSPEC)
 set.network.attribute(Colombia1, "Size", SizeCO1)
 set.network.attribute(Colombia1, "Density", DensityCO1)
 set.network.attribute(Colombia1, "Clustering", ClusteringCO1)
+set.network.attribute(Colombia1, "Country", "Colombia")
 Colombia1
 
 library(igraph)
@@ -201,6 +207,7 @@ ClusteringCO2 <- tnet::clustering_tm(MatrizCOMS)
 set.network.attribute(Colombia2, "Size", SizeCO2)
 set.network.attribute(Colombia2, "Density", DensityCO2)
 set.network.attribute(Colombia2, "Clustering", ClusteringCO2)
+set.network.attribute(Colombia2, "Country", "Colombia")
 Colombia2
 
 library(igraph)
@@ -246,6 +253,7 @@ ClusteringCOL3 <- tnet::clustering_tm(MatrizCOPHD)
 set.network.attribute(Colombia3, "Size", SizeCOL3)
 set.network.attribute(Colombia3, "Density", DensityCOL3)
 set.network.attribute(Colombia3, "Clustering", ClusteringCOL3)
+set.network.attribute(Colombia3, "Country", "Colombia")
 Colombia3
 
 MatrizCOSPEC <- as.matrix(t(COL_Spec))
