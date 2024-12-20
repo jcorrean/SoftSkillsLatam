@@ -12,6 +12,10 @@ Programas <- data.frame(table(ECU$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
+library(tidyverse)
+ECU <- ECU %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
+
 library(quanteda)
 TextsECU <- corpus(ECU$text)
 docvars(TextsECU, "Program") <- ECU$Program
@@ -115,6 +119,7 @@ ClusteringECU <- tnet::clustering_tm(Matriz)
 set.network.attribute(Ecuador, "Size", SizeECU)
 set.network.attribute(Ecuador, "Density", DensityECU)
 set.network.attribute(Ecuador, "Clustering", ClusteringECU)
+set.network.attribute(Ecuador, "Country", "Ecuador")
 Ecuador
 
 bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
@@ -158,6 +163,7 @@ ClusteringECU1 <- tnet::clustering_tm(MatrizECUSPEC)
 set.network.attribute(Ecuador1, "Size", SizeECU1)
 set.network.attribute(Ecuador1, "Density", DensityECU1)
 set.network.attribute(Ecuador1, "Clustering", ClusteringECU1)
+set.network.attribute(Ecuador1, "Country", "Ecuador")
 Ecuador1
 
 bnECU2 <- graph_from_biadjacency_matrix(t(MatrizECUMS), directed = FALSE)
@@ -200,6 +206,7 @@ ClusteringECU2 <- tnet::clustering_tm(MatrizECUMS)
 set.network.attribute(Ecuador2, "Size", SizeECU2)
 set.network.attribute(Ecuador2, "Density", DensityECU2)
 set.network.attribute(Ecuador2, "Clustering", ClusteringECU2)
+set.network.attribute(Ecuador2, "Country", "Ecuador")
 Ecuador2
 
 bnECU3 <- graph_from_biadjacency_matrix(t(MatrizECUPHD), directed = FALSE)
@@ -243,6 +250,7 @@ ClusteringECU3 <- tnet::clustering_tm(MatrizECUPHD)
 set.network.attribute(Ecuador3, "Size", SizeECU3)
 set.network.attribute(Ecuador3, "Density", DensityECU3)
 set.network.attribute(Ecuador3, "Clustering", ClusteringECU3)
+set.network.attribute(Ecuador3, "Country", "Ecuador")
 Ecuador3
 
 MatrizECUSPEC <- as.matrix(t(ECU_Spec))
