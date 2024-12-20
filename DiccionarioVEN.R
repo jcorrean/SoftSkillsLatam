@@ -12,6 +12,11 @@ Programas <- data.frame(table(VEN$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
+library(tidyverse)
+VEN <- VEN %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
+
+
 library(quanteda)
 TextsVEN <- corpus(VEN$text)
 docvars(TextsVEN, "Program") <- VEN$Program
@@ -116,6 +121,7 @@ ClusteringVE <- tnet::clustering_tm(Matriz)
 set.network.attribute(Venezuela, "Size", SizeVE)
 set.network.attribute(Venezuela, "Density", DensityVE)
 set.network.attribute(Venezuela, "Clustering", ClusteringVE)
+set.network.attribute(Venezuela, "Country", "Venezuela")
 Venezuela
 
 bnVEN1 <- graph_from_biadjacency_matrix(t(MatrizVESPEC), directed = FALSE)
@@ -160,6 +166,7 @@ ClusteringVE1 <- tnet::clustering_tm(MatrizVESPEC)
 set.network.attribute(Venezuela1, "Size", SizeVE1)
 set.network.attribute(Venezuela1, "Density", DensityVE1)
 set.network.attribute(Venezuela1, "Clustering", ClusteringVE1)
+set.network.attribute(Venezuela1, "Country", "Venezuela")
 Venezuela1
 
 library(igraph)
@@ -205,6 +212,7 @@ ClusteringVE2 <- tnet::clustering_tm(MatrizVEMS)
 set.network.attribute(Venezuela2, "Size", SizeVE2)
 set.network.attribute(Venezuela2, "Density", DensityVE2)
 set.network.attribute(Venezuela2, "Clustering", ClusteringVE2)
+set.network.attribute(Venezuela2, "Country", "Venezuela")
 Venezuela2
 
 library(igraph)
@@ -250,6 +258,7 @@ ClusteringVE3 <- tnet::clustering_tm(MatrizVEPHD)
 set.network.attribute(Venezuela3, "Size", SizeVE3)
 set.network.attribute(Venezuela3, "Density", DensityVE3)
 set.network.attribute(Venezuela3, "Clustering", ClusteringVE3)
+set.network.attribute(Venezuela3, "Country", "Venezuela")
 Venezuela3
 
 MatrizVESPEC <- as.matrix(t(VEN_Spec))
