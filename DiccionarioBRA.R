@@ -12,6 +12,10 @@ Programas <- data.frame(table(BRA$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
+library(tidyverse)
+BRA <- BRA %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
+
 library(quanteda)
 TextsBRA <- corpus(BRA$text)
 docvars(TextsBRA, "Program") <- BRA$Program
