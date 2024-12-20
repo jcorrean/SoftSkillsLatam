@@ -9,7 +9,7 @@ load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
 
 library(stringr)
-
+library(tidyverse)
 ARG %>%
   mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
   count(initial_digit) #29
