@@ -12,6 +12,10 @@ Programas <- data.frame(table(CORI$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
+library(tidyverse)
+CORI <- CORI %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
+
 library(quanteda)
 TextsCORI <- corpus(CORI$text)
 docvars(TextsCORI, "Program") <- CORI$Program
@@ -114,7 +118,9 @@ ClusteringCR <- tnet::clustering_tm(Matriz)
 set.network.attribute(CostaRica, "Size", SizeCR)
 set.network.attribute(CostaRica, "Density", DensityCR)
 set.network.attribute(CostaRica, "Clustering", ClusteringCR)
+set.network.attribute(CostaRica, "Country", "Costa Rica")
 CostaRica
+
 bnCORI1 <- graph_from_biadjacency_matrix(t(MatrizCORISPEC), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCORI1)
 edges_cr1 <- data.frame(
@@ -156,6 +162,7 @@ ClusteringCORI1 <- tnet::clustering_tm(MatrizCORISPEC)
 set.network.attribute(CostaRica1, "Size", SizeCORI1)
 set.network.attribute(CostaRica1, "Density", DensityCORI1)
 set.network.attribute(CostaRica1, "Clustering", ClusteringCORI1)
+set.network.attribute(CostaRica1, "Country", "Costa Rica")
 CostaRica1
 
 bnCORI2 <- graph_from_biadjacency_matrix(t(MatrizCORIMS), directed = FALSE)
@@ -198,6 +205,7 @@ ClusteringCORI2 <- tnet::clustering_tm(MatrizCORIMS)
 set.network.attribute(CostaRica2, "Size", SizeCORI2)
 set.network.attribute(CostaRica2, "Density", DensityCORI2)
 set.network.attribute(CostaRica2, "Clustering", ClusteringCORI2)
+set.network.attribute(CostaRica2, "Country", "Costa Rica")
 CostaRica2
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
@@ -242,6 +250,7 @@ ClusteringCORI3 <- tnet::clustering_tm(MatrizCORIPHD)
 set.network.attribute(CostaRica3, "Size", SizeCORI3)
 set.network.attribute(CostaRica3, "Density", DensityCORI3)
 set.network.attribute(CostaRica3, "Clustering", ClusteringCORI3)
+set.network.attribute(CostaRica3, "Country", "Costa Rica")
 CostaRica3
 
 MatrizCORISPEC <- as.matrix(t(CORI_Spec))
