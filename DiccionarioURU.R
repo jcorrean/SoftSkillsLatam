@@ -12,6 +12,10 @@ Programas <- data.frame(table(URU$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
 
+library(tidyverse)
+URU <- URU %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
+
 library(quanteda)
 TextsURU <- corpus(URU$text)
 docvars(TextsURU, "Program") <- URU$Program
@@ -114,6 +118,7 @@ ClusteringURU <- tnet::clustering_tm(Matriz)
 set.network.attribute(Uruguay, "Size", SizeURU)
 set.network.attribute(Uruguay, "Density", DensityURU)
 set.network.attribute(Uruguay, "Clustering", ClusteringURU)
+set.network.attribute(Uruguay, "Country", "Uruguay")
 Uruguay
 
 library(igraph)
@@ -158,6 +163,7 @@ ClusteringURU1 <- tnet::clustering_tm(MatrizURUSPEC)
 set.network.attribute(Uruguay1, "Size", SizeURU1)
 set.network.attribute(Uruguay1, "Density", DensityURU1)
 set.network.attribute(Uruguay1, "Clustering", ClusteringURU1)
+set.network.attribute(Uruguay1, "Country", "Uruguay")
 Uruguay1
 
 library(igraph)
@@ -201,6 +207,7 @@ ClusteringURU2 <- tnet::clustering_tm(MatrizURUMS)
 set.network.attribute(Uruguay2, "Size", SizeURU2)
 set.network.attribute(Uruguay2, "Density", DensityURU2)
 set.network.attribute(Uruguay2, "Clustering", ClusteringURU2)
+set.network.attribute(Uruguay2, "Country", "Uruguay")
 Uruguay2
 
 library(igraph)
@@ -245,6 +252,7 @@ ClusteringURU3 <- tnet::clustering_tm(MatrizURUPHD)
 set.network.attribute(Uruguay3, "Size", SizeURU3)
 set.network.attribute(Uruguay3, "Density", DensityURU3)
 set.network.attribute(Uruguay3, "Clustering", ClusteringURU3)
+set.network.attribute(Uruguay3, "Country", "Uruguay")
 Uruguay3
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Uruguay.RData")
