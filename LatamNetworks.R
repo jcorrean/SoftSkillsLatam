@@ -36,7 +36,7 @@ ECU %>%
 
 MEX %>%
   mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
-  count(initial_digit) #62
+  count(initial_digit) #21
 
 URU %>%
   mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
@@ -46,7 +46,7 @@ VEN %>%
   mutate(initial_digit = str_extract(doc_id, "^\\d+")) %>%
   count(initial_digit) #17
 
-Sampled.Universities <- 29+268+51+50+2+29+62+8+17
+Sampled.Universities <- 29+268+51+50+2+21+62+8+17
 Sampled.Universities
 
 RegionNetwork <- do.call(rbind, list(edges_arg, 
