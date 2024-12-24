@@ -5,12 +5,16 @@ MEX$doc_id <- gsub("\\.pdf$|\\.docx$", "", MEX$doc_id)
 library(dplyr)
 MEX <- mutate(MEX, 
               Program = ifelse(
-                grepl("Doctorado en", text), "Doctorado",
+                grepl("Doctorado", text), "Doctorado",
                 ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
                        "Especialización")))
 Programas <- data.frame(table(MEX$Program))
 colnames(Programas)[1] <- "Programa" 
 colnames(Programas)[2] <- "Total"
+
+library(tidyverse)
+MEX <- MEX %>%
+  mutate(University.Code = str_extract(doc_id, "^\\d+"))
 
 library(quanteda)
 TextsMEX <- corpus(MEX$text)
@@ -116,6 +120,7 @@ ClusteringMEX <- tnet::clustering_tm(Matriz)
 set.network.attribute(Mexico, "Size", SizeMEX)
 set.network.attribute(Mexico, "Density", DensityMEX)
 set.network.attribute(Mexico, "Clustering", ClusteringMEX)
+set.network.attribute(Mexico, "Country", "Mexico")
 Mexico
 
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
@@ -159,6 +164,7 @@ ClusteringMEX1 <- tnet::clustering_tm(MatrizMEXSPEC)
 set.network.attribute(Mexico1, "Size", SizeMEX1)
 set.network.attribute(Mexico1, "Density", DensityMEX1)
 set.network.attribute(Mexico1, "Clustering", ClusteringMEX1)
+set.network.attribute(Mexico1, "Country", "Mexico")
 Mexico1
 
 bnMEX2 <- graph_from_biadjacency_matrix(t(MatrizMEXMS), directed = FALSE)
@@ -201,6 +207,7 @@ ClusteringMEX2 <- tnet::clustering_tm(MatrizMEXMS)
 set.network.attribute(Mexico2, "Size", SizeMEX2)
 set.network.attribute(Mexico2, "Density", DensityMEX2)
 set.network.attribute(Mexico2, "Clustering", ClusteringMEX2)
+set.network.attribute(Mexico2, "Country", "Mexico")
 Mexico2
 
 bnMEX3 <- graph_from_biadjacency_matrix(t(MatrizMEXPHD), directed = FALSE)
@@ -244,6 +251,7 @@ ClusteringMEX3 <- tnet::clustering_tm(MatrizMEXPHD)
 set.network.attribute(Mexico3, "Size", SizeMEX3)
 set.network.attribute(Mexico3, "Density", DensityMEX3)
 set.network.attribute(Mexico3, "Clustering", ClusteringMEX3)
+set.network.attribute(Mexico3, "Country", "Mexico")
 Mexico3
 
 MatrizMEXSPEC <- as.matrix(t(MEX_Spec))
