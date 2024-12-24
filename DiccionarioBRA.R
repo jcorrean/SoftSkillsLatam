@@ -120,6 +120,7 @@ ClusteringBR <- tnet::clustering_tm(Matriz)
 set.network.attribute(Brazil, "Size", SizeBR)
 set.network.attribute(Brazil, "Density", DensityBR)
 set.network.attribute(Brazil, "Clustering", ClusteringBR)
+set.network.attribute(Brazil, "Country", "Brazil")
 Brazil
 
 bnBRA1 <- graph_from_biadjacency_matrix(t(MatrizBRASPEC), directed = FALSE)
@@ -163,6 +164,7 @@ ClusteringBRA1 <- tnet::clustering_tm(MatrizBRASPEC)
 set.network.attribute(Brazil1, "Size", SizeBRA1)
 set.network.attribute(Brazil1, "Density", DensityBRA1)
 set.network.attribute(Brazil1, "Clustering", ClusteringBRA1)
+set.network.attribute(Brazil1, "Country", "Brazil")
 Brazil1
 
 bnBRA2 <- graph_from_biadjacency_matrix(t(MatrizBRAMS), directed = FALSE)
@@ -205,6 +207,7 @@ ClusteringBRA2 <- tnet::clustering_tm(MatrizBRASPEC)
 set.network.attribute(Brazil2, "Size", SizeBRA2)
 set.network.attribute(Brazil2, "Density", DensityBRA2)
 set.network.attribute(Brazil2, "Clustering", ClusteringBRA2)
+set.network.attribute(Brazil2, "Country", "Brazil")
 Brazil2
 
 bnBRA3 <- graph_from_biadjacency_matrix(t(MatrizBRAPHD), directed = FALSE)
@@ -249,6 +252,7 @@ ClusteringBRA3 <- tnet::clustering_tm(MatrizBRAPHD)
 set.network.attribute(Brazil3, "Size", SizeBRA3)
 set.network.attribute(Brazil3, "Density", DensityBRA3)
 set.network.attribute(Brazil3, "Clustering", ClusteringBRA3)
+set.network.attribute(Brazil3, "Country", "Brazil")
 Brazil3
 
 MatrizBRASPEC <- as.matrix(t(BRA_Spec))
