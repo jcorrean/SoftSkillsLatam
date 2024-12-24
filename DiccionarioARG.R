@@ -122,6 +122,7 @@ ClusteringARG <- tnet::clustering_tm(Matriz)
 set.network.attribute(Argentina, "Size", SizeARG)
 set.network.attribute(Argentina, "Density", DensityARG)
 set.network.attribute(Argentina, "Clustering", ClusteringARG)
+set.network.attribute(Argentina, "Country", "Argentina")
 Argentina
 
 library(igraph)
@@ -167,6 +168,7 @@ ClusteringARG1 <- tnet::clustering_tm(MatrizARGSPEC)
 set.network.attribute(Argentina1, "Size", SizeARG1)
 set.network.attribute(Argentina1, "Density", DensityARG1)
 set.network.attribute(Argentina1, "Clustering", ClusteringARG1)
+set.network.attribute(Argentina1, "Country", "Argentina")
 Argentina1
 
 library(igraph)
@@ -211,6 +213,7 @@ ClusteringARG2 <- tnet::clustering_tm(MatrizARGMS)
 set.network.attribute(Argentina2, "Size", SizeARG2)
 set.network.attribute(Argentina2, "Density", DensityARG2)
 set.network.attribute(Argentina2, "Clustering", ClusteringARG2)
+set.network.attribute(Argentina2, "Country", "Argentina")
 Argentina2
 
 library(igraph)
@@ -256,6 +259,7 @@ ClusteringARG3 <- tnet::clustering_tm(MatrizARGPHD)
 set.network.attribute(Argentina3, "Size", SizeARG3)
 set.network.attribute(Argentina3, "Density", DensityARG3)
 set.network.attribute(Argentina3, "Clustering", ClusteringARG3)
+set.network.attribute(Argentina3, "Country", "Argentina")
 Argentina3
 
 MatrizARGSPEC <- as.matrix(t(ARG_Spec))
