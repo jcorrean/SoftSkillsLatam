@@ -78,6 +78,7 @@ MatrizARGPHD <- as.matrix(t(ARG_PhD))
 ProgramsARG
 Matriz <- as.matrix(t(ProgramsARG))
 rowSums(Matriz)
+str(Matriz)
 
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
@@ -87,6 +88,7 @@ edges_arg <- data.frame(
   Target = EdgeListAR[, 2],
   Country = "Argentina"
 )
+bnARG <- graph_from_data_frame(edges_arg, directed = TRUE)
 bipartite_mapping(bnARG)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
@@ -114,7 +116,7 @@ library(psych)
 describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
 
 library(network)
-Argentina <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Argentina <- network(Matriz, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
@@ -127,12 +129,13 @@ Argentina
 
 library(igraph)
 bnARG1 <- graph_from_biadjacency_matrix(t(MatrizARGSPEC), directed = FALSE)
-EdgeListVE <- as_edgelist(bnARG1)
+EdgeListAR1 <- as_edgelist(bnARG1)
 edges_arg1 <- data.frame(
-  Source = paste0("ARG_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("ARG_", EdgeListAR1[, 1]),
+  Target = EdgeListAR1[, 2],
   Country = "Argentina"
 )
+bnARG1 <- graph_from_data_frame(edges_arg1, directed = TRUE)
 bipartite_mapping(bnARG1)
 V(bnARG1)$type <- bipartite_mapping(bnARG1)$type
 V(bnARG1)$shape <- ifelse(V(bnARG1)$type, "circle", "square")
@@ -160,7 +163,7 @@ ProgramsARG1$Level <- "Specialization"
 library(psych)
 describeBy(ProgramsARG1$Eigenvector, group = ProgramsARG1$Partition, mat = TRUE, digits = 2)
 library(network)
-Argentina1 <- network(MatrizARGSPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Argentina1 <- network(MatrizARGSPEC, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina1
 SizeARG1 <- network::network.size(Argentina1)
 DensityARG1 <- network::network.density(Argentina1)
