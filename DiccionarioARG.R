@@ -184,7 +184,7 @@ set.network.attribute(Argentina1, "Level", "Specialization")
 Argentina1
 
 library(igraph)
-bnARG2 <- graph_from_biadjacency_matrix(t(MatrizARGMS), directed = FALSE)
+bnARG2 <- graph_from_biadjacency_matrix(t(MatrizARGMS), directed = TRUE)
 EdgeListVE <- as_edgelist(bnARG2)
 edges_arg2 <- data.frame(
   Source = paste0("ARG_", EdgeListVE[, 1]),
