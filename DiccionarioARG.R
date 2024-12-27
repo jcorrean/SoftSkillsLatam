@@ -180,6 +180,7 @@ set.network.attribute(Argentina1, "Size", SizeARG1)
 set.network.attribute(Argentina1, "Density", DensityARG1)
 set.network.attribute(Argentina1, "Clustering", ClusteringARG1)
 set.network.attribute(Argentina1, "Country", "Argentina")
+set.network.attribute(Argentina1, "Level", "Specialization")
 Argentina1
 
 library(igraph)
@@ -228,6 +229,7 @@ set.network.attribute(Argentina2, "Size", SizeARG2)
 set.network.attribute(Argentina2, "Density", DensityARG2)
 set.network.attribute(Argentina2, "Clustering", ClusteringARG2)
 set.network.attribute(Argentina2, "Country", "Argentina")
+set.network.attribute(Argentina2, "Level", "Master")
 Argentina2
 
 library(igraph)
@@ -277,6 +279,7 @@ set.network.attribute(Argentina3, "Size", SizeARG3)
 set.network.attribute(Argentina3, "Density", DensityARG3)
 set.network.attribute(Argentina3, "Clustering", ClusteringARG3)
 set.network.attribute(Argentina3, "Country", "Argentina")
+set.network.attribute(Argentina3, "Level", "PhD")
 Argentina3
 
 MatrizARGSPEC <- as.matrix(t(ARG_Spec))
