@@ -264,7 +264,7 @@ library(network)
 verticesBRA3 <- nrow(MatrizBRAPHD) + ncol(MatrizBRAPHD)
 g3 <- network.initialize(verticesBRA3, directed = TRUE, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizBRAPHD, g3)
-Brazil3 <- network(MatrizBRAPHD, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil3
 SizeBRA3 <- network::network.size(Brazil3)
 DensityBRA3 <- network::network.density(Brazil3)
