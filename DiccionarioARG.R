@@ -116,7 +116,8 @@ library(psych)
 describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
 
 library(network)
-g <- network.initialize(524, directed = TRUE, bipartite = TRUE)
+verticesARG <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesARG, directed = TRUE, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 
 Argentina <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
