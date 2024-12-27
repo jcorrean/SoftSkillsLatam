@@ -260,8 +260,10 @@ ProgramsECU3$Country <- "Ecuador"
 ProgramsECU3$Level <- "PhD"
 
 psych::describeBy(ProgramsECU3$Eigenvector, group = ProgramsECU3$Partition, mat = TRUE, digits = 2)
-
-Ecuador3 <- network(MatrizECUPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesECUPHD <- nrow(MatrizECUPHD) + ncol(MatrizECUPHD)
+g3 <- network.initialize(verticesECUPHD, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizECUPHD, g3)
+Ecuador3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador3
 SizeECU3 <- network::network.size(Ecuador3)
 DensityECU3 <- network::network.density(Ecuador3)
@@ -270,6 +272,7 @@ set.network.attribute(Ecuador3, "Size", SizeECU3)
 set.network.attribute(Ecuador3, "Density", DensityECU3)
 set.network.attribute(Ecuador3, "Clustering", ClusteringECU3)
 set.network.attribute(Ecuador3, "Country", "Ecuador")
+set.network.attribute(Ecuador3, "Level", "PhD")
 Ecuador3
 
 MatrizECUSPEC <- as.matrix(t(ECU_Spec))
