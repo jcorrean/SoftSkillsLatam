@@ -87,13 +87,14 @@ edges_chl <- data.frame(
   Target = EdgeListCHL[, 2],
   Country = "Chile"
 )
-
+bnCHL <- graph_from_data_frame(edges_chl, directed = TRUE)
 bipartite_mapping(bnCHL)
 V(bnCHL)$type <- bipartite_mapping(bnCHL)$type
 V(bnCHL)$shape <- ifelse(V(bnCHL)$type, "circle", "square")
 V(bnCHL)$label.cex <- ifelse(V(bnCHL)$type, 0.5, 1)
 V(bnCHL)$size <- sqrt(igraph::degree(bnCHL))
 E(bnCHL)$color <- "lightgrey"
+plot(bnCHL, vertex.label = NA, layout = layout_as_bipartite)
 
 ProgramsCHL <- data.frame(Degree = igraph::degree(bnCHL),
                           Closeness = igraph::closeness(bnCHL),
@@ -114,9 +115,12 @@ ProgramsCHL$Country <- "Chile"
 library(psych)
 describeBy(ProgramsCHL$Eigenvector, group = ProgramsCHL$Partition, mat = TRUE, digits = 2)
 
-
 library(network)
-Chile <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCHL <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesCHL, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+
+Chile <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile
 SizeCHL <- network::network.size(Chile)
 DensityCHL <- network::network.density(Chile)
@@ -128,18 +132,20 @@ set.network.attribute(Chile, "Country", "Chile")
 Chile
 
 bnCHL1 <- graph_from_biadjacency_matrix(t(MatrizCHLSPEC), directed = FALSE)
-EdgeListVE <- as_edgelist(bnCHL1)
+EdgeListCHL1 <- as_edgelist(bnCHL1)
 edges_chl1 <- data.frame(
-  Source = paste0("CHL_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("CHL_", EdgeListCHL1[, 1]),
+  Target = EdgeListCHL1[, 2],
   Country = "Chile"
 )
+bnCHL1 <- graph_from_data_frame(edges_chl1, directed = TRUE)
 bipartite_mapping(bnCHL1)
 V(bnCHL1)$type <- bipartite_mapping(bnCHL1)$type
 V(bnCHL1)$shape <- ifelse(V(bnCHL1)$type, "circle", "square")
 V(bnCHL1)$label.cex <- ifelse(V(bnCHL1)$type, 0.5, 1)
 V(bnCHL1)$size <- sqrt(igraph::degree(bnCHL1))
 E(bnCHL1)$color <- "lightgrey"
+plot(bnCHL1, vertex.label = NA, layout = layout_as_bipartite)
 
 ProgramsCHL1 <- data.frame(Degree = igraph::degree(bnCHL1),
                            Closeness = igraph::closeness(bnCHL1),
@@ -161,30 +167,36 @@ ProgramsCHL1$Level <- "Specialization"
 library(psych)
 describeBy(ProgramsCHL1$Eigenvector, group = ProgramsCHL1$Partition, mat = TRUE, digits = 2)
 library(network)
-Chile1 <- network(MatrizCHLSPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCHLSPEC <- nrow(MatrizCHLSPEC) + ncol(MatrizCHLSPEC)
+g1 <- network.initialize(verticesCHLSPEC, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizCHLSPEC, g1)
+Chile1 <- network(pave1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile1
-SizeCHL1 <- network::network.size(Chile)
-DensityCHL1 <- network::network.density(Chile)
+SizeCHL1 <- network::network.size(Chile1)
+DensityCHL1 <- network::network.density(Chile1)
 ClusteringCHL1 <- tnet::clustering_tm(MatrizCHLSPEC)
 set.network.attribute(Chile1, "Size", SizeCHL1)
 set.network.attribute(Chile1, "Density", DensityCHL1)
 set.network.attribute(Chile1, "Clustering", ClusteringCHL1)
 set.network.attribute(Chile1, "Country", "Chile")
+set.network.attribute(Chile1, "Level", "Specialization")
 Chile1
 
 bnCHL2 <- graph_from_biadjacency_matrix(t(MatrizCHLMS), directed = FALSE)
-EdgeListVE <- as_edgelist(bnCHL2)
+EdgeListCHL2 <- as_edgelist(bnCHL2)
 edges_chl2 <- data.frame(
-  Source = paste0("CHL_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("CHL_", EdgeListCHL2[, 1]),
+  Target = EdgeListCHL2[, 2],
   Country = "Chile"
 )
+bnCHL2 <- graph_from_data_frame(edges_chl2, directed = TRUE)
 bipartite_mapping(bnCHL2)
 V(bnCHL2)$type <- bipartite_mapping(bnCHL2)$type
 V(bnCHL2)$shape <- ifelse(V(bnCHL2)$type, "circle", "square")
 V(bnCHL2)$label.cex <- ifelse(V(bnCHL2)$type, 0.5, 1)
 V(bnCHL2)$size <- sqrt(igraph::degree(bnCHL2))
 E(bnCHL2)$color <- "lightgrey"
+plot(bnCHL2, vertex.label = NA, layout = layout_as_bipartite)
 
 ProgramsCHL2 <- data.frame(Degree = igraph::degree(bnCHL2),
                            Closeness = igraph::closeness(bnCHL2),
@@ -202,9 +214,13 @@ ProgramsCHL2 <- mutate(ProgramsCHL2,
                          grepl("text", Node), "Program", "Skill"))
 ProgramsCHL2$Country <- "Chile"
 ProgramsCHL2$Level <- "Master"
-psych::describeBy(ProgramsCHL2$Eigenvector, group = ProgramsARG2$Partition, mat = TRUE, digits = 2)
+psych::describeBy(ProgramsCHL2$Eigenvector, group = ProgramsCHL2$Partition, mat = TRUE, digits = 2)
 
-Chile2 <- network(MatrizCHLMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+library(network)
+verticesCHL2 <- nrow(MatrizCHLMS) + ncol(MatrizCHLMS)
+g2 <- network.initialize(verticesCHL2, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizCHLMS, g2)
+Chile2 <- network(pave2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile2
 SizeCHL2 <- network::network.size(Chile2)
 DensityCHL2 <- network::network.density(Chile2)
@@ -213,22 +229,25 @@ set.network.attribute(Chile2, "Size", SizeCHL2)
 set.network.attribute(Chile2, "Density", DensityCHL2)
 set.network.attribute(Chile2, "Clustering", ClusteringCHL2)
 set.network.attribute(Chile2, "Country", "Chile")
+set.network.attribute(Chile2, "Level", "Master")
 Chile2
 
 
 bnCHL3 <- graph_from_biadjacency_matrix(t(MatrizCHLPHD), directed = FALSE)
-EdgeListVE <- as_edgelist(bnCHL3)
+EdgeListCHL3 <- as_edgelist(bnCHL3)
 edges_chl3 <- data.frame(
-  Source = paste0("CHL_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("CHL_", EdgeListCHL3[, 1]),
+  Target = EdgeListCHL3[, 2],
   Country = "Chile"
 )
+bnCHL3 <- graph_from_data_frame(edges_chl3, directed = TRUE)
 bipartite_mapping(bnCHL3)
 V(bnCHL3)$type <- bipartite_mapping(bnCHL3)$type
 V(bnCHL3)$shape <- ifelse(V(bnCHL3)$type, "circle", "square")
 V(bnCHL3)$label.cex <- ifelse(V(bnCHL3)$type, 0.5, 1)
 V(bnCHL3)$size <- sqrt(igraph::degree(bnCHL3))
 E(bnCHL3)$color <- "lightgrey"
+plot(bnCHL3, vertex.label = NA, layout = layout_as_bipartite)
 
 ProgramsCHL3 <- data.frame(Degree = igraph::degree(bnCHL3),
                            Closeness = igraph::closeness(bnCHL3),
@@ -249,7 +268,10 @@ ProgramsCHL3$Level <- "PhD"
 
 psych::describeBy(ProgramsCHL3$Eigenvector, group = ProgramsCHL3$Partition, mat = TRUE, digits = 2)
 
-Chile3 <- network(MatrizCHLPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCHL3 <- nrow(MatrizCHLPHD) + ncol(MatrizCHLPHD)
+g3 <- network.initialize(verticesCHL3, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizCHLPHD, g3)
+Chile3 <- network(pave3, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile3
 SizeCHL3 <- network::network.size(Chile3)
 DensityCHL3 <- network::network.density(Chile3)
@@ -258,6 +280,7 @@ set.network.attribute(Chile3, "Size", SizeCHL3)
 set.network.attribute(Chile3, "Density", DensityCHL3)
 set.network.attribute(Chile3, "Clustering", ClusteringCHL3)
 set.network.attribute(Chile3, "Country", "Chile")
+set.network.attribute(Chile3, "Level", "PhD")
 Chile3
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Chile.RData")
 
