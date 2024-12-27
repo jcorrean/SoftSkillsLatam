@@ -95,7 +95,7 @@ V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
 V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
-
+plot(bnARG, vertex.label = NA, layout = layout_as_bipartite)
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
                           Betweennes = igraph::betweenness(bnARG),
@@ -146,7 +146,7 @@ V(bnARG1)$shape <- ifelse(V(bnARG1)$type, "circle", "square")
 V(bnARG1)$label.cex <- ifelse(V(bnARG1)$type, 0.5, 1)
 V(bnARG1)$size <- sqrt(igraph::degree(bnARG1))
 E(bnARG1)$color <- "lightgrey"
-
+plot(bnARG1, vertex.label = NA, layout = layout_as_bipartite)
 ProgramsARG1 <- data.frame(Degree = igraph::degree(bnARG1),
                            Closeness = igraph::closeness(bnARG1),
                            Betweennes = igraph::betweenness(bnARG1),
@@ -184,20 +184,21 @@ set.network.attribute(Argentina1, "Level", "Specialization")
 Argentina1
 
 library(igraph)
-bnARG2 <- graph_from_biadjacency_matrix(t(MatrizARGMS), directed = TRUE)
-EdgeListVE <- as_edgelist(bnARG2)
+bnARG2 <- graph_from_biadjacency_matrix(t(MatrizARGMS), directed = FALSE)
+EdgeListAR2 <- as_edgelist(bnARG2)
 edges_arg2 <- data.frame(
-  Source = paste0("ARG_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("ARG_", EdgeListAR2[, 1]),
+  Target = EdgeListAR2[, 2],
   Country = "Argentina"
 )
+bnARG2 <- graph_from_data_frame(edges_arg2, directed = TRUE)
 bipartite_mapping(bnARG2)
 V(bnARG2)$type <- bipartite_mapping(bnARG2)$type
 V(bnARG2)$shape <- ifelse(V(bnARG2)$type, "circle", "square")
 V(bnARG2)$label.cex <- ifelse(V(bnARG2)$type, 0.5, 1)
 V(bnARG2)$size <- sqrt(igraph::degree(bnARG2))
 E(bnARG2)$color <- "lightgrey"
-
+plot(bnARG2, vertex.label = NA, layout = layout_as_bipartite)
 ProgramsARG2 <- data.frame(Degree = igraph::degree(bnARG2),
                            Closeness = igraph::closeness(bnARG2),
                            Betweennes = igraph::betweenness(bnARG2),
@@ -234,18 +235,20 @@ Argentina2
 
 library(igraph)
 bnARG3 <- graph_from_biadjacency_matrix(t(MatrizARGPHD), directed = FALSE)
-EdgeListVE <- as_edgelist(bnARG3)
+EdgeListAR3 <- as_edgelist(bnARG3)
 edges_arg3 <- data.frame(
-  Source = paste0("ARG_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("ARG_", EdgeListAR3[, 1]),
+  Target = EdgeListAR3[, 2],
   Country = "Argentina"
 )
+bnARG3 <- graph_from_data_frame(edges_arg3, directed = TRUE)
 bipartite_mapping(bnARG3)
 V(bnARG3)$type <- bipartite_mapping(bnARG3)$type
 V(bnARG3)$shape <- ifelse(V(bnARG3)$type, "circle", "square")
 V(bnARG3)$label.cex <- ifelse(V(bnARG3)$type, 0.5, 1)
 V(bnARG3)$size <- sqrt(igraph::degree(bnARG3))
 E(bnARG3)$color <- "lightgrey"
+plot(bnARG3, vertex.label = NA, layout = layout_as_bipartite)
 
 ProgramsARG3 <- data.frame(Degree = igraph::degree(bnARG3),
                            Closeness = igraph::closeness(bnARG3),
