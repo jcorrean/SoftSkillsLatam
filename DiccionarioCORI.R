@@ -84,13 +84,16 @@ edges_cr <- data.frame(
   Target = EdgeListCORI[, 2],
   Country = "Costa Rica"
 )
+bnCORI <- graph_from_data_frame(edges_cr, directed = TRUE)
 bipartite_mapping(bnCORI)
 V(bnCORI)$type <- bipartite_mapping(bnCORI)$type
 V(bnCORI)$shape <- ifelse(V(bnCORI)$type, "circle", "square")
 V(bnCORI)$label.cex <- ifelse(V(bnCORI)$type, 0.5, 1)
 V(bnCORI)$size <- sqrt(igraph::degree(bnCORI))
 E(bnCORI)$color <- "lightgrey"
-
+png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCORI, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsCORI <- data.frame(Degree = igraph::degree(bnCORI),
                           Closeness = igraph::closeness(bnCORI),
                           Betweennes = igraph::betweenness(bnCORI),
@@ -110,7 +113,10 @@ ProgramsCORI$Country <- "Costa Rica"
 psych::describeBy(ProgramsCORI$Eigenvector, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
 
 library(network)
-CostaRica <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCORI <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesCORI, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+CostaRica <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica
 SizeCR <- network::network.size(CostaRica)
 DensityCR <- network::network.density(CostaRica)
@@ -122,19 +128,21 @@ set.network.attribute(CostaRica, "Country", "Costa Rica")
 CostaRica
 
 bnCORI1 <- graph_from_biadjacency_matrix(t(MatrizCORISPEC), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCORI1)
+EdgeListCORI1 <- as_edgelist(bnCORI1)
 edges_cr1 <- data.frame(
-  Source = paste0("CR_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("CR_", EdgeListCORI1[, 1]),
+  Target = EdgeListCORI1[, 2],
   Country = "Costa Rica"
 )
-bipartite_mapping(bnCORI1)
+bnCORI1 <- graph_from_data_frame(edges_cr1, directed = TRUE)
 V(bnCORI1)$type <- bipartite_mapping(bnCORI1)$type
 V(bnCORI1)$shape <- ifelse(V(bnCORI1)$type, "circle", "square")
 V(bnCORI1)$label.cex <- ifelse(V(bnCORI1)$type, 0.5, 1)
 V(bnCORI1)$size <- sqrt(igraph::degree(bnCORI1))
 E(bnCORI1)$color <- "lightgrey"
-
+png(filename = "f2.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCORI1, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsCORI1 <- data.frame(Degree = igraph::degree(bnCORI1),
                            Closeness = igraph::closeness(bnCORI1),
                            Betweennes = igraph::betweenness(bnCORI1),
@@ -154,7 +162,10 @@ ProgramsCORI1$Level <- "Specialization"
 
 psych::describeBy(ProgramsCORI1$Eigenvector, group = ProgramsCORI1$Partition, mat = TRUE, digits = 2)
 library(network)
-CostaRica1 <- network(MatrizCORISPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCORISPEC <- nrow(MatrizCORISPEC) + ncol(MatrizCORISPEC)
+g1 <- network.initialize(verticesCORISPEC, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizCORISPEC, g1)
+CostaRica1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica1
 SizeCORI1 <- network::network.size(CostaRica1)
 DensityCORI1 <- network::network.density(CostaRica1)
@@ -163,22 +174,25 @@ set.network.attribute(CostaRica1, "Size", SizeCORI1)
 set.network.attribute(CostaRica1, "Density", DensityCORI1)
 set.network.attribute(CostaRica1, "Clustering", ClusteringCORI1)
 set.network.attribute(CostaRica1, "Country", "Costa Rica")
+set.network.attribute(CostaRica1, "Level", "Specialization")
 CostaRica1
 
 bnCORI2 <- graph_from_biadjacency_matrix(t(MatrizCORIMS), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCORI2)
+EdgeListCORI2 <- as_edgelist(bnCORI2)
 edges_cr2 <- data.frame(
-  Source = paste0("CR_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("CR_", EdgeListCORI2[, 1]),
+  Target = EdgeListCORI2[, 2],
   Country = "Costa Rica"
 )
-bipartite_mapping(bnCORI2)
+bnCORI2 <- graph_from_data_frame(edges_cr2, directed = TRUE)
 V(bnCORI2)$type <- bipartite_mapping(bnCORI2)$type
 V(bnCORI2)$shape <- ifelse(V(bnCORI2)$type, "circle", "square")
 V(bnCORI2)$label.cex <- ifelse(V(bnCORI2)$type, 0.5, 1)
 V(bnCORI2)$size <- sqrt(igraph::degree(bnCORI2))
 E(bnCORI2)$color <- "lightgrey"
-
+png(filename = "f3.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCORI2, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsCORI2 <- data.frame(Degree = igraph::degree(bnCORI2),
                            Closeness = igraph::closeness(bnCORI2),
                            Betweennes = igraph::betweenness(bnCORI2),
@@ -197,7 +211,10 @@ ProgramsCORI2$Country <- "Costa Rica"
 ProgramsCORI2$Level <- "Master"
 psych::describeBy(ProgramsCORI2$Eigenvector, group = ProgramsCORI2$Partition, mat = TRUE, digits = 2)
 library(network)
-CostaRica2 <- network(MatrizCORIMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCORIMS <- nrow(MatrizCORIMS) + ncol(MatrizCORIMS)
+g2 <- network.initialize(verticesCORIMS, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizCORIMS, g2)
+CostaRica2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica2
 SizeCORI2 <- network::network.size(CostaRica2)
 DensityCORI2 <- network::network.density(CostaRica2)
@@ -206,22 +223,25 @@ set.network.attribute(CostaRica2, "Size", SizeCORI2)
 set.network.attribute(CostaRica2, "Density", DensityCORI2)
 set.network.attribute(CostaRica2, "Clustering", ClusteringCORI2)
 set.network.attribute(CostaRica2, "Country", "Costa Rica")
+set.network.attribute(CostaRica2, "Level", "Master")
 CostaRica2
 
 bnCORI3 <- graph_from_biadjacency_matrix(t(MatrizCORIPHD), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCORI3)
+EdgeListCORI3 <- as_edgelist(bnCORI3)
 edges_cr3 <- data.frame(
-  Source = paste0("CR_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("CR_", EdgeListCORI3[, 1]),
+  Target = EdgeListCORI3[, 2],
   Country = "CostaRica"
 )
-bipartite_mapping(bnCORI3)
+bnCORI3 <- graph_from_data_frame(edges_cr3, directed = TRUE)
 V(bnCORI3)$type <- bipartite_mapping(bnCORI3)$type
 V(bnCORI3)$shape <- ifelse(V(bnCORI3)$type, "circle", "square")
 V(bnCORI3)$label.cex <- ifelse(V(bnCORI3)$type, 0.5, 1)
 V(bnCORI3)$size <- sqrt(igraph::degree(bnCORI3))
 E(bnCORI3)$color <- "lightgrey"
-
+png(filename = "f4.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCORI3, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsCORI3 <- data.frame(Degree = igraph::degree(bnCORI3),
                            Closeness = igraph::closeness(bnCORI3),
                            Betweennes = igraph::betweenness(bnCORI3),
@@ -242,7 +262,10 @@ ProgramsCORI3$Level <- "PhD"
 
 psych::describeBy(ProgramsCORI3$Eigenvector, group = ProgramsCORI3$Partition, mat = TRUE, digits = 2)
 library(network)
-CostaRica3 <- network(MatrizCORIPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCORIPHD <- nrow(MatrizCORIPHD) + ncol(MatrizCORIPHD)
+g3 <- network.initialize(verticesCORIPHD, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizCORIPHD, g3)
+CostaRica3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica3
 SizeCORI3 <- network::network.size(CostaRica3)
 DensityCORI3 <- network::network.density(CostaRica3)
@@ -251,6 +274,7 @@ set.network.attribute(CostaRica3, "Size", SizeCORI3)
 set.network.attribute(CostaRica3, "Density", DensityCORI3)
 set.network.attribute(CostaRica3, "Clustering", ClusteringCORI3)
 set.network.attribute(CostaRica3, "Country", "Costa Rica")
+set.network.attribute(CostaRica3, "Level", "PhD")
 CostaRica3
 
 MatrizCORISPEC <- as.matrix(t(CORI_Spec))
