@@ -86,13 +86,15 @@ edges_ec <- data.frame(
   Target = EdgeListECU[, 2],
   Country = "Ecuador"
 )
-bipartite_mapping(bnECU)
+bnECU <- graph_from_data_frame(edges_ec, directed = TRUE)
 V(bnECU)$type <- bipartite_mapping(bnECU)$type
 V(bnECU)$shape <- ifelse(V(bnECU)$type, "circle", "square")
 V(bnECU)$label.cex <- ifelse(V(bnECU)$type, 0.5, 1)
 V(bnECU)$size <- sqrt(igraph::degree(bnECU))
 E(bnECU)$color <- "lightgrey"
-
+png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnECU, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsECU <- data.frame(Degree = igraph::degree(bnECU),
                           Closeness = igraph::closeness(bnECU),
                           Betweennes = igraph::betweenness(bnECU),
@@ -111,7 +113,10 @@ ProgramsECU$Country <- "Ecuador"
 
 psych::describeBy(ProgramsECU$Eigenvector, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
 library(network)
-Ecuador <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesECU <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesECU, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+Ecuador <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador
 SizeECU <- network::network.size(Ecuador)
 DensityECU <- network::network.density(Ecuador)
@@ -123,19 +128,21 @@ set.network.attribute(Ecuador, "Country", "Ecuador")
 Ecuador
 
 bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
-EdgeListVE <- as_edgelist(bnECU1)
+EdgeListECU1 <- as_edgelist(bnECU1)
 edges_ec1 <- data.frame(
-  Source = paste0("ECU_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("ECU_", EdgeListECU1[, 1]),
+  Target = EdgeListECU1[, 2],
   Country = "Ecuador"
 )
-bipartite_mapping(bnECU1)
+bnECU1 <- graph_from_data_frame(edges_ec1, directed = TRUE)
 V(bnECU1)$type <- bipartite_mapping(bnECU1)$type
 V(bnECU1)$shape <- ifelse(V(bnECU1)$type, "circle", "square")
 V(bnECU1)$label.cex <- ifelse(V(bnECU1)$type, 0.5, 1)
 V(bnECU1)$size <- sqrt(igraph::degree(bnECU1))
 E(bnECU1)$color <- "lightgrey"
-
+png(filename = "f2.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnECU1, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsECU1 <- data.frame(Degree = igraph::degree(bnECU1),
                            Closeness = igraph::closeness(bnECU1),
                            Betweennes = igraph::betweenness(bnECU1),
@@ -155,7 +162,10 @@ ProgramsECU1$Level <- "Specialization"
 
 psych::describeBy(ProgramsECU1$Eigenvector, group = ProgramsECU1$Partition, mat = TRUE, digits = 2)
 library(network)
-Ecuador1 <- network(MatrizECUSPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesECUSPEC <- nrow(MatrizECUSPEC) + ncol(MatrizECUSPEC)
+g1 <- network.initialize(verticesECUSPEC, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizECUSPEC, g1)
+Ecuador1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador1
 SizeECU1 <- network::network.size(Ecuador1)
 DensityECU1 <- network::network.density(Ecuador1)
@@ -164,22 +174,25 @@ set.network.attribute(Ecuador1, "Size", SizeECU1)
 set.network.attribute(Ecuador1, "Density", DensityECU1)
 set.network.attribute(Ecuador1, "Clustering", ClusteringECU1)
 set.network.attribute(Ecuador1, "Country", "Ecuador")
+set.network.attribute(Ecuador1, "Level", "Specialization")
 Ecuador1
 
 bnECU2 <- graph_from_biadjacency_matrix(t(MatrizECUMS), directed = FALSE)
-EdgeListVE <- as_edgelist(bnECU2)
+EdgeListECU2 <- as_edgelist(bnECU2)
 edges_ec2 <- data.frame(
-  Source = paste0("ECU_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("ECU_", EdgeListECU2[, 1]),
+  Target = EdgeListECU2[, 2],
   Country = "Ecuador"
 )
-bipartite_mapping(bnECU2)
+bnECU2 <- graph_from_data_frame(edges_ec2, directed = TRUE)
 V(bnECU2)$type <- bipartite_mapping(bnECU2)$type
 V(bnECU2)$shape <- ifelse(V(bnECU2)$type, "circle", "square")
 V(bnECU2)$label.cex <- ifelse(V(bnECU2)$type, 0.5, 1)
 V(bnECU2)$size <- sqrt(igraph::degree(bnECU2))
 E(bnECU2)$color <- "lightgrey"
-
+png(filename = "f3.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnECU2, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsECU2 <- data.frame(Degree = igraph::degree(bnECU2),
                            Closeness = igraph::closeness(bnECU2),
                            Betweennes = igraph::betweenness(bnECU2),
@@ -198,7 +211,10 @@ ProgramsECU2$Country <- "Ecuador"
 ProgramsECU2$Level <- "Master"
 psych::describeBy(ProgramsECU2$Eigenvector, group = ProgramsECU2$Partition, mat = TRUE, digits = 2)
 library(network)
-Ecuador2 <- network(MatrizECUMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesECUMS <- nrow(MatrizECUMS) + ncol(MatrizECUMS)
+g2 <- network.initialize(verticesECUMS, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizECUMS, g2)
+Ecuador2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador2
 SizeECU2 <- network::network.size(Ecuador2)
 DensityECU2 <- network::network.density(Ecuador2)
@@ -207,22 +223,25 @@ set.network.attribute(Ecuador2, "Size", SizeECU2)
 set.network.attribute(Ecuador2, "Density", DensityECU2)
 set.network.attribute(Ecuador2, "Clustering", ClusteringECU2)
 set.network.attribute(Ecuador2, "Country", "Ecuador")
+set.network.attribute(Ecuador2, "Level", "Master")
 Ecuador2
 
 bnECU3 <- graph_from_biadjacency_matrix(t(MatrizECUPHD), directed = FALSE)
-EdgeListVE <- as_edgelist(bnECU3)
+EdgeListECU3 <- as_edgelist(bnECU3)
 edges_ec3 <- data.frame(
-  Source = paste0("ECU_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("ECU_", EdgeListECU3[, 1]),
+  Target = EdgeListECU3[, 2],
   Country = "Ecuador"
 )
-bipartite_mapping(bnECU3)
+bnECU3 <- graph_from_data_frame(edges_ec3, directed = TRUE)
 V(bnECU3)$type <- bipartite_mapping(bnECU3)$type
 V(bnECU3)$shape <- ifelse(V(bnECU3)$type, "circle", "square")
 V(bnECU3)$label.cex <- ifelse(V(bnECU3)$type, 0.5, 1)
 V(bnECU3)$size <- sqrt(igraph::degree(bnECU3))
 E(bnECU3)$color <- "lightgrey"
-
+png(filename = "f4.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnECU3, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsECU3 <- data.frame(Degree = igraph::degree(bnECU3),
                            Closeness = igraph::closeness(bnECU3),
                            Betweennes = igraph::betweenness(bnECU3),
