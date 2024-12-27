@@ -116,7 +116,10 @@ library(psych)
 describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
 
 library(network)
-Argentina <- network(Matriz, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+g <- network.initialize(524, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+
+Argentina <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
