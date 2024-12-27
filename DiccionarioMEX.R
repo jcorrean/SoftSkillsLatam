@@ -86,13 +86,15 @@ edges_mx <- data.frame(
   Target = EdgeListMEX[, 2],
   Country = "Mexico"
 )
-bipartite_mapping(bnMEX)
+bnMEX <- graph_from_data_frame(edges_mx, directed = TRUE)
 V(bnMEX)$type <- bipartite_mapping(bnMEX)$type
 V(bnMEX)$shape <- ifelse(V(bnMEX)$type, "circle", "square")
 V(bnMEX)$label.cex <- ifelse(V(bnMEX)$type, 0.5, 1)
 V(bnMEX)$size <- sqrt(igraph::degree(bnMEX))
 E(bnMEX)$color <- "lightgrey"
-
+png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnMEX, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsMEX <- data.frame(Degree = igraph::degree(bnMEX),
                           Closeness = igraph::closeness(bnMEX),
                           Betweennes = igraph::betweenness(bnMEX),
@@ -112,7 +114,10 @@ ProgramsMEX$Country <- "Mexico"
 psych::describeBy(ProgramsMEX$Eigenvector, group = ProgramsMEX$Partition, mat = TRUE, digits = 2)
 
 library(network)
-Mexico <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesMEX <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesMEX, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+Mexico <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico
 SizeMEX <- network::network.size(Mexico)
 DensityMEX <- network::network.density(Mexico)
@@ -124,19 +129,21 @@ set.network.attribute(Mexico, "Country", "Mexico")
 Mexico
 
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
-EdgeListVE <- as_edgelist(bnMEX1)
+EdgeListMEX1 <- as_edgelist(bnMEX1)
 edges_mx1 <- data.frame(
-  Source = paste0("MEX_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("MEX_", EdgeListMEX1[, 1]),
+  Target = EdgeListMEX1[, 2],
   Country = "Mexico"
 )
-bipartite_mapping(bnMEX1)
+bnMEX1 <- graph_from_data_frame(edges_mx1, directed = TRUE)
 V(bnMEX1)$type <- bipartite_mapping(bnMEX1)$type
 V(bnMEX1)$shape <- ifelse(V(bnMEX1)$type, "circle", "square")
 V(bnMEX1)$label.cex <- ifelse(V(bnMEX1)$type, 0.5, 1)
 V(bnMEX1)$size <- sqrt(igraph::degree(bnMEX1))
 E(bnMEX1)$color <- "lightgrey"
-
+png(filename = "f2.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnMEX1, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsMEX1 <- data.frame(Degree = igraph::degree(bnMEX1),
                            Closeness = igraph::closeness(bnMEX1),
                            Betweennes = igraph::betweenness(bnMEX1),
@@ -156,7 +163,10 @@ ProgramsMEX1$Level <- "Specialization"
 
 psych::describeBy(ProgramsMEX1$Eigenvector, group = ProgramsMEX1$Partition, mat = TRUE, digits = 2)
 library(network)
-Mexico1 <- network(MatrizMEXSPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesMEXSPEC <- nrow(MatrizMEXSPEC) + ncol(MatrizMEXSPEC)
+g1 <- network.initialize(verticesMEXSPEC, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizMEXSPEC, g1)
+Mexico1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico1
 SizeMEX1 <- network::network.size(Mexico1)
 DensityMEX1 <- network::network.density(Mexico1)
@@ -165,22 +175,25 @@ set.network.attribute(Mexico1, "Size", SizeMEX1)
 set.network.attribute(Mexico1, "Density", DensityMEX1)
 set.network.attribute(Mexico1, "Clustering", ClusteringMEX1)
 set.network.attribute(Mexico1, "Country", "Mexico")
+set.network.attribute(Mexico1, "Level", "Specialization")
 Mexico1
 
 bnMEX2 <- graph_from_biadjacency_matrix(t(MatrizMEXMS), directed = FALSE)
-EdgeListVE <- as_edgelist(bnMEX2)
+EdgeListMEX2 <- as_edgelist(bnMEX2)
 edges_mx2 <- data.frame(
-  Source = paste0("MEX_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("MEX_", EdgeListMEX2[, 1]),
+  Target = EdgeListMEX2[, 2],
   Country = "Mexico"
 )
-bipartite_mapping(bnMEX2)
+bnMEX2 <- graph_from_data_frame(edges_mx2, directed = TRUE)
 V(bnMEX2)$type <- bipartite_mapping(bnMEX2)$type
 V(bnMEX2)$shape <- ifelse(V(bnMEX2)$type, "circle", "square")
 V(bnMEX2)$label.cex <- ifelse(V(bnMEX2)$type, 0.5, 1)
 V(bnMEX2)$size <- sqrt(igraph::degree(bnMEX2))
 E(bnMEX2)$color <- "lightgrey"
-
+png(filename = "f3.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnMEX2, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsMEX2 <- data.frame(Degree = igraph::degree(bnMEX2),
                            Closeness = igraph::closeness(bnMEX2),
                            Betweennes = igraph::betweenness(bnMEX2),
@@ -199,7 +212,10 @@ ProgramsMEX2$Country <- "Mexico"
 ProgramsMEX2$Level <- "Master"
 psych::describeBy(ProgramsMEX2$Eigenvector, group = ProgramsMEX2$Partition, mat = TRUE, digits = 2)
 library(network)
-Mexico2 <- network(MatrizMEXMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesMEXMS <- nrow(MatrizMEXMS) + ncol(MatrizMEXMS)
+g2 <- network.initialize(verticesMEXMS, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizMEXMS, g2)
+Mexico2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico2
 SizeMEX2 <- network::network.size(Mexico2)
 DensityMEX2 <- network::network.density(Mexico2)
@@ -208,22 +224,25 @@ set.network.attribute(Mexico2, "Size", SizeMEX2)
 set.network.attribute(Mexico2, "Density", DensityMEX2)
 set.network.attribute(Mexico2, "Clustering", ClusteringMEX2)
 set.network.attribute(Mexico2, "Country", "Mexico")
+set.network.attribute(Mexico2, "Level", "Master")
 Mexico2
 
 bnMEX3 <- graph_from_biadjacency_matrix(t(MatrizMEXPHD), directed = FALSE)
-EdgeListVE <- as_edgelist(bnMEX3)
+EdgeListMEX3 <- as_edgelist(bnMEX3)
 edges_mx3 <- data.frame(
-  Source = paste0("MEX_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
+  Source = paste0("MEX_", EdgeListMEX3[, 1]),
+  Target = EdgeListMEX3[, 2],
   Country = "Mexico"
 )
-bipartite_mapping(bnMEX3)
+bnMEX3 <- graph_from_data_frame(edges_mx3, directed = TRUE)
 V(bnMEX3)$type <- bipartite_mapping(bnMEX3)$type
 V(bnMEX3)$shape <- ifelse(V(bnMEX3)$type, "circle", "square")
 V(bnMEX3)$label.cex <- ifelse(V(bnMEX3)$type, 0.5, 1)
 V(bnMEX3)$size <- sqrt(igraph::degree(bnMEX3))
 E(bnMEX3)$color <- "lightgrey"
-
+png(filename = "f4.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnMEX3, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsMEX3 <- data.frame(Degree = igraph::degree(bnMEX3),
                            Closeness = igraph::closeness(bnMEX3),
                            Betweennes = igraph::betweenness(bnMEX3),
@@ -242,8 +261,10 @@ ProgramsMEX3$Country <- "Mexico"
 ProgramsMEX3$Level <- "PhD"
 
 psych::describeBy(ProgramsMEX3$Eigenvector, group = ProgramsMEX3$Partition, mat = TRUE, digits = 2)
-
-Mexico3 <- network(MatrizMEXPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesMEXPHD <- nrow(MatrizMEXPHD) + ncol(MatrizMEXPHD)
+g3 <- network.initialize(verticesMEXPHD, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizMEXPHD, g3)
+Mexico3 <- network(MatrizMEXPHD, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico3
 SizeMEX3 <- network::network.size(Mexico3)
 DensityMEX3 <- network::network.density(Mexico3)
@@ -252,6 +273,7 @@ set.network.attribute(Mexico3, "Size", SizeMEX3)
 set.network.attribute(Mexico3, "Density", DensityMEX3)
 set.network.attribute(Mexico3, "Clustering", ClusteringMEX3)
 set.network.attribute(Mexico3, "Country", "Mexico")
+set.network.attribute(Mexico3, "Level", "PhD")
 Mexico3
 
 MatrizMEXSPEC <- as.matrix(t(MEX_Spec))
