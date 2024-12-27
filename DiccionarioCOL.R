@@ -79,19 +79,20 @@ rowSums(Matriz)
 
 library(igraph)
 bnCOL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListCOLL <- as_edgelist(bnCOL)
+EdgeListCOL <- as_edgelist(bnCOL)
 edges_col <- data.frame(
-  Source = paste0("COL_", EdgeListCOLL[, 1]),
-  Target = EdgeListCOLL[, 2],
+  Source = paste0("COL_", EdgeListCOL[, 1]),
+  Target = EdgeListCOL[, 2],
   Country = "Colombia"
 )
+bnCOL <- graph_from_data_frame(edges_col, directed = TRUE)
 bipartite_mapping(bnCOL)
 V(bnCOL)$type <- bipartite_mapping(bnCOL)$type
 V(bnCOL)$shape <- ifelse(V(bnCOL)$type, "circle", "square")
 V(bnCOL)$label.cex <- ifelse(V(bnCOL)$type, 0.5, 1)
 V(bnCOL)$size <- sqrt(igraph::degree(bnCOL))
 E(bnCOL)$color <- "lightgrey"
-
+plot(bnCOL, vertex.label = NA, layout = layout_as_bipartite)
 ProgramsCOL <- data.frame(Degree = igraph::degree(bnCOL),
                            Closeness = igraph::closeness(bnCOL),
                            Betweennes = igraph::betweenness(bnCOL),
@@ -111,7 +112,10 @@ ProgramsCOL$Country <- "Colombia"
 psych::describeBy(ProgramsCOL$Eigenvector, group = ProgramsCOL$Partition, mat = TRUE, digits = 2)
 
 library(network)
-Colombia <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCOL <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesCOL, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+Colombia <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia
 SizeCOL <- network::network.size(Colombia)
 DensityCOL <- network::network.density(Colombia)
@@ -121,20 +125,24 @@ set.network.attribute(Colombia, "Density", DensityCOL)
 set.network.attribute(Colombia, "Clustering", ClusteringCOL)
 set.network.attribute(Colombia, "Country", "Colombia")
 Colombia
+
 bnCOL1 <- graph_from_biadjacency_matrix(t(MatrizCOSPEC), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCOL1)
+EdgeListCOL1 <- as_edgelist(bnCOL1)
 edges_col1 <- data.frame(
-  Source = paste0("COL_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("COL_", EdgeListCOL1[, 1]),
+  Target = EdgeListCOL1[, 2],
   Country = "Colombia"
 )
+bnCOL1 <- graph_from_data_frame(edges_col1, directed = TRUE)
 bipartite_mapping(bnCOL1)
 V(bnCOL1)$type <- bipartite_mapping(bnCOL1)$type
 V(bnCOL1)$shape <- ifelse(V(bnCOL1)$type, "circle", "square")
 V(bnCOL1)$label.cex <- ifelse(V(bnCOL1)$type, 0.5, 1)
 V(bnCOL1)$size <- sqrt(igraph::degree(bnCOL1))
 E(bnCOL1)$color <- "lightgrey"
-
+png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCOL1, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsCOL1 <- data.frame(Degree = igraph::degree(bnCOL1),
                            Closeness = igraph::closeness(bnCOL1),
                            Betweennes = igraph::betweenness(bnCOL1),
@@ -154,7 +162,10 @@ ProgramsCOL1$Level <- "Specialization"
 
 psych::describeBy(ProgramsCOL1$Eigenvector, group = ProgramsCOL1$Partition, mat = TRUE, digits = 2)
 library(network)
-Colombia1 <- network(MatrizCOSPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCOLSPEC <- nrow(MatrizCOSPEC) + ncol(MatrizCOSPEC)
+g1 <- network.initialize(verticesCOLSPEC, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizCOSPEC, g1)
+Colombia1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia1
 SizeCO1 <- network::network.size(Colombia1)
 DensityCO1 <- network::network.density(Colombia1)
@@ -163,23 +174,26 @@ set.network.attribute(Colombia1, "Size", SizeCO1)
 set.network.attribute(Colombia1, "Density", DensityCO1)
 set.network.attribute(Colombia1, "Clustering", ClusteringCO1)
 set.network.attribute(Colombia1, "Country", "Colombia")
+set.network.attribute(Colombia1, "Level", "Specialization")
 Colombia1
 
 library(igraph)
 bnCOL2 <- graph_from_biadjacency_matrix(t(MatrizCOMS), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCOL2)
+EdgeListCOL2 <- as_edgelist(bnCOL2)
 edges_col2 <- data.frame(
-  Source = paste0("COL_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("COL_", EdgeListCOL2[, 1]),
+  Target = EdgeListCOL2[, 2],
   Country = "Colombia"
 )
-bipartite_mapping(bnCOL2)
+bnCOL2 <- graph_from_data_frame(edges_col2, directed = TRUE)
 V(bnCOL2)$type <- bipartite_mapping(bnCOL2)$type
 V(bnCOL2)$shape <- ifelse(V(bnCOL2)$type, "circle", "square")
 V(bnCOL2)$label.cex <- ifelse(V(bnCOL2)$type, 0.5, 1)
 V(bnCOL2)$size <- sqrt(igraph::degree(bnCOL2))
 E(bnCOL2)$color <- "lightgrey"
-
+png(filename = "f2.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCOL2, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 ProgramsCOL2 <- data.frame(Degree = igraph::degree(bnCOL2),
                            Closeness = igraph::closeness(bnCOL2),
                            Betweennes = igraph::betweenness(bnCOL2),
@@ -199,7 +213,10 @@ ProgramsCOL2$Level <- "Master"
 
 psych::describeBy(ProgramsCOL2$Eigenvector, group = ProgramsCOL2$Partition, mat = TRUE, digits = 2)
 library(network)
-Colombia2 <- network(MatrizCOMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCOLMS <- nrow(MatrizCOMS) + ncol(MatrizCOMS)
+g2 <- network.initialize(verticesCOLMS, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizCOMS, g2)
+Colombia2 <- network(pave2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia2
 SizeCO2 <- network::network.size(Colombia2)
 DensityCO2 <- network::network.density(Colombia2)
@@ -208,22 +225,27 @@ set.network.attribute(Colombia2, "Size", SizeCO2)
 set.network.attribute(Colombia2, "Density", DensityCO2)
 set.network.attribute(Colombia2, "Clustering", ClusteringCO2)
 set.network.attribute(Colombia2, "Country", "Colombia")
+set.network.attribute(Colombia2, "Level", "Master")
 Colombia2
 
 library(igraph)
 bnCOL3 <- graph_from_biadjacency_matrix(t(MatrizCOPHD), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCOL3)
+EdgeListCOL3 <- as_edgelist(bnCOL3)
 edges_col3 <- data.frame(
-  Source = paste0("COL_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("COL_", EdgeListCOL3[, 1]),
+  Target = EdgeListCOL3[, 2],
   Country = "Colombia"
 )
+bnCOL3 <- graph_from_data_frame(edges_col3, directed = TRUE)
 bipartite_mapping(bnCOL3)
 V(bnCOL3)$type <- bipartite_mapping(bnCOL3)$type
 V(bnCOL3)$shape <- ifelse(V(bnCOL3)$type, "circle", "square")
 V(bnCOL3)$label.cex <- ifelse(V(bnCOL3)$type, 0.5, 1)
 V(bnCOL3)$size <- sqrt(igraph::degree(bnCOL3))
 E(bnCOL3)$color <- "lightgrey"
+png(filename = "f3.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnCOL3, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
+dev.off()
 
 ProgramsCOL3 <- data.frame(Degree = igraph::degree(bnCOL3),
                            Closeness = igraph::closeness(bnCOL3),
@@ -245,7 +267,10 @@ ProgramsCOL3$Level <- "PhD"
 
 psych::describeBy(ProgramsCOL3$Eigenvector, group = ProgramsCOL3$Partition, mat = TRUE, digits = 2)
 library(network)
-Colombia3 <- network(MatrizCOPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesCOLPHD <- nrow(MatrizCOPHD) + ncol(MatrizCOPHD)
+g3 <- network.initialize(verticesCOLPHD, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizCOPHD, g3)
+Colombia3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia3
 SizeCOL3 <- network::network.size(Colombia3)
 DensityCOL3 <- network::network.density(Colombia3)
@@ -254,6 +279,7 @@ set.network.attribute(Colombia3, "Size", SizeCOL3)
 set.network.attribute(Colombia3, "Density", DensityCOL3)
 set.network.attribute(Colombia3, "Clustering", ClusteringCOL3)
 set.network.attribute(Colombia3, "Country", "Colombia")
+set.network.attribute(Colombia3, "Level", "PhD")
 Colombia3
 
 MatrizCOSPEC <- as.matrix(t(COL_Spec))
