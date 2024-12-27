@@ -76,6 +76,7 @@ MatrizBRAPHD <- as.matrix(t(BRA_PhD))
 ProgramsBRA
 Matriz <- as.matrix(t(ProgramsBRA))
 rowSums(Matriz)
+
 library(igraph)
 bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListBR <- as_edgelist(bnBRA)
@@ -84,6 +85,7 @@ edges_br <- data.frame(
   Target = EdgeListBR[, 2],
   Country = "Brazil"
 )
+bnBRA <- graph_from_data_frame(edges_br, directed = TRUE)
 bipartite_mapping(bnBRA)
 V(bnBRA)$type <- bipartite_mapping(bnBRA)$type
 V(bnBRA)$shape <- ifelse(V(bnBRA)$type, "circle", "square")
