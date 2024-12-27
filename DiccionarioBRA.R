@@ -93,6 +93,7 @@ V(bnBRA)$label.cex <- ifelse(V(bnBRA)$type, 0.5, 1)
 V(bnBRA)$size <- sqrt(igraph::degree(bnBRA))
 E(bnBRA)$color <- "lightgrey"
 
+
 ProgramsBRA <- data.frame(Degree = igraph::degree(bnBRA),
                           Closeness = igraph::closeness(bnBRA),
                           Betweennes = igraph::betweenness(bnBRA),
@@ -112,9 +113,12 @@ ProgramsBRA$Country <- "Brazil"
 library(psych)
 describeBy(ProgramsBRA$Eigenvector, group = ProgramsBRA$Partition, mat = TRUE, digits = 2)
 
-
 library(network)
-Brazil <- network(Matriz, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesBRA <- nrow(Matriz) + ncol(Matriz)
+g <- network.initialize(verticesBRA, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matriz, g)
+
+Brazil <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil
 SizeBR <- network::network.size(Brazil)
 DensityBR <- network::network.density(Brazil)
@@ -126,12 +130,13 @@ set.network.attribute(Brazil, "Country", "Brazil")
 Brazil
 
 bnBRA1 <- graph_from_biadjacency_matrix(t(MatrizBRASPEC), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnBRA1)
+EdgeListBR1 <- as_edgelist(bnBRA1)
 edges_br1 <- data.frame(
-  Source = paste0("BRA_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
-  Country = "Costa Rica"
+  Source = paste0("BRA_", EdgeListBR1[, 1]),
+  Target = EdgeListBR1[, 2],
+  Country = "Brazil"
 )
+bnBRA1 <- graph_from_data_frame(edges_br1, directed = TRUE)
 bipartite_mapping(bnBRA1)
 V(bnBRA1)$type <- bipartite_mapping(bnBRA1)$type
 V(bnBRA1)$shape <- ifelse(V(bnBRA1)$type, "circle", "square")
@@ -158,7 +163,12 @@ ProgramsBRA1$Level <- "Specialization"
 
 psych::describeBy(ProgramsBRA1$Eigenvector, group = ProgramsBRA1$Partition, mat = TRUE, digits = 2)
 library(network)
-Brazil1 <- network(MatrizBRASPEC, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+
+verticesBRA1 <- nrow(MatrizBRASPEC) + ncol(MatrizBRASPEC)
+g1 <- network.initialize(verticesBRA1, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizBRASPEC, g1)
+
+Brazil1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil1
 SizeBRA1 <- network::network.size(Brazil1)
 DensityBRA1 <- network::network.density(Brazil1)
@@ -167,13 +177,14 @@ set.network.attribute(Brazil1, "Size", SizeBRA1)
 set.network.attribute(Brazil1, "Density", DensityBRA1)
 set.network.attribute(Brazil1, "Clustering", ClusteringBRA1)
 set.network.attribute(Brazil1, "Country", "Brazil")
+set.network.attribute(Brazil1, "Level", "Specialization")
 Brazil1
 
 bnBRA2 <- graph_from_biadjacency_matrix(t(MatrizBRAMS), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnBRA2)
+EdgeListBR2 <- as_edgelist(bnBRA2)
 edges_br2 <- data.frame(
-  Source = paste0("BR_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("BR_", EdgeListBR2[, 1]),
+  Target = EdgeListBR2[, 2],
   Country = "Brazil"
 )
 bipartite_mapping(bnBRA2)
@@ -201,7 +212,10 @@ ProgramsBRA2$Country <- "Brazil"
 ProgramsBRA2$Level <- "Master"
 psych::describeBy(ProgramsBRA2$Eigenvector, group = ProgramsBRA2$Partition, mat = TRUE, digits = 2)
 library(network)
-Brazil2 <- network(MatrizBRAMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesBRA2 <- nrow(MatrizBRAMS) + ncol(MatrizBRAMS)
+g2 <- network.initialize(verticesBRA2, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizBRAMS, g2)
+Brazil2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil2
 SizeBRA2 <- network::network.size(Brazil2)
 DensityBRA2 <- network::network.density(Brazil2)
@@ -210,6 +224,7 @@ set.network.attribute(Brazil2, "Size", SizeBRA2)
 set.network.attribute(Brazil2, "Density", DensityBRA2)
 set.network.attribute(Brazil2, "Clustering", ClusteringBRA2)
 set.network.attribute(Brazil2, "Country", "Brazil")
+set.network.attribute(Brazil2, "Level", "Master")
 Brazil2
 
 bnBRA3 <- graph_from_biadjacency_matrix(t(MatrizBRAPHD), directed = FALSE)
