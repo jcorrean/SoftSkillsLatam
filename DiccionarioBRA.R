@@ -228,10 +228,10 @@ set.network.attribute(Brazil2, "Level", "Master")
 Brazil2
 
 bnBRA3 <- graph_from_biadjacency_matrix(t(MatrizBRAPHD), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnBRA3)
+EdgeListBR3 <- as_edgelist(bnBRA3)
 edges_br3 <- data.frame(
-  Source = paste0("BRA_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
+  Source = paste0("BRA_", EdgeListBR3[, 1]),
+  Target = EdgeListBR3[, 2],
   Country = "Brazil"
 )
 bipartite_mapping(bnBRA3)
@@ -261,7 +261,10 @@ ProgramsBRA3$Level <- "PhD"
 
 psych::describeBy(ProgramsBRA3$Eigenvector, group = ProgramsBRA3$Partition, mat = TRUE, digits = 2)
 library(network)
-Brazil3 <- network(MatrizBRAPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesBRA3 <- nrow(MatrizBRAPHD) + ncol(MatrizBRAPHD)
+g3 <- network.initialize(verticesBRA3, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizBRAPHD, g3)
+Brazil3 <- network(MatrizBRAPHD, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil3
 SizeBRA3 <- network::network.size(Brazil3)
 DensityBRA3 <- network::network.density(Brazil3)
