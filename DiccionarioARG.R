@@ -167,7 +167,11 @@ ProgramsARG1$Level <- "Specialization"
 library(psych)
 describeBy(ProgramsARG1$Eigenvector, group = ProgramsARG1$Partition, mat = TRUE, digits = 2)
 library(network)
-Argentina1 <- network(MatrizARGSPEC, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesARGSPEC <- nrow(MatrizARGSPEC) + ncol(MatrizARGSPEC)
+g1 <- network.initialize(verticesARGSPEC, directed = TRUE, bipartite = TRUE)
+pave1 <- network.bipartite(MatrizARGSPEC, g1)
+
+Argentina1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina1
 SizeARG1 <- network::network.size(Argentina1)
 DensityARG1 <- network::network.density(Argentina1)
@@ -212,7 +216,10 @@ ProgramsARG2$Level <- "Master"
 library(psych)
 describeBy(ProgramsARG2$Eigenvector, group = ProgramsARG2$Partition, mat = TRUE, digits = 2)
 library(network)
-Argentina2 <- network(MatrizARGMS, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesARG2 <- nrow(MatrizARGMS) + ncol(MatrizARGMS)
+g2 <- network.initialize(verticesARG2, directed = TRUE, bipartite = TRUE)
+pave2 <- network.bipartite(MatrizARGMS, g2)
+Argentina2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina2
 SizeARG2 <- network::network.size(Argentina2)
 DensityARG2 <- network::network.density(Argentina2)
@@ -258,7 +265,10 @@ ProgramsARG3$Level <- "PhD"
 library(psych)
 describeBy(ProgramsARG3$Eigenvector, group = ProgramsARG3$Partition, mat = TRUE, digits = 2)
 library(network)
-Argentina3 <- network(MatrizARGPHD, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+verticesARG3 <- nrow(MatrizARGPHD) + ncol(MatrizARGPHD)
+g3 <- network.initialize(verticesARG3, directed = TRUE, bipartite = TRUE)
+pave3 <- network.bipartite(MatrizARGPHD, g3)
+Argentina3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina3
 SizeARG3 <- network::network.size(Argentina3)
 DensityARG3 <- network::network.density(Argentina3)
