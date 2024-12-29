@@ -273,6 +273,7 @@ set.network.attribute(Brazil3, "Size", SizeBRA3)
 set.network.attribute(Brazil3, "Density", DensityBRA3)
 set.network.attribute(Brazil3, "Clustering", ClusteringBRA3)
 set.network.attribute(Brazil3, "Country", "Brazil")
+set.network.attribute(Brazil3, "Level", "PhD")
 Brazil3
 
 MatrizBRASPEC <- as.matrix(t(BRA_Spec))
