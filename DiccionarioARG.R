@@ -129,6 +129,7 @@ set.network.attribute(Argentina, "Size", SizeARG)
 set.network.attribute(Argentina, "Density", DensityARG)
 set.network.attribute(Argentina, "Clustering", ClusteringARG)
 set.network.attribute(Argentina, "Country", "Argentina")
+set.network.attribute(Argentina, "Level", "All")
 Argentina
 
 library(igraph)
