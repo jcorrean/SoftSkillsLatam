@@ -126,6 +126,7 @@ set.network.attribute(Mexico, "Size", SizeMEX)
 set.network.attribute(Mexico, "Density", DensityMEX)
 set.network.attribute(Mexico, "Clustering", ClusteringMEX)
 set.network.attribute(Mexico, "Country", "Mexico")
+set.network.attribute(Mexico, "Level", "All")
 Mexico
 
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
