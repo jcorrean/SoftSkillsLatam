@@ -59,7 +59,7 @@ RegionNetwork <- do.call(rbind, list(edges_arg,
                                      edges_ur, 
                                      edges_ve))
 rm(list=setdiff(ls(), c("RegionNetwork")))
-RegionNetwork <- RegionNetwork[,c(2,1,3)]
+
 colnames(RegionNetwork)[1] <- "Skill"
 colnames(RegionNetwork)[2] <- "Brochure"
 
@@ -69,7 +69,7 @@ RegionNetwork %>%
   summarize(count = length(unique(Skill)))
 
 library(igraph)
-bnR <- graph_from_data_frame(RegionNetwork,directed=FALSE)
+bnR <- graph_from_data_frame(RegionNetwork,directed=TRUE)
 bipartite_mapping(bnR)
 V(bnR)$type <- bipartite_mapping(bnR)$type
 V(bnR)$type <- bipartite_mapping(bnR)$type
@@ -77,12 +77,18 @@ V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
+plot(bnR, vertex.label = NA, layout = layout_as_bipartite)
+bnR
 Matrix <- as.matrix(as_adjacency_matrix(bnR))
 nrow(Matrix) - 10
 ncol(Matrix)
 Matrix <- Matrix[1:10,11:ncol(Matrix)]
 Columnas <- data.frame(colnames(Matrix))
-
+verticesRegion <- nrow(Matrix) + ncol(Matrix)
+g <- network.initialize(verticesRegion, directed = TRUE, bipartite = TRUE)
+pave <- network.bipartite(Matrix, g)
+library(network)
+Region <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 
 Centralities <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
