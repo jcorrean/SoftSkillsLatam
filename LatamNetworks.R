@@ -83,11 +83,6 @@ ProgramsRegion <- ProgramsRegion[order(-ProgramsRegion$Degree), ]
 colnames(ProgramsRegion)[4] <- "Eigenvector"
 
 
-library(dplyr)
-RegionNetwork %>%
-  group_by(Country) %>%
-  summarize(count = length(unique(Skill)))
-
 library(igraph)
 bnR <- graph_from_data_frame(RegionNetwork,directed=TRUE)
 bipartite_mapping(bnR)
@@ -105,10 +100,19 @@ ncol(Matrix)
 Matrix <- Matrix[1:10,11:ncol(Matrix)]
 Columnas <- data.frame(colnames(Matrix))
 verticesRegion <- nrow(Matrix) + ncol(Matrix)
+library(network)
 g <- network.initialize(verticesRegion, directed = TRUE, bipartite = TRUE)
 pave <- network.bipartite(Matrix, g)
 library(network)
 Region <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Region
+SizeR <- network::network.size(Region)
+DensityR <- network::network.density(Region)
+ClusteringR <- tnet::clustering_tm(Matrix)
+set.network.attribute(Region, "Size", SizeR)
+set.network.attribute(Region, "Density", DensityR)
+set.network.attribute(Region, "Clustering", ClusteringR)
+Region
 
 Centralities <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
