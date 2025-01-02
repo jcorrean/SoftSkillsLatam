@@ -67,10 +67,11 @@ bnR <- graph_from_data_frame(RegionNetwork, directed = TRUE)
 bipartite_mapping(bnR)
 V(bnR)$type <- bipartite_mapping(bnR)$type
 V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
+V(bnR)$color <- ifelse(V(bnR)$type, "green4", "red3")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
-plot(bnR, vertex.label = NA, layout = layout_as_bipartite)
+plot(bnR, vertex.label = NA, layout = layout_components, arrow.width = 0.5)
 ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
                           Betweennes = igraph::betweenness(bnR),
