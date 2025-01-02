@@ -59,9 +59,20 @@ RegionNetwork <- do.call(rbind, list(edges_arg,
                                      edges_ur, 
                                      edges_ve))
 rm(list=setdiff(ls(), c("RegionNetwork")))
+#RegionNetwork <- RegionNetwork[,c(2,1,3)]
+#colnames(RegionNetwork)[1] <- "Skill"
+#colnames(RegionNetwork)[2] <- "Brochure"
 
-colnames(RegionNetwork)[1] <- "Skill"
-colnames(RegionNetwork)[2] <- "Brochure"
+bnR <- graph_from_data_frame(RegionNetwork, directed = TRUE)
+bipartite_mapping(bnR)
+V(bnR)$type <- bipartite_mapping(bnR)$type
+V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
+V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
+V(bnR)$size <- sqrt(igraph::degree(bnR))
+E(bnR)$color <- "lightgrey"
+plot(bnR, vertex.label = NA, layout = layout_as_bipartite)
+
+
 
 library(dplyr)
 RegionNetwork %>%
