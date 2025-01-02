@@ -125,6 +125,7 @@ set.network.attribute(CostaRica, "Size", SizeCR)
 set.network.attribute(CostaRica, "Density", DensityCR)
 set.network.attribute(CostaRica, "Clustering", ClusteringCR)
 set.network.attribute(CostaRica, "Country", "Costa Rica")
+set.network.attribute(CostaRica, "Level", "All")
 CostaRica
 
 bnCORI1 <- graph_from_biadjacency_matrix(t(MatrizCORISPEC), directed = FALSE)
