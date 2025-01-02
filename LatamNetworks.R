@@ -71,7 +71,16 @@ V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
 plot(bnR, vertex.label = NA, layout = layout_as_bipartite)
-
+ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
+                          Closeness = igraph::closeness(bnR),
+                          Betweennes = igraph::betweenness(bnR),
+                          Eigen = igraph::eigen_centrality(bnR))
+ProgramsRegion <- ProgramsRegion[ -c(5:25) ]
+rownames(ProgramsRegion)
+ProgramsRegion$SS <- rownames(ProgramsRegion)
+ProgramsRegion <- ProgramsRegion[order(-ProgramsRegion$Degree), ]
+#ProgramsRegion <- ProgramsRegion[!grepl("text", ProgramsRegion$SS), ]
+colnames(ProgramsRegion)[4] <- "Eigenvector"
 
 
 library(dplyr)
@@ -180,7 +189,7 @@ load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
 
-RegionNetwork <- do.call(rbind, list(ProgramsARG, 
+RegionNetwork <- do.call(rbind, list(ProgramsRegion, 
                                      ProgramsBRA, 
                                      ProgramsCHL, 
                                      ProgramsCOL, 
