@@ -71,7 +71,7 @@ V(bnR)$color <- ifelse(V(bnR)$type, "green4", "red3")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
-plot(bnR, vertex.label = NA, layout = layout_components, arrow.width = 0.5)
+plot(bnR, vertex.label = NA, layout = layout_as_bipartite, arrow.width = 0.2, arrow.size = 0.5)
 ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
                           Betweennes = igraph::betweenness(bnR),
@@ -84,17 +84,7 @@ ProgramsRegion <- ProgramsRegion[order(-ProgramsRegion$Degree), ]
 colnames(ProgramsRegion)[4] <- "Eigenvector"
 
 
-library(igraph)
-bnR <- graph_from_data_frame(RegionNetwork,directed=TRUE)
-bipartite_mapping(bnR)
-V(bnR)$type <- bipartite_mapping(bnR)$type
-V(bnR)$type <- bipartite_mapping(bnR)$type
-V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
-V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
-V(bnR)$size <- sqrt(igraph::degree(bnR))
-E(bnR)$color <- "lightgrey"
-plot(bnR, vertex.label = NA, layout = layout_as_bipartite)
-bnR
+
 Matrix <- as.matrix(as_adjacency_matrix(bnR))
 nrow(Matrix) - 10
 ncol(Matrix)
@@ -104,8 +94,8 @@ verticesRegion <- nrow(Matrix) + ncol(Matrix)
 library(network)
 g <- network.initialize(verticesRegion, directed = TRUE, bipartite = TRUE)
 pave <- network.bipartite(Matrix, g)
-library(network)
-Region <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+library(intergraph)
+Region <- asNetwork(bnR)
 Region
 SizeR <- network::network.size(Region)
 DensityR <- network::network.density(Region)
