@@ -49,6 +49,7 @@ VEN %>%
 Sampled.Universities <- 29+268+51+50+2+29+27+8+17
 Sampled.Universities
 
+268/Sampled.Universities
 RegionNetwork <- do.call(rbind, list(edges_arg, 
                                      edges_br, 
                                      edges_chl, 
@@ -63,6 +64,7 @@ rm(list=setdiff(ls(), c("RegionNetwork")))
 #colnames(RegionNetwork)[1] <- "Skill"
 #colnames(RegionNetwork)[2] <- "Brochure"
 
+library(igraph)
 bnR <- graph_from_data_frame(RegionNetwork, directed = TRUE)
 bipartite_mapping(bnR)
 V(bnR)$type <- bipartite_mapping(bnR)$type
@@ -71,7 +73,9 @@ V(bnR)$color <- ifelse(V(bnR)$type, "green4", "red3")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
-plot(bnR, vertex.label = NA, layout = layout_as_bipartite, arrow.width = 0.2, arrow.size = 0.5)
+png(filename = "FR.png", width = 10, height = 8, units = "in", res = 300)
+plot(bnR, vertex.label = NA, layout = layout_as_bipartite, arrow.width = 0.1, arrow.size = 0.1)
+dev.off()
 ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
                           Betweennes = igraph::betweenness(bnR),
