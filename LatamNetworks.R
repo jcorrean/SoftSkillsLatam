@@ -74,7 +74,8 @@ V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
 png(filename = "FR.png", width = 10, height = 8, units = "in", res = 300)
-plot(bnR, vertex.label = NA, layout = layout_as_bipartite, arrow.width = 0.1, arrow.size = 0.1)
+set.seed(8970)
+plot(bnR, vertex.label = NA, layout = layout_components, arrow.width = 0.1, arrow.size = 0.1)
 dev.off()
 ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
