@@ -85,7 +85,7 @@ edges_ur <- data.frame(
   Target = EdgeListURU[, 2],
   Country = "Uruguay"
 )
-bnURU <- graph_from_data_frame(edges_ur, directed = TRUE)
+bnURU <- graph_from_data_frame(edges_ur, directed = F)
 V(bnURU)$type <- bipartite_mapping(bnURU)$type
 V(bnURU)$shape <- ifelse(V(bnURU)$type, "circle", "square")
 V(bnURU)$label.cex <- ifelse(V(bnURU)$type, 0.5, 1)
@@ -114,7 +114,7 @@ ProgramsURU$Country <- "Uruguay"
 psych::describeBy(ProgramsURU$Eigenvector, group = ProgramsURU$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesURU <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesURU, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesURU, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 
 Uruguay <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -137,7 +137,7 @@ edges_ur1 <- data.frame(
   Target = EdgeListURU1[, 2],
   Country = "Uruguay"
 )
-bnURU1 <- graph_from_data_frame(edges_ur1, directed = TRUE)
+bnURU1 <- graph_from_data_frame(edges_ur1, directed = F)
 V(bnURU1)$type <- bipartite_mapping(bnURU1)$type
 V(bnURU1)$shape <- ifelse(V(bnURU1)$type, "circle", "square")
 V(bnURU1)$label.cex <- ifelse(V(bnURU1)$type, 0.5, 1)
@@ -166,10 +166,10 @@ ProgramsURU1$Level <- "Specialization"
 
 psych::describeBy(ProgramsURU1$Eigenvector, group = ProgramsURU1$Partition, mat = TRUE, digits = 2)
 verticesURUSPEC <- nrow(MatrizURUSPEC) + ncol(MatrizURUSPEC)
-g1 <- network.initialize(verticesURUSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesURUSPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizURUSPEC, g1)
 
-Uruguay1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Uruguay1 <- network(pave1, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Uruguay1
 SizeURU1 <- network::network.size(Uruguay1)
 DensityURU1 <- network::network.density(Uruguay1)
@@ -189,7 +189,7 @@ edges_ur2 <- data.frame(
   Target = EdgeListURU2[, 2],
   Country = "Uruguay"
 )
-bnURU2 <- graph_from_data_frame(edges_ur2, directed = TRUE)
+bnURU2 <- graph_from_data_frame(edges_ur2, directed = F)
 V(bnURU2)$type <- bipartite_mapping(bnURU2)$type
 V(bnURU2)$shape <- ifelse(V(bnURU2)$type, "circle", "square")
 V(bnURU2)$label.cex <- ifelse(V(bnURU2)$type, 0.5, 1)
@@ -216,9 +216,9 @@ ProgramsURU2$Country <- "Uruguay"
 ProgramsURU2$Level <- "Master"
 psych::describeBy(ProgramsURU2$Eigenvector, group = ProgramsURU2$Partition, mat = TRUE, digits = 2)
 verticesURUMS <- nrow(MatrizURUMS) + ncol(MatrizURUMS)
-g2 <- network.initialize(verticesURUMS, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesURUMS, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizURUMS, g2)
-Uruguay2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Uruguay2 <- network(pave2, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Uruguay2
 SizeURU2 <- network::network.size(Uruguay2)
 DensityURU2 <- network::network.density(Uruguay2)
@@ -238,7 +238,7 @@ edges_ur3 <- data.frame(
   Target = EdgeListURU3[, 2],
   Country = "Uruguay"
 )
-bnURU3 <- graph_from_data_frame(edges_ur3, directed = TRUE)
+bnURU3 <- graph_from_data_frame(edges_ur3, directed = F)
 V(bnURU3)$type <- bipartite_mapping(bnURU3)$type
 V(bnURU3)$shape <- ifelse(V(bnURU3)$type, "circle", "square")
 V(bnURU3)$label.cex <- ifelse(V(bnURU3)$type, 0.5, 1)
@@ -267,9 +267,9 @@ ProgramsURU3$Level <- "PhD"
 
 psych::describeBy(ProgramsURU3$Eigenvector, group = ProgramsURU3$Partition, mat = TRUE, digits = 2)
 verticesURUPHD <- nrow(MatrizURUPHD) + ncol(MatrizURUPHD)
-g3 <- network.initialize(verticesURUPHD, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesURUPHD, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizURUPHD, g3)
-Uruguay3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Uruguay3 <- network(pave3, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Uruguay3
 SizeURU3 <- network::network.size(Uruguay3)
 DensityURU3 <- network::network.density(Uruguay3)
