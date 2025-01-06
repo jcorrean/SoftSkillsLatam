@@ -86,7 +86,7 @@ edges_mx <- data.frame(
   Target = EdgeListMEX[, 2],
   Country = "Mexico"
 )
-bnMEX <- graph_from_data_frame(edges_mx, directed = TRUE)
+bnMEX <- graph_from_data_frame(edges_mx, directed = F)
 V(bnMEX)$type <- bipartite_mapping(bnMEX)$type
 V(bnMEX)$shape <- ifelse(V(bnMEX)$type, "circle", "square")
 V(bnMEX)$label.cex <- ifelse(V(bnMEX)$type, 0.5, 1)
@@ -115,9 +115,9 @@ psych::describeBy(ProgramsMEX$Eigenvector, group = ProgramsMEX$Partition, mat = 
 
 library(network)
 verticesMEX <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesMEX, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesMEX, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
-Mexico <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Mexico <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico
 SizeMEX <- network::network.size(Mexico)
 DensityMEX <- network::network.density(Mexico)
@@ -136,7 +136,7 @@ edges_mx1 <- data.frame(
   Target = EdgeListMEX1[, 2],
   Country = "Mexico"
 )
-bnMEX1 <- graph_from_data_frame(edges_mx1, directed = TRUE)
+bnMEX1 <- graph_from_data_frame(edges_mx1, directed = F)
 V(bnMEX1)$type <- bipartite_mapping(bnMEX1)$type
 V(bnMEX1)$shape <- ifelse(V(bnMEX1)$type, "circle", "square")
 V(bnMEX1)$label.cex <- ifelse(V(bnMEX1)$type, 0.5, 1)
@@ -165,9 +165,9 @@ ProgramsMEX1$Level <- "Specialization"
 psych::describeBy(ProgramsMEX1$Eigenvector, group = ProgramsMEX1$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesMEXSPEC <- nrow(MatrizMEXSPEC) + ncol(MatrizMEXSPEC)
-g1 <- network.initialize(verticesMEXSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesMEXSPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizMEXSPEC, g1)
-Mexico1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Mexico1 <- network(pave1, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico1
 SizeMEX1 <- network::network.size(Mexico1)
 DensityMEX1 <- network::network.density(Mexico1)
@@ -186,7 +186,7 @@ edges_mx2 <- data.frame(
   Target = EdgeListMEX2[, 2],
   Country = "Mexico"
 )
-bnMEX2 <- graph_from_data_frame(edges_mx2, directed = TRUE)
+bnMEX2 <- graph_from_data_frame(edges_mx2, directed = F)
 V(bnMEX2)$type <- bipartite_mapping(bnMEX2)$type
 V(bnMEX2)$shape <- ifelse(V(bnMEX2)$type, "circle", "square")
 V(bnMEX2)$label.cex <- ifelse(V(bnMEX2)$type, 0.5, 1)
@@ -214,9 +214,9 @@ ProgramsMEX2$Level <- "Master"
 psych::describeBy(ProgramsMEX2$Eigenvector, group = ProgramsMEX2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesMEXMS <- nrow(MatrizMEXMS) + ncol(MatrizMEXMS)
-g2 <- network.initialize(verticesMEXMS, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesMEXMS, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizMEXMS, g2)
-Mexico2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Mexico2 <- network(pave2, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico2
 SizeMEX2 <- network::network.size(Mexico2)
 DensityMEX2 <- network::network.density(Mexico2)
@@ -235,7 +235,7 @@ edges_mx3 <- data.frame(
   Target = EdgeListMEX3[, 2],
   Country = "Mexico"
 )
-bnMEX3 <- graph_from_data_frame(edges_mx3, directed = TRUE)
+bnMEX3 <- graph_from_data_frame(edges_mx3, directed = F)
 V(bnMEX3)$type <- bipartite_mapping(bnMEX3)$type
 V(bnMEX3)$shape <- ifelse(V(bnMEX3)$type, "circle", "square")
 V(bnMEX3)$label.cex <- ifelse(V(bnMEX3)$type, 0.5, 1)
@@ -263,9 +263,9 @@ ProgramsMEX3$Level <- "PhD"
 
 psych::describeBy(ProgramsMEX3$Eigenvector, group = ProgramsMEX3$Partition, mat = TRUE, digits = 2)
 verticesMEXPHD <- nrow(MatrizMEXPHD) + ncol(MatrizMEXPHD)
-g3 <- network.initialize(verticesMEXPHD, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesMEXPHD, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizMEXPHD, g3)
-Mexico3 <- network(MatrizMEXPHD, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Mexico3 <- network(MatrizMEXPHD, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Mexico3
 SizeMEX3 <- network::network.size(Mexico3)
 DensityMEX3 <- network::network.density(Mexico3)
