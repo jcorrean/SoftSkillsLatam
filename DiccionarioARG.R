@@ -88,7 +88,7 @@ edges_arg <- data.frame(
   Target = EdgeListAR[, 2],
   Country = "Argentina"
 )
-bnARG <- graph_from_data_frame(edges_arg, directed = TRUE)
+bnARG <- graph_from_data_frame(edges_arg, directed = FALSE)
 bipartite_mapping(bnARG)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
@@ -117,7 +117,7 @@ describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, d
 
 library(network)
 verticesARG <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesARG, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesARG, directed = FALSE, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 
 Argentina <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -140,7 +140,7 @@ edges_arg1 <- data.frame(
   Target = EdgeListAR1[, 2],
   Country = "Argentina"
 )
-bnARG1 <- graph_from_data_frame(edges_arg1, directed = TRUE)
+bnARG1 <- graph_from_data_frame(edges_arg1, directed = FALSE)
 bipartite_mapping(bnARG1)
 V(bnARG1)$type <- bipartite_mapping(bnARG1)$type
 V(bnARG1)$shape <- ifelse(V(bnARG1)$type, "circle", "square")
@@ -169,10 +169,10 @@ library(psych)
 describeBy(ProgramsARG1$Eigenvector, group = ProgramsARG1$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesARGSPEC <- nrow(MatrizARGSPEC) + ncol(MatrizARGSPEC)
-g1 <- network.initialize(verticesARGSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesARGSPEC, directed = FALSE, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizARGSPEC, g1)
 
-Argentina1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Argentina1 <- network(pave1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina1
 SizeARG1 <- network::network.size(Argentina1)
 DensityARG1 <- network::network.density(Argentina1)
@@ -192,7 +192,7 @@ edges_arg2 <- data.frame(
   Target = EdgeListAR2[, 2],
   Country = "Argentina"
 )
-bnARG2 <- graph_from_data_frame(edges_arg2, directed = TRUE)
+bnARG2 <- graph_from_data_frame(edges_arg2, directed = FALSE)
 bipartite_mapping(bnARG2)
 V(bnARG2)$type <- bipartite_mapping(bnARG2)$type
 V(bnARG2)$shape <- ifelse(V(bnARG2)$type, "circle", "square")
@@ -220,9 +220,9 @@ library(psych)
 describeBy(ProgramsARG2$Eigenvector, group = ProgramsARG2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesARG2 <- nrow(MatrizARGMS) + ncol(MatrizARGMS)
-g2 <- network.initialize(verticesARG2, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesARG2, directed = FALSE, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizARGMS, g2)
-Argentina2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Argentina2 <- network(pave2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina2
 SizeARG2 <- network::network.size(Argentina2)
 DensityARG2 <- network::network.density(Argentina2)
@@ -242,7 +242,7 @@ edges_arg3 <- data.frame(
   Target = EdgeListAR3[, 2],
   Country = "Argentina"
 )
-bnARG3 <- graph_from_data_frame(edges_arg3, directed = TRUE)
+bnARG3 <- graph_from_data_frame(edges_arg3, directed = FALSE)
 bipartite_mapping(bnARG3)
 V(bnARG3)$type <- bipartite_mapping(bnARG3)$type
 V(bnARG3)$shape <- ifelse(V(bnARG3)$type, "circle", "square")
@@ -272,9 +272,9 @@ library(psych)
 describeBy(ProgramsARG3$Eigenvector, group = ProgramsARG3$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesARG3 <- nrow(MatrizARGPHD) + ncol(MatrizARGPHD)
-g3 <- network.initialize(verticesARG3, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesARG3, directed = FALSE, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizARGPHD, g3)
-Argentina3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Argentina3 <- network(pave3, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Argentina3
 SizeARG3 <- network::network.size(Argentina3)
 DensityARG3 <- network::network.density(Argentina3)
