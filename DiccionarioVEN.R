@@ -87,7 +87,7 @@ edges_ve <- data.frame(
   Target = EdgeListVE[, 2],
   Country = "Venezuela"
 )
-bnVEN <- graph_from_data_frame(edges_ve, directed = TRUE)
+bnVEN <- graph_from_data_frame(edges_ve, directed = F)
 V(bnVEN)$type <- bipartite_mapping(bnVEN)$type
 V(bnVEN)$shape <- ifelse(V(bnVEN)$type, "circle", "square")
 V(bnVEN)$label.cex <- ifelse(V(bnVEN)$type, 0.5, 1)
@@ -117,7 +117,7 @@ library(psych)
 describeBy(ProgramsVEN$Eigenvector, group = ProgramsVEN$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesVEN <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesVEN, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesVEN, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 Venezuela <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela
@@ -138,7 +138,7 @@ edges_ve1 <- data.frame(
   Target = EdgeListVE1[, 2],
   Country = "Venezuela"
 )
-bnVEN1 <- graph_from_data_frame(edges_ve1, directed = TRUE)
+bnVEN1 <- graph_from_data_frame(edges_ve1, directed = F)
 V(bnVEN1)$type <- bipartite_mapping(bnVEN1)$type
 V(bnVEN1)$shape <- ifelse(V(bnVEN1)$type, "circle", "square")
 V(bnVEN1)$label.cex <- ifelse(V(bnVEN1)$type, 0.5, 1)
@@ -169,7 +169,7 @@ library(psych)
 describeBy(ProgramsVEN1$Eigenvector, group = ProgramsVEN$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesVENSPEC <- nrow(MatrizVESPEC) + ncol(MatrizVESPEC)
-g1 <- network.initialize(verticesVENSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesVENSPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizVESPEC, g1)
 Venezuela1 <- network(pave1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela1
@@ -191,7 +191,7 @@ edges_ve2 <- data.frame(
   Target = EdgeListVE2[, 2],
   Country = "Venezuela"
 )
-bnVEN2 <- graph_from_data_frame(edges_ve2, directed = TRUE)
+bnVEN2 <- graph_from_data_frame(edges_ve2, directed = F)
 V(bnVEN2)$type <- bipartite_mapping(bnVEN2)$type
 V(bnVEN2)$shape <- ifelse(V(bnVEN2)$type, "circle", "square")
 V(bnVEN2)$label.cex <- ifelse(V(bnVEN2)$type, 0.5, 1)
@@ -221,9 +221,9 @@ library(psych)
 describeBy(ProgramsVEN2$Eigenvector, group = ProgramsVEN2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesVENMS <- nrow(MatrizVEMS) + ncol(MatrizVEMS)
-g2 <- network.initialize(verticesVENMS, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesVENMS, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizVEMS, g2)
-Venezuela2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Venezuela2 <- network(pave2, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela2
 SizeVE2 <- network::network.size(Venezuela2)
 DensityVE2 <- network::network.density(Venezuela2)
@@ -243,7 +243,7 @@ edges_ve3 <- data.frame(
   Target = EdgeListVE3[, 2],
   Country = "Venezuela"
 )
-bnVEN3 <- graph_from_data_frame(edges_ve3, directed = TRUE)
+bnVEN3 <- graph_from_data_frame(edges_ve3, directed = F)
 V(bnVEN3)$type <- bipartite_mapping(bnVEN3)$type
 V(bnVEN3)$shape <- ifelse(V(bnVEN3)$type, "circle", "square")
 V(bnVEN3)$label.cex <- ifelse(V(bnVEN3)$type, 0.5, 1)
@@ -273,10 +273,10 @@ library(psych)
 describeBy(ProgramsVEN3$Eigenvector, group = ProgramsVEN3$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesVENPHD <- nrow(MatrizVEPHD) + ncol(MatrizVEPHD)
-g3 <- network.initialize(verticesVENPHD, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesVENPHD, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizVEPHD, g3)
 
-Venezuela3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Venezuela3 <- network(pave3, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Venezuela3
 SizeVE3 <- network::network.size(Venezuela3)
 DensityVE3 <- network::network.density(Venezuela3)
