@@ -214,9 +214,9 @@ ProgramsBRA2$Level <- "Master"
 psych::describeBy(ProgramsBRA2$Eigenvector, group = ProgramsBRA2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesBRA2 <- nrow(MatrizBRAMS) + ncol(MatrizBRAMS)
-g2 <- network.initialize(verticesBRA2, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesBRA2, directed = FALSE, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizBRAMS, g2)
-Brazil2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil2 <- network(pave2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil2
 SizeBRA2 <- network::network.size(Brazil2)
 DensityBRA2 <- network::network.density(Brazil2)
@@ -263,9 +263,9 @@ ProgramsBRA3$Level <- "PhD"
 psych::describeBy(ProgramsBRA3$Eigenvector, group = ProgramsBRA3$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesBRA3 <- nrow(MatrizBRAPHD) + ncol(MatrizBRAPHD)
-g3 <- network.initialize(verticesBRA3, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesBRA3, directed = FALSE, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizBRAPHD, g3)
-Brazil3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil3 <- network(pave3, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil3
 SizeBRA3 <- network::network.size(Brazil3)
 DensityBRA3 <- network::network.density(Brazil3)
