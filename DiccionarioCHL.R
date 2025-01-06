@@ -87,7 +87,7 @@ edges_chl <- data.frame(
   Target = EdgeListCHL[, 2],
   Country = "Chile"
 )
-bnCHL <- graph_from_data_frame(edges_chl, directed = TRUE)
+bnCHL <- graph_from_data_frame(edges_chl, directed = F)
 bipartite_mapping(bnCHL)
 V(bnCHL)$type <- bipartite_mapping(bnCHL)$type
 V(bnCHL)$shape <- ifelse(V(bnCHL)$type, "circle", "square")
@@ -117,7 +117,7 @@ describeBy(ProgramsCHL$Eigenvector, group = ProgramsCHL$Partition, mat = TRUE, d
 
 library(network)
 verticesCHL <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesCHL, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesCHL, directed = FALSE, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 
 Chile <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
@@ -139,7 +139,7 @@ edges_chl1 <- data.frame(
   Target = EdgeListCHL1[, 2],
   Country = "Chile"
 )
-bnCHL1 <- graph_from_data_frame(edges_chl1, directed = TRUE)
+bnCHL1 <- graph_from_data_frame(edges_chl1, directed = F)
 bipartite_mapping(bnCHL1)
 V(bnCHL1)$type <- bipartite_mapping(bnCHL1)$type
 V(bnCHL1)$shape <- ifelse(V(bnCHL1)$type, "circle", "square")
@@ -169,7 +169,7 @@ library(psych)
 describeBy(ProgramsCHL1$Eigenvector, group = ProgramsCHL1$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCHLSPEC <- nrow(MatrizCHLSPEC) + ncol(MatrizCHLSPEC)
-g1 <- network.initialize(verticesCHLSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesCHLSPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizCHLSPEC, g1)
 Chile1 <- network(pave1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile1
@@ -190,7 +190,7 @@ edges_chl2 <- data.frame(
   Target = EdgeListCHL2[, 2],
   Country = "Chile"
 )
-bnCHL2 <- graph_from_data_frame(edges_chl2, directed = TRUE)
+bnCHL2 <- graph_from_data_frame(edges_chl2, directed = F)
 bipartite_mapping(bnCHL2)
 V(bnCHL2)$type <- bipartite_mapping(bnCHL2)$type
 V(bnCHL2)$shape <- ifelse(V(bnCHL2)$type, "circle", "square")
@@ -219,7 +219,7 @@ psych::describeBy(ProgramsCHL2$Eigenvector, group = ProgramsCHL2$Partition, mat 
 
 library(network)
 verticesCHL2 <- nrow(MatrizCHLMS) + ncol(MatrizCHLMS)
-g2 <- network.initialize(verticesCHL2, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesCHL2, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizCHLMS, g2)
 Chile2 <- network(pave2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile2
@@ -241,7 +241,7 @@ edges_chl3 <- data.frame(
   Target = EdgeListCHL3[, 2],
   Country = "Chile"
 )
-bnCHL3 <- graph_from_data_frame(edges_chl3, directed = TRUE)
+bnCHL3 <- graph_from_data_frame(edges_chl3, directed = F)
 bipartite_mapping(bnCHL3)
 V(bnCHL3)$type <- bipartite_mapping(bnCHL3)$type
 V(bnCHL3)$shape <- ifelse(V(bnCHL3)$type, "circle", "square")
@@ -270,7 +270,7 @@ ProgramsCHL3$Level <- "PhD"
 psych::describeBy(ProgramsCHL3$Eigenvector, group = ProgramsCHL3$Partition, mat = TRUE, digits = 2)
 
 verticesCHL3 <- nrow(MatrizCHLPHD) + ncol(MatrizCHLPHD)
-g3 <- network.initialize(verticesCHL3, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesCHL3, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizCHLPHD, g3)
 Chile3 <- network(pave3, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Chile3
