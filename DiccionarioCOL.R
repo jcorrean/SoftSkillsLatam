@@ -85,7 +85,7 @@ edges_col <- data.frame(
   Target = EdgeListCOL[, 2],
   Country = "Colombia"
 )
-bnCOL <- graph_from_data_frame(edges_col, directed = TRUE)
+bnCOL <- graph_from_data_frame(edges_col, directed = F)
 bipartite_mapping(bnCOL)
 V(bnCOL)$type <- bipartite_mapping(bnCOL)$type
 V(bnCOL)$shape <- ifelse(V(bnCOL)$type, "circle", "square")
@@ -113,9 +113,9 @@ psych::describeBy(ProgramsCOL$Eigenvector, group = ProgramsCOL$Partition, mat = 
 
 library(network)
 verticesCOL <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesCOL, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesCOL, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
-Colombia <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Colombia <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia
 SizeCOL <- network::network.size(Colombia)
 DensityCOL <- network::network.density(Colombia)
@@ -134,7 +134,7 @@ edges_col1 <- data.frame(
   Target = EdgeListCOL1[, 2],
   Country = "Colombia"
 )
-bnCOL1 <- graph_from_data_frame(edges_col1, directed = TRUE)
+bnCOL1 <- graph_from_data_frame(edges_col1, directed = F)
 bipartite_mapping(bnCOL1)
 V(bnCOL1)$type <- bipartite_mapping(bnCOL1)$type
 V(bnCOL1)$shape <- ifelse(V(bnCOL1)$type, "circle", "square")
@@ -164,9 +164,9 @@ ProgramsCOL1$Level <- "Specialization"
 psych::describeBy(ProgramsCOL1$Eigenvector, group = ProgramsCOL1$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCOLSPEC <- nrow(MatrizCOSPEC) + ncol(MatrizCOSPEC)
-g1 <- network.initialize(verticesCOLSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesCOLSPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizCOSPEC, g1)
-Colombia1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Colombia1 <- network(pave1, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia1
 SizeCO1 <- network::network.size(Colombia1)
 DensityCO1 <- network::network.density(Colombia1)
@@ -186,7 +186,7 @@ edges_col2 <- data.frame(
   Target = EdgeListCOL2[, 2],
   Country = "Colombia"
 )
-bnCOL2 <- graph_from_data_frame(edges_col2, directed = TRUE)
+bnCOL2 <- graph_from_data_frame(edges_col2, directed = F)
 V(bnCOL2)$type <- bipartite_mapping(bnCOL2)$type
 V(bnCOL2)$shape <- ifelse(V(bnCOL2)$type, "circle", "square")
 V(bnCOL2)$label.cex <- ifelse(V(bnCOL2)$type, 0.5, 1)
@@ -215,7 +215,7 @@ ProgramsCOL2$Level <- "Master"
 psych::describeBy(ProgramsCOL2$Eigenvector, group = ProgramsCOL2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCOLMS <- nrow(MatrizCOMS) + ncol(MatrizCOMS)
-g2 <- network.initialize(verticesCOLMS, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesCOLMS, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizCOMS, g2)
 Colombia2 <- network(pave2, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia2
@@ -237,7 +237,7 @@ edges_col3 <- data.frame(
   Target = EdgeListCOL3[, 2],
   Country = "Colombia"
 )
-bnCOL3 <- graph_from_data_frame(edges_col3, directed = TRUE)
+bnCOL3 <- graph_from_data_frame(edges_col3, directed = F)
 bipartite_mapping(bnCOL3)
 V(bnCOL3)$type <- bipartite_mapping(bnCOL3)$type
 V(bnCOL3)$shape <- ifelse(V(bnCOL3)$type, "circle", "square")
@@ -269,9 +269,9 @@ ProgramsCOL3$Level <- "PhD"
 psych::describeBy(ProgramsCOL3$Eigenvector, group = ProgramsCOL3$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCOLPHD <- nrow(MatrizCOPHD) + ncol(MatrizCOPHD)
-g3 <- network.initialize(verticesCOLPHD, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesCOLPHD, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizCOPHD, g3)
-Colombia3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Colombia3 <- network(pave3, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Colombia3
 SizeCOL3 <- network::network.size(Colombia3)
 DensityCOL3 <- network::network.density(Colombia3)
