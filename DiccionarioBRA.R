@@ -85,7 +85,7 @@ edges_br <- data.frame(
   Target = EdgeListBR[, 2],
   Country = "Brazil"
 )
-bnBRA <- graph_from_data_frame(edges_br, directed = TRUE)
+bnBRA <- graph_from_data_frame(edges_br, directed = FALSE)
 bipartite_mapping(bnBRA)
 V(bnBRA)$type <- bipartite_mapping(bnBRA)$type
 V(bnBRA)$shape <- ifelse(V(bnBRA)$type, "circle", "square")
@@ -115,10 +115,10 @@ describeBy(ProgramsBRA$Eigenvector, group = ProgramsBRA$Partition, mat = TRUE, d
 
 library(network)
 verticesBRA <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesBRA, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesBRA, directed = FALSE, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 
-Brazil <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil
 SizeBR <- network::network.size(Brazil)
 DensityBR <- network::network.density(Brazil)
@@ -137,7 +137,7 @@ edges_br1 <- data.frame(
   Target = EdgeListBR1[, 2],
   Country = "Brazil"
 )
-bnBRA1 <- graph_from_data_frame(edges_br1, directed = TRUE)
+bnBRA1 <- graph_from_data_frame(edges_br1, directed = FALSE)
 bipartite_mapping(bnBRA1)
 V(bnBRA1)$type <- bipartite_mapping(bnBRA1)$type
 V(bnBRA1)$shape <- ifelse(V(bnBRA1)$type, "circle", "square")
@@ -166,10 +166,10 @@ psych::describeBy(ProgramsBRA1$Eigenvector, group = ProgramsBRA1$Partition, mat 
 library(network)
 
 verticesBRA1 <- nrow(MatrizBRASPEC) + ncol(MatrizBRASPEC)
-g1 <- network.initialize(verticesBRA1, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesBRA1, directed = FALSE, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizBRASPEC, g1)
 
-Brazil1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Brazil1 <- network(pave1, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Brazil1
 SizeBRA1 <- network::network.size(Brazil1)
 DensityBRA1 <- network::network.density(Brazil1)
