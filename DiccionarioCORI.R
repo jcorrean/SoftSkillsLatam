@@ -84,7 +84,7 @@ edges_cr <- data.frame(
   Target = EdgeListCORI[, 2],
   Country = "Costa Rica"
 )
-bnCORI <- graph_from_data_frame(edges_cr, directed = TRUE)
+bnCORI <- graph_from_data_frame(edges_cr, directed = F)
 bipartite_mapping(bnCORI)
 V(bnCORI)$type <- bipartite_mapping(bnCORI)$type
 V(bnCORI)$shape <- ifelse(V(bnCORI)$type, "circle", "square")
@@ -114,7 +114,7 @@ psych::describeBy(ProgramsCORI$Eigenvector, group = ProgramsCORI$Partition, mat 
 
 library(network)
 verticesCORI <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesCORI, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesCORI, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
 CostaRica <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica
@@ -135,7 +135,7 @@ edges_cr1 <- data.frame(
   Target = EdgeListCORI1[, 2],
   Country = "Costa Rica"
 )
-bnCORI1 <- graph_from_data_frame(edges_cr1, directed = TRUE)
+bnCORI1 <- graph_from_data_frame(edges_cr1, directed = F)
 V(bnCORI1)$type <- bipartite_mapping(bnCORI1)$type
 V(bnCORI1)$shape <- ifelse(V(bnCORI1)$type, "circle", "square")
 V(bnCORI1)$label.cex <- ifelse(V(bnCORI1)$type, 0.5, 1)
@@ -164,9 +164,9 @@ ProgramsCORI1$Level <- "Specialization"
 psych::describeBy(ProgramsCORI1$Eigenvector, group = ProgramsCORI1$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCORISPEC <- nrow(MatrizCORISPEC) + ncol(MatrizCORISPEC)
-g1 <- network.initialize(verticesCORISPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesCORISPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizCORISPEC, g1)
-CostaRica1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+CostaRica1 <- network(pave1, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica1
 SizeCORI1 <- network::network.size(CostaRica1)
 DensityCORI1 <- network::network.density(CostaRica1)
@@ -185,7 +185,7 @@ edges_cr2 <- data.frame(
   Target = EdgeListCORI2[, 2],
   Country = "Costa Rica"
 )
-bnCORI2 <- graph_from_data_frame(edges_cr2, directed = TRUE)
+bnCORI2 <- graph_from_data_frame(edges_cr2, directed = F)
 V(bnCORI2)$type <- bipartite_mapping(bnCORI2)$type
 V(bnCORI2)$shape <- ifelse(V(bnCORI2)$type, "circle", "square")
 V(bnCORI2)$label.cex <- ifelse(V(bnCORI2)$type, 0.5, 1)
@@ -213,9 +213,9 @@ ProgramsCORI2$Level <- "Master"
 psych::describeBy(ProgramsCORI2$Eigenvector, group = ProgramsCORI2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCORIMS <- nrow(MatrizCORIMS) + ncol(MatrizCORIMS)
-g2 <- network.initialize(verticesCORIMS, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesCORIMS, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizCORIMS, g2)
-CostaRica2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+CostaRica2 <- network(pave2, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica2
 SizeCORI2 <- network::network.size(CostaRica2)
 DensityCORI2 <- network::network.density(CostaRica2)
@@ -234,7 +234,7 @@ edges_cr3 <- data.frame(
   Target = EdgeListCORI3[, 2],
   Country = "CostaRica"
 )
-bnCORI3 <- graph_from_data_frame(edges_cr3, directed = TRUE)
+bnCORI3 <- graph_from_data_frame(edges_cr3, directed = F)
 V(bnCORI3)$type <- bipartite_mapping(bnCORI3)$type
 V(bnCORI3)$shape <- ifelse(V(bnCORI3)$type, "circle", "square")
 V(bnCORI3)$label.cex <- ifelse(V(bnCORI3)$type, 0.5, 1)
@@ -264,9 +264,9 @@ ProgramsCORI3$Level <- "PhD"
 psych::describeBy(ProgramsCORI3$Eigenvector, group = ProgramsCORI3$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesCORIPHD <- nrow(MatrizCORIPHD) + ncol(MatrizCORIPHD)
-g3 <- network.initialize(verticesCORIPHD, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesCORIPHD, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizCORIPHD, g3)
-CostaRica3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+CostaRica3 <- network(pave3, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 CostaRica3
 SizeCORI3 <- network::network.size(CostaRica3)
 DensityCORI3 <- network::network.density(CostaRica3)
