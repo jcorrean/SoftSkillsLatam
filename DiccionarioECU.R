@@ -86,7 +86,7 @@ edges_ec <- data.frame(
   Target = EdgeListECU[, 2],
   Country = "Ecuador"
 )
-bnECU <- graph_from_data_frame(edges_ec, directed = TRUE)
+bnECU <- graph_from_data_frame(edges_ec, directed = F)
 V(bnECU)$type <- bipartite_mapping(bnECU)$type
 V(bnECU)$shape <- ifelse(V(bnECU)$type, "circle", "square")
 V(bnECU)$label.cex <- ifelse(V(bnECU)$type, 0.5, 1)
@@ -114,9 +114,9 @@ ProgramsECU$Country <- "Ecuador"
 psych::describeBy(ProgramsECU$Eigenvector, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesECU <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesECU, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesECU, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matriz, g)
-Ecuador <- network(pave, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador
 SizeECU <- network::network.size(Ecuador)
 DensityECU <- network::network.density(Ecuador)
@@ -135,7 +135,7 @@ edges_ec1 <- data.frame(
   Target = EdgeListECU1[, 2],
   Country = "Ecuador"
 )
-bnECU1 <- graph_from_data_frame(edges_ec1, directed = TRUE)
+bnECU1 <- graph_from_data_frame(edges_ec1, directed = F)
 V(bnECU1)$type <- bipartite_mapping(bnECU1)$type
 V(bnECU1)$shape <- ifelse(V(bnECU1)$type, "circle", "square")
 V(bnECU1)$label.cex <- ifelse(V(bnECU1)$type, 0.5, 1)
@@ -164,9 +164,9 @@ ProgramsECU1$Level <- "Specialization"
 psych::describeBy(ProgramsECU1$Eigenvector, group = ProgramsECU1$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesECUSPEC <- nrow(MatrizECUSPEC) + ncol(MatrizECUSPEC)
-g1 <- network.initialize(verticesECUSPEC, directed = TRUE, bipartite = TRUE)
+g1 <- network.initialize(verticesECUSPEC, directed = F, bipartite = TRUE)
 pave1 <- network.bipartite(MatrizECUSPEC, g1)
-Ecuador1 <- network(pave1, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador1 <- network(pave1, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador1
 SizeECU1 <- network::network.size(Ecuador1)
 DensityECU1 <- network::network.density(Ecuador1)
@@ -185,7 +185,7 @@ edges_ec2 <- data.frame(
   Target = EdgeListECU2[, 2],
   Country = "Ecuador"
 )
-bnECU2 <- graph_from_data_frame(edges_ec2, directed = TRUE)
+bnECU2 <- graph_from_data_frame(edges_ec2, directed = F)
 V(bnECU2)$type <- bipartite_mapping(bnECU2)$type
 V(bnECU2)$shape <- ifelse(V(bnECU2)$type, "circle", "square")
 V(bnECU2)$label.cex <- ifelse(V(bnECU2)$type, 0.5, 1)
@@ -213,9 +213,9 @@ ProgramsECU2$Level <- "Master"
 psych::describeBy(ProgramsECU2$Eigenvector, group = ProgramsECU2$Partition, mat = TRUE, digits = 2)
 library(network)
 verticesECUMS <- nrow(MatrizECUMS) + ncol(MatrizECUMS)
-g2 <- network.initialize(verticesECUMS, directed = TRUE, bipartite = TRUE)
+g2 <- network.initialize(verticesECUMS, directed = F, bipartite = TRUE)
 pave2 <- network.bipartite(MatrizECUMS, g2)
-Ecuador2 <- network(pave2, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador2 <- network(pave2, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador2
 SizeECU2 <- network::network.size(Ecuador2)
 DensityECU2 <- network::network.density(Ecuador2)
@@ -234,7 +234,7 @@ edges_ec3 <- data.frame(
   Target = EdgeListECU3[, 2],
   Country = "Ecuador"
 )
-bnECU3 <- graph_from_data_frame(edges_ec3, directed = TRUE)
+bnECU3 <- graph_from_data_frame(edges_ec3, directed = F)
 V(bnECU3)$type <- bipartite_mapping(bnECU3)$type
 V(bnECU3)$shape <- ifelse(V(bnECU3)$type, "circle", "square")
 V(bnECU3)$label.cex <- ifelse(V(bnECU3)$type, 0.5, 1)
@@ -262,9 +262,9 @@ ProgramsECU3$Level <- "PhD"
 
 psych::describeBy(ProgramsECU3$Eigenvector, group = ProgramsECU3$Partition, mat = TRUE, digits = 2)
 verticesECUPHD <- nrow(MatrizECUPHD) + ncol(MatrizECUPHD)
-g3 <- network.initialize(verticesECUPHD, directed = TRUE, bipartite = TRUE)
+g3 <- network.initialize(verticesECUPHD, directed = F, bipartite = TRUE)
 pave3 <- network.bipartite(MatrizECUPHD, g3)
-Ecuador3 <- network(pave3, directed = TRUE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Ecuador3 <- network(pave3, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Ecuador3
 SizeECU3 <- network::network.size(Ecuador3)
 DensityECU3 <- network::network.density(Ecuador3)
