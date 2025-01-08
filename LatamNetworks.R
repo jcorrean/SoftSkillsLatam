@@ -61,12 +61,9 @@ RegionNetwork <- do.call(rbind, list(edges_arg,
                                      edges_ur, 
                                      edges_ve))
 rm(list=setdiff(ls(), c("RegionNetwork")))
-#RegionNetwork <- RegionNetwork[,c(2,1,3)]
-#colnames(RegionNetwork)[1] <- "Skill"
-#colnames(RegionNetwork)[2] <- "Brochure"
 
 library(igraph)
-bnR <- graph_from_data_frame(RegionNetwork, directed = TRUE)
+bnR <- graph_from_data_frame(RegionNetwork, directed = F)
 bipartite_mapping(bnR)
 V(bnR)$type <- bipartite_mapping(bnR)$type
 V(bnR)$shape <- ifelse(V(bnR)$type, "circle", "square")
@@ -74,9 +71,9 @@ V(bnR)$color <- ifelse(V(bnR)$type, "green4", "red3")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
-png(filename = "FR.png", width = 10, height = 8, units = "in", res = 300)
+png(filename = "FR.png", width = 10, height = 38, units = "in", res = 300)
 set.seed(8970)
-plot(bnR, vertex.label = NA, layout = layout_components, arrow.width = 0.1, arrow.size = 0.1)
+plot(bnR, vertex.label = NA, layout = layout.bipartite, arrow.width = 0.1, arrow.size = 0.1)
 dev.off()
 ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
                           Closeness = igraph::closeness(bnR),
