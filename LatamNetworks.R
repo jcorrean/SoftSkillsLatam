@@ -99,9 +99,7 @@ g <- network.initialize(verticesRegion, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matrix, g)
 Region <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
 Region
-library(intergraph)
-Region <- asNetwork(bnR)
-Region
+
 SizeR <- network::network.size(Region)
 DensityR <- network::network.density(Region)
 ClusteringR <- tnet::clustering_tm(Matrix)
@@ -152,27 +150,7 @@ RegionNetwork <- network(Matrix, directed = FALSE, hyper = FALSE, loops = FALSE,
 RegionNetwork
 SizeRN <- network::network.size(RegionNetwork)
 DensityRN <- network::network.density(RegionNetwork)
-#ClusteringRN <- tnet::clustering_tm(Matrix)
 
-library(ggplot2)
-library(ggridges)
-png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
-ggplot(Centralities, aes(x = Eigenvector, y = Partition, fill = Partition)) +
-  stat_density_ridges(quantile_lines = TRUE, alpha = 0.35) +
-  theme_bw() +
-  ylab("Network Partition") +
-  xlab("Eigenvector centrality degree") +
-  coord_cartesian(xlim = c(0, 1.1)) +
-  theme(axis.text.x = element_text(size = 16, color = "black"),
-        axis.text.y = element_text(size = 16, color = "black"),
-        axis.title.x = element_text(size= 16),
-        axis.title.y = element_text(size = 16),
-        legend.position = "none") +
-  annotate("text", x = 0.35, y = 1.9, label = "Average centrality = 0.41", hjust = 0, vjust = 1) +
-  annotate("text", x = 0.35, y = 1.8, label = "Standard deviation centrality = 0.26", hjust = 0, vjust = 1) +
-  annotate("text", x = 0.02, y = 0.9, label = "Average centrality = 0.02", hjust = 0, vjust = 1) +
-  annotate("text", x = 0.02, y = 0.8, label = "Standard deviation centrality = 0.01", hjust = 0, vjust = 1)
-dev.off()
 
 library(psych)
 describeBy(Centralities$Eigenvector, group = Centralities$Partition, mat = TRUE, digits = 2)
@@ -189,7 +167,7 @@ load("Results/Mexico.RData")
 load("Results/Uruguay.RData")
 load("Results/Venezuela.RData")
 
-RegionNetwork <- do.call(rbind, list(ProgramsRegion, 
+RegionNetwork <- do.call(rbind, list(ProgramsARG, 
                                      ProgramsBRA, 
                                      ProgramsCHL, 
                                      ProgramsCOL, 
@@ -206,7 +184,8 @@ ProgramsRegion <- RegionNetwork %>% filter(., Partition == "Program")
 RegionalPrograms <- describeBy(ProgramsRegion$Eigenvector, group = ProgramsRegion$Country, mat = TRUE, digits = 2)
 mean(RegionalPrograms$mean)
 mean(RegionalPrograms$sd)
-0.42/0.08
+
+mean(RegionalSkills$mean)/mean(RegionalPrograms$mean)
 rm(list=setdiff(ls(), c("RegionNetwork")))
 
 Promedios <- RegionNetwork %>%
