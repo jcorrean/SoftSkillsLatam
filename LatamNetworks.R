@@ -95,8 +95,10 @@ Matrix <- Matrix[1:10,11:ncol(Matrix)]
 Columnas <- data.frame(colnames(Matrix))
 verticesRegion <- nrow(Matrix) + ncol(Matrix)
 library(network)
-g <- network.initialize(verticesRegion, directed = TRUE, bipartite = TRUE)
+g <- network.initialize(verticesRegion, directed = F, bipartite = TRUE)
 pave <- network.bipartite(Matrix, g)
+Region <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
+Region
 library(intergraph)
 Region <- asNetwork(bnR)
 Region
