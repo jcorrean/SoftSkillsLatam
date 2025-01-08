@@ -50,6 +50,7 @@ Sampled.Universities <- 29+268+51+50+2+29+27+8+17
 Sampled.Universities
 
 268/Sampled.Universities
+
 RegionNetwork <- do.call(rbind, list(edges_arg, 
                                      edges_br, 
                                      edges_chl, 
