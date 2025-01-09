@@ -126,6 +126,7 @@ set.network.attribute(Ecuador, "Density", DensityECU)
 set.network.attribute(Ecuador, "Clustering", ClusteringECU)
 set.network.attribute(Ecuador, "Country", "Ecuador")
 set.network.attribute(Ecuador, "Level", "All")
+set.network.attribute(Ecuador, "OECD", FALSE)
 Ecuador
 
 bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
