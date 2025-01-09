@@ -130,6 +130,7 @@ set.network.attribute(Chile, "Density", DensityCHL)
 set.network.attribute(Chile, "Clustering", ClusteringCHL)
 set.network.attribute(Chile, "Country", "Chile")
 set.network.attribute(Chile, "Level", "All")
+set.network.attribute(Chile, "OECD", TRUE)
 Chile
 
 bnCHL1 <- graph_from_biadjacency_matrix(t(MatrizCHLSPEC), directed = FALSE)
