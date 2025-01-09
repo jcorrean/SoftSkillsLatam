@@ -127,6 +127,7 @@ set.network.attribute(Mexico, "Density", DensityMEX)
 set.network.attribute(Mexico, "Clustering", ClusteringMEX)
 set.network.attribute(Mexico, "Country", "Mexico")
 set.network.attribute(Mexico, "Level", "All")
+set.network.attribute(Mexico, "OECD", TRUE)
 Mexico
 
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
@@ -282,4 +283,3 @@ MatrizMEXMS <- as.matrix(t(MEX_MS))
 MatrizMEXPHD <- as.matrix(t(MEX_PhD))
 
 save.image("~/Documents/GitHub/SoftSkillsLatam/Results/Mexico.RData")
-
