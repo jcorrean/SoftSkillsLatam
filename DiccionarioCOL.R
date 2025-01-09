@@ -125,6 +125,7 @@ set.network.attribute(Colombia, "Density", DensityCOL)
 set.network.attribute(Colombia, "Clustering", ClusteringCOL)
 set.network.attribute(Colombia, "Country", "Colombia")
 set.network.attribute(Colombia, "Level", "All")
+set.network.attribute(Colombia, "OECD", TRUE)
 Colombia
 
 bnCOL1 <- graph_from_biadjacency_matrix(t(MatrizCOSPEC), directed = FALSE)
