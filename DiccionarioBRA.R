@@ -128,6 +128,7 @@ set.network.attribute(Brazil, "Density", DensityBR)
 set.network.attribute(Brazil, "Clustering", ClusteringBR)
 set.network.attribute(Brazil, "Country", "Brazil")
 set.network.attribute(Brazil, "Level", "All")
+set.network.attribute(Brazil, "OECD", FALSE)
 Brazil
 
 bnBRA1 <- graph_from_biadjacency_matrix(t(MatrizBRASPEC), directed = FALSE)
