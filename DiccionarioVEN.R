@@ -129,6 +129,7 @@ set.network.attribute(Venezuela, "Density", DensityVE)
 set.network.attribute(Venezuela, "Clustering", ClusteringVE)
 set.network.attribute(Venezuela, "Country", "Venezuela")
 set.network.attribute(Venezuela, "Level", "All")
+set.network.attribute(Venezuela, "OECD", FALSE)
 Venezuela
 
 bnVEN1 <- graph_from_biadjacency_matrix(t(MatrizVESPEC), directed = FALSE)
