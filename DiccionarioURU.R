@@ -127,6 +127,7 @@ set.network.attribute(Uruguay, "Density", DensityURU)
 set.network.attribute(Uruguay, "Clustering", ClusteringURU)
 set.network.attribute(Uruguay, "Country", "Uruguay")
 set.network.attribute(Uruguay, "Level", "All")
+set.network.attribute(Uruguay, "OECD", FALSE)
 Uruguay
 
 library(igraph)
