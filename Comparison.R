@@ -21,4 +21,5 @@ RegionalNetworks %>% map(~list(development = . %n% "OECD",
                 n = network.size(.),
                 d = network.density(.))) %>% bind_rows() %>%
   group_by(development) %>%
-  summarize(nnets = n(), p1 = mean(d==1), m = mean(d)) %>% kable()
+  summarize(Countries = n(), p1 = sum(n), m = mean(d)) %>% kable()
+
