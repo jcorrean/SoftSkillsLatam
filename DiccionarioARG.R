@@ -8,7 +8,6 @@ ARG <- mutate(ARG,
                 grepl("Doctor|Doctorado en", text), "Doctorado",
                 ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
                        "Especialización")))
-ARG <- mutate(ARG, University = str_extract(doc_id, "^\\d+")) 
 
 library(stringr)
 ARG <- ARG %>%
@@ -80,9 +79,30 @@ Matriz <- as.matrix(ProgramsARG)
 rowSums(Matriz)
 str(Matriz)
 
+library(network)
+Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Argentina1 <- as.network(MatrizARGSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Argentina2 <- as.network(MatrizARGMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Argentina3 <- as.network(MatrizARGPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+
+pave <- network::as.
+
+SizeARG <- network::network.size(Argentina)
+DensityARG <- network::network.density(Argentina)
+ClusteringARG <- tnet::clustering_tm(Matriz)
+set.network.attribute(Argentina, "Size", SizeARG)
+set.network.attribute(Argentina, "Density", DensityARG)
+set.network.attribute(Argentina, "Clustering", ClusteringARG)
+set.network.attribute(Argentina, "Country", "Argentina")
+set.network.attribute(Argentina, "Level", "All")
+set.network.attribute(Argentina, "OECD", FALSE)
+network::set.edge.attribute(Argentina, "weight", edges_args$Weight)
+network::get.edge.attribute(Argentina,"weight")
+
+
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
-EdgeListAR <- as_edgelist(bnARG)
+
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
@@ -105,6 +125,7 @@ V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 E(bnARG)$weight <- edges_args$Weight
+igraph::is.bipartite(bnARG)
 
 plot(bnARG, vertex.label = NA, layout = layout_as_bipartite, edge.width=0.2*edges_args$Weight)
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
@@ -129,7 +150,8 @@ describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, d
 library(network)
 library(intergraph)
 Argentina <- asNetwork(bnARG)
-SizeARG <- network::network.size(Argentina)
+Argentina
+SizeARG <- 10 + network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::clustering_tm(t(Matriz))
 set.network.attribute(Argentina, "Size", SizeARG)
@@ -138,14 +160,12 @@ set.network.attribute(Argentina, "Clustering", ClusteringARG)
 set.network.attribute(Argentina, "Country", "Argentina")
 set.network.attribute(Argentina, "Level", "All")
 set.network.attribute(Argentina, "OECD", FALSE)
-set.vertex.attribute(Argentina, "Country", "Argentina")
-set.edge.attribute(Argentina, "weight", edges_args$Weight)
-get.edge.attribute(Argentina,"weight")
+network::set.edge.attribute(Argentina, "weight", edges_args$Weight)
+network::get.edge.attribute(Argentina,"weight")
 Argentina
 
 library(igraph)
 bnARG1 <- graph_from_biadjacency_matrix(MatrizARGSPEC, directed = FALSE)
-EdgeListAR1 <- as_edgelist(bnARG1)
 edges_arg1 <- data.frame()
 for (i in 1:nrow(MatrizARGSPEC)) {
   for (j in 1:ncol(MatrizARGSPEC)) {
@@ -188,6 +208,7 @@ ProgramsARG1$Level <- "Specialization"
 
 library(psych)
 describeBy(ProgramsARG1$Eigenvector, group = ProgramsARG1$Partition, mat = TRUE, digits = 2)
+
 
 Argentina1 <- asNetwork(bnARG1)
 Argentina1
