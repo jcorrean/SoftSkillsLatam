@@ -85,11 +85,10 @@ Argentina1 <- as.network(MatrizARGSPEC, matrix.type = "adjacency", directed = FA
 Argentina2 <- as.network(MatrizARGMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Argentina3 <- as.network(MatrizARGPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 
-pave <- network::as.
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
-ClusteringARG <- tnet::clustering_tm(Matriz)
+ClusteringARG <- tnet::clustering_tm(t(Matriz))
 set.network.attribute(Argentina, "Size", SizeARG)
 set.network.attribute(Argentina, "Density", DensityARG)
 set.network.attribute(Argentina, "Clustering", ClusteringARG)
@@ -150,10 +149,11 @@ describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, d
 library(network)
 library(intergraph)
 Argentina <- asNetwork(bnARG)
+argentina <- as.sociomatrix(Argentina)
 Argentina
 SizeARG <- 10 + network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
-ClusteringARG <- tnet::clustering_tm(t(Matriz))
+ClusteringARG <- tnet::clustering_tm(argentina)
 set.network.attribute(Argentina, "Size", SizeARG)
 set.network.attribute(Argentina, "Density", DensityARG)
 set.network.attribute(Argentina, "Clustering", ClusteringARG)
@@ -326,6 +326,7 @@ ProgramsARG3$Level <- "PhD"
 library(psych)
 describeBy(ProgramsARG3$Eigenvector, group = ProgramsARG3$Partition, mat = TRUE, digits = 2)
 Argentina3 <- asNetwork(bnARG3)
+
 SizeARG3 <- network::network.size(Argentina3)
 DensityARG3 <- network::network.density(Argentina3)
 ClusteringARG3 <- tnet::clustering_tm(t(MatrizARGPHD))
@@ -334,8 +335,10 @@ set.network.attribute(Argentina3, "Density", DensityARG3)
 set.network.attribute(Argentina3, "Clustering", ClusteringARG3)
 set.network.attribute(Argentina3, "Country", "Argentina")
 set.network.attribute(Argentina3, "Level", "PhD")
+set.edge.value(Argentina, "Frequency", Matriz)
 set.edge.attribute(Argentina3, "weight", edges_arg3$Weight)
 get.edge.attribute(Argentina3, "weight")
+get.vertex.attribute(Argentina, "vertex.names")
 Argentina3
 
 MatrizARGSPEC <- as.matrix(t(ARG_Spec))
