@@ -95,10 +95,6 @@ set.network.attribute(Argentina, "Clustering", ClusteringARG)
 set.network.attribute(Argentina, "Country", "Argentina")
 set.network.attribute(Argentina, "Level", "All")
 set.network.attribute(Argentina, "OECD", FALSE)
-network::set.edge.attribute(Argentina, "weight", edges_args$Weight)
-network::get.edge.attribute(Argentina,"weight")
-
-
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 
@@ -124,6 +120,15 @@ V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 E(bnARG)$weight <- edges_args$Weight
+
+network::set.edge.attribute(Argentina, "weight", edges_args$Weight)
+Argentina %e% "weight" <-  edges_args$Weight
+network::get.edge.attribute(Argentina,"weight")
+as.sociomatrix(Argentina, attrname = "weight")
+Argentina
+network::list.edge.attributes(Argentina)
+summary(Argentina)
+
 igraph::is.bipartite(bnARG)
 
 plot(bnARG, vertex.label = NA, layout = layout_as_bipartite, edge.width=0.2*edges_args$Weight)
