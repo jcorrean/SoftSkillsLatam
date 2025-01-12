@@ -70,12 +70,28 @@ BRA_PhD <- tokens(BRAPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizBRASPEC <- as.matrix(t(BRA_Spec))
-MatrizBRAMS <- as.matrix(t(BRA_MS))
-MatrizBRAPHD <- as.matrix(t(BRA_PhD))
+MatrizBRASPEC <- as.matrix(BRA_Spec)
+MatrizBRAMS <- as.matrix(BRA_MS)
+MatrizBRAPHD <- as.matrix(BRA_PhD)
 ProgramsBRA
-Matriz <- as.matrix(t(ProgramsBRA))
+Matriz <- as.matrix(ProgramsBRA)
 rowSums(Matriz)
+
+library(network)
+Brazil <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Brazil1 <- as.network(MatrizBRASPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Brazil2 <- as.network(MatrizBRAMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Brazil3 <- as.network(MatrizBRAPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+SizeBRA <- network::network.size(Brazil)
+DensityBRA <- network::network.density(Brazil)
+ClusteringBRA <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Brazil, "Size", SizeBRA)
+set.network.attribute(Brazil, "Density", DensityBRA)
+set.network.attribute(Brazil, "Clustering", ClusteringBRA)
+set.network.attribute(Brazil, "Country", "Brazil")
+set.network.attribute(Brazil, "Level", "All")
+set.network.attribute(Brazil, "OECD", FALSE)
+
 
 library(igraph)
 bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
