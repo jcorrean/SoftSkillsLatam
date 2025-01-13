@@ -70,14 +70,27 @@ ECU_PhD <- tokens(ECUPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizECUSPEC <- as.matrix(t(ECU_Spec))
-MatrizECUMS <- as.matrix(t(ECU_MS))
-MatrizECUPHD <- as.matrix(t(ECU_PhD))
+MatrizECUSPEC <- as.matrix(ECU_Spec)
+MatrizECUMS <- as.matrix(ECU_MS)
+MatrizECUPHD <- as.matrix(ECU_PhD)
 
 ProgramsECU
-Matriz <- as.matrix(t(ProgramsECU))
+Matriz <- as.matrix(ProgramsECU)
 rowSums(Matriz)
-
+library(network)
+Ecuador <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Ecuador1 <- as.network(MatrizECUSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Ecuador2 <- as.network(MatrizECUMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Ecuador3 <- as.network(MatrizECUPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+SizeECU <- network::network.size(Ecuador)
+DensityECU <- network::network.density(Ecuador)
+ClusteringECU <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Ecuador, "Size", SizeECU)
+set.network.attribute(Ecuador, "Density", DensityECU)
+set.network.attribute(Ecuador, "Clustering", ClusteringECU)
+set.network.attribute(Ecuador, "Country", "Ecuador")
+set.network.attribute(Ecuador, "Level", "All")
+set.network.attribute(Ecuador, "OECD", FALSE)
 library(igraph)
 bnECU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListECU <- as_edgelist(bnECU)
