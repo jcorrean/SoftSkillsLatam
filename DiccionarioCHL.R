@@ -70,15 +70,31 @@ CHL_PhD <- tokens(CHLPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizCHLSPEC <- as.matrix(t(CHL_Spec))
-MatrizCHLMS <- as.matrix(t(CHL_MS))
-MatrizCHLPHD <- as.matrix(t(CHL_PhD))
+MatrizCHLSPEC <- as.matrix(CHL_Spec)
+MatrizCHLMS <- as.matrix(CHL_MS)
+MatrizCHLPHD <- as.matrix(CHL_PhD)
 
 
 ProgramsCHL
-Matriz <- as.matrix(t(ProgramsCHL))
+Matriz <- as.matrix(ProgramsCHL)
 rowSums(Matriz)
 
+library(network)
+Chile <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Chile1 <- as.network(MatrizCHLSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Chile2 <- as.network(MatrizCHLMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Chile3 <- as.network(MatrizCHLPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+
+
+SizeCHL <- network::network.size(Chile)
+DensityCHL <- network::network.density(Chile)
+ClusteringCHL <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Chile, "Size", SizeCHL)
+set.network.attribute(Chile, "Density", DensityCHL)
+set.network.attribute(Chile, "Clustering", ClusteringCHL)
+set.network.attribute(Chile, "Country", "Chile")
+set.network.attribute(Chile, "Level", "All")
+set.network.attribute(Chile, "OECD", TRUE)
 library(igraph)
 bnCHL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListCHL <- as_edgelist(bnCHL)
