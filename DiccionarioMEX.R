@@ -70,13 +70,27 @@ MEX_PhD <- tokens(MEXPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizMEXSPEC <- as.matrix(t(MEX_Spec))
-MatrizMEXMS <- as.matrix(t(MEX_MS))
-MatrizMEXPHD <- as.matrix(t(MEX_PhD))
+MatrizMEXSPEC <- as.matrix(MEX_Spec)
+MatrizMEXMS <- as.matrix(MEX_MS)
+MatrizMEXPHD <- as.matrix(MEX_PhD)
 ProgramsMEX
-Matriz <- as.matrix(t(ProgramsMEX))
+Matriz <- as.matrix(ProgramsMEX)
 rowSums(Matriz)
-
+library(network)
+Mexico <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Mexico1 <- as.network(MatrizMEXSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Mexico2 <- as.network(MatrizMEXMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Mexico3 <- as.network(MatrizMEXPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+SizeMEX <- network::network.size(Mexico)
+DensityMEX <- network::network.density(Mexico)
+ClusteringMEX <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Mexico, "Size", SizeMEX)
+set.network.attribute(Mexico, "Density", DensityMEX)
+set.network.attribute(Mexico, "Clustering", ClusteringMEX)
+set.network.attribute(Mexico, "Country", "Mexico")
+set.network.attribute(Mexico, "Level", "All")
+set.network.attribute(Mexico, "OECD", TRUE)
+Mexico
 
 library(igraph)
 bnMEX <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
