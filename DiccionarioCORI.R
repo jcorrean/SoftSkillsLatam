@@ -70,12 +70,29 @@ CORI_PhD <- tokens(CORIPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizCORISPEC <- as.matrix(t(CORI_Spec))
-MatrizCORIMS <- as.matrix(t(CORI_MS))
-MatrizCORIPHD <- as.matrix(t(CORI_PhD))
+MatrizCORISPEC <- as.matrix(CORI_Spec)
+MatrizCORIMS <- as.matrix(CORI_MS)
+MatrizCORIPHD <- as.matrix(CORI_PhD)
 ProgramsCORI
-Matriz <- as.matrix(t(ProgramsCORI))
+Matriz <- as.matrix(ProgramsCORI)
 rowSums(Matriz)
+library(network)
+CostaRica <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+CostaRica1 <- as.network(MatrizCORISPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+CostaRica2 <- as.network(MatrizCORIMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+CostaRica3 <- as.network(MatrizCORIPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+
+SizeCR <- network::network.size(CostaRica)
+DensityCR <- network::network.density(CostaRica)
+ClusteringCR <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(CostaRica, "Size", SizeCR)
+set.network.attribute(CostaRica, "Density", DensityCR)
+set.network.attribute(CostaRica, "Clustering", ClusteringCR)
+set.network.attribute(CostaRica, "Country", "Costa Rica")
+set.network.attribute(CostaRica, "Level", "All")
+set.network.attribute(CostaRica, "OECD", TRUE)
+CostaRica
+
 library(igraph)
 bnCORI <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListCORI <- as_edgelist(bnCORI)
@@ -112,22 +129,6 @@ ProgramsCORI$Country <- "Costa Rica"
 
 psych::describeBy(ProgramsCORI$Eigenvector, group = ProgramsCORI$Partition, mat = TRUE, digits = 2)
 
-library(network)
-verticesCORI <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesCORI, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
-CostaRica <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-CostaRica
-SizeCR <- network::network.size(CostaRica)
-DensityCR <- network::network.density(CostaRica)
-ClusteringCR <- tnet::clustering_tm(Matriz)
-set.network.attribute(CostaRica, "Size", SizeCR)
-set.network.attribute(CostaRica, "Density", DensityCR)
-set.network.attribute(CostaRica, "Clustering", ClusteringCR)
-set.network.attribute(CostaRica, "Country", "Costa Rica")
-set.network.attribute(CostaRica, "Level", "All")
-set.network.attribute(CostaRica, "OECD", TRUE)
-CostaRica
 
 bnCORI1 <- graph_from_biadjacency_matrix(t(MatrizCORISPEC), directed = FALSE)
 EdgeListCORI1 <- as_edgelist(bnCORI1)
