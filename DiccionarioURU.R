@@ -70,13 +70,27 @@ URU_PhD <- tokens(URUPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizURUSPEC <- as.matrix(t(URU_Spec))
-MatrizURUMS <- as.matrix(t(URU_MS))
-MatrizURUPHD <- as.matrix(t(URU_PhD))
+MatrizURUSPEC <- as.matrix(URU_Spec)
+MatrizURUMS <- as.matrix(URU_MS)
+MatrizURUPHD <- as.matrix(URU_PhD)
 ProgramsURU
-Matriz <- as.matrix(t(ProgramsURU))
+Matriz <- as.matrix(ProgramsURU)
 rowSums(Matriz)
-
+library(network)
+Uruguay <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Uruguay1 <- as.network(MatrizURUSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Uruguay2 <- as.network(MatrizURUMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Uruguay3 <- as.network(MatrizURUPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+SizeURU <- network::network.size(Uruguay)
+DensityURU <- network::network.density(Uruguay)
+ClusteringURU <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Uruguay, "Size", SizeURU)
+set.network.attribute(Uruguay, "Density", DensityURU)
+set.network.attribute(Uruguay, "Clustering", ClusteringURU)
+set.network.attribute(Uruguay, "Country", "Uruguay")
+set.network.attribute(Uruguay, "Level", "All")
+set.network.attribute(Uruguay, "OECD", FALSE)
+Uruguay
 library(igraph)
 bnURU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListURU <- as_edgelist(bnURU)
