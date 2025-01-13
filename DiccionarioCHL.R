@@ -73,8 +73,6 @@ CHL_PhD <- tokens(CHLPhD,
 MatrizCHLSPEC <- as.matrix(CHL_Spec)
 MatrizCHLMS <- as.matrix(CHL_MS)
 MatrizCHLPHD <- as.matrix(CHL_PhD)
-
-
 ProgramsCHL
 Matriz <- as.matrix(ProgramsCHL)
 rowSums(Matriz)
