@@ -70,13 +70,28 @@ COL_PhD <- tokens(COLPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizCOSPEC <- as.matrix(t(COL_Spec))
-MatrizCOMS <- as.matrix(t(COL_MS))
-MatrizCOPHD <- as.matrix(t(COL_PhD))
+MatrizCOSPEC <- as.matrix(COL_Spec)
+MatrizCOMS <- as.matrix(COL_MS)
+MatrizCOPHD <- as.matrix(COL_PhD)
 ProgramsCOL
-Matriz <- as.matrix(t(ProgramsCOL))
+Matriz <- as.matrix(ProgramsCOL)
 rowSums(Matriz)
+library(network)
+Colombia <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Colombia1 <- as.network(MatrizCOSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Colombia2 <- as.network(MatrizCOMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Colombia3 <- as.network(MatrizCOPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 
+
+SizeCOL <- network::network.size(Colombia)
+DensityCOL <- network::network.density(Colombia)
+ClusteringCOL <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Colombia, "Size", SizeCOL)
+set.network.attribute(Colombia, "Density", DensityCOL)
+set.network.attribute(Colombia, "Clustering", ClusteringCOL)
+set.network.attribute(Colombia, "Country", "Colombia")
+set.network.attribute(Colombia, "Level", "All")
+set.network.attribute(Colombia, "OECD", TRUE)
 library(igraph)
 bnCOL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL)
