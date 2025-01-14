@@ -19,9 +19,37 @@ length(RegionalNetworks)
 RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
 RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="edges")
-RegionalNetworks %>% map(~list(OECD.Member = . %n% "OECD",
-                n = network.size(.),
-                d = network.density(.))) %>% bind_rows() %>%
-  group_by(OECD.Member) %>%
-  summarize(Countries = n(), Size = sum(n), Average.Density = mean(d)) %>% kable()
 
+country_names <- c("Argentina", "Brazil", "Chile", "Colombia", "CostaRica", "Ecuador", "Mexico", "Uruguay", "Venezuela")
+RegionalNetworks
+RegionalNetworks <- setNames(RegionalNetworks[1:9],country_names)
+
+RegionalNetworks %>%
+  imap(~ {
+    mnext_value <- .x$gal$mnext
+    list(
+      Country = .y,
+      OECD.Member = .x %n% "OECD",
+      n = network.size(.x),
+      d = network.density(.x),
+      Clustering = get.network.attribute(.x, "Clustering"),
+      mnext = ifelse(is.null(mnext_value), NA_integer_, mnext_value)
+    )
+  }) %>%
+  bind_rows() %>%
+  group_by(Country) %>%
+  summarize(
+    OECD.Member = first(OECD.Member),
+    Edges = mnext,
+    Size = sum(n),
+    Density = mean(d),
+    Clustering = first(Clustering)
+  ) %>%
+  kable()
+
+
+library(ergm.multi)
+SampledNetworks <- Networks(RegionalNetworks)
+ergm(SampledNetworks ~ N(~edges, ~
+                         I(n <= 0.020)+
+                         I(n >= 0.040)))
