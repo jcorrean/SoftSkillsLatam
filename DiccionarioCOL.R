@@ -81,8 +81,6 @@ Colombia <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipa
 Colombia1 <- as.network(MatrizCOSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Colombia2 <- as.network(MatrizCOMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Colombia3 <- as.network(MatrizCOPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
-
-
 SizeCOL <- network::network.size(Colombia)
 DensityCOL <- network::network.density(Colombia)
 ClusteringCOL <- tnet::clustering_tm(t(Matriz))
@@ -92,6 +90,7 @@ set.network.attribute(Colombia, "Clustering", ClusteringCOL)
 set.network.attribute(Colombia, "Country", "Colombia")
 set.network.attribute(Colombia, "Level", "All")
 set.network.attribute(Colombia, "OECD", TRUE)
+Colombia
 library(igraph)
 bnCOL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
 EdgeListCOL <- as_edgelist(bnCOL)
