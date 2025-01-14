@@ -20,6 +20,7 @@ library(tibble)
 library(knitr)
 library(dplyr)
 RegionalNetworks <- readRDS("RegionalNetworks.RDS")
+RegionalNetworks
 length(RegionalNetworks)
 RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
