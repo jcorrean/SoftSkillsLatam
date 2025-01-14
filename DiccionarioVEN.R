@@ -71,13 +71,28 @@ VEN_PhD <- tokens(VENPhD,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-MatrizVESPEC <- as.matrix(t(VEN_Spec))
-MatrizVEMS <- as.matrix(t(VEN_MS))
-MatrizVEPHD <- as.matrix(t(VEN_PhD))
+MatrizVESPEC <- as.matrix(VEN_Spec)
+MatrizVEMS <- as.matrix(VEN_MS)
+MatrizVEPHD <- as.matrix(VEN_PhD)
 
 ProgramsVEN
-Matriz <- as.matrix(t(ProgramsVEN))
+Matriz <- as.matrix(ProgramsVEN)
 rowSums(Matriz)
+library(network)
+Venezuela <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Venezuela1 <- as.network(MatrizVESPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Venezuela2 <- as.network(MatrizVEMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Venezuela3 <- as.network(MatrizVEPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+SizeVE <- network::network.size(Venezuela)
+DensityVE <- network::network.density(Venezuela)
+ClusteringVE <- tnet::clustering_tm(t(Matriz))
+set.network.attribute(Venezuela, "Size", SizeVE)
+set.network.attribute(Venezuela, "Density", DensityVE)
+set.network.attribute(Venezuela, "Clustering", ClusteringVE)
+set.network.attribute(Venezuela, "Country", "Venezuela")
+set.network.attribute(Venezuela, "Level", "All")
+set.network.attribute(Venezuela, "OECD", FALSE)
+Venezuela
 
 library(igraph)
 bnVEN <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
