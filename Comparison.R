@@ -15,11 +15,13 @@ library(purrr)
 library(tibble)
 library(knitr)
 library(dplyr)
-RegionalNetworks %>% discard(`%n%`, "OECD")
+length(RegionalNetworks)
+RegionalNetworks
+RegionalNetworks %>% keep(`%n%`, "OECD")
 RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="edges")
-RegionalNetworks %>% map(~list(development = . %n% "OECD",
+RegionalNetworks %>% map(~list(OECD.Member = . %n% "OECD",
                 n = network.size(.),
                 d = network.density(.))) %>% bind_rows() %>%
-  group_by(development) %>%
-  summarize(Countries = n(), p1 = sum(n), m = mean(d)) %>% kable()
+  group_by(OECD.Member) %>%
+  summarize(Countries = n(), Size = sum(n), Average.Density = mean(d)) %>% kable()
 
