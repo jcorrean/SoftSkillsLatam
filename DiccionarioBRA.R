@@ -91,7 +91,7 @@ set.network.attribute(Brazil, "Clustering", ClusteringBRA)
 set.network.attribute(Brazil, "Country", "Brazil")
 set.network.attribute(Brazil, "Level", "All")
 set.network.attribute(Brazil, "OECD", FALSE)
-
+Brazil
 
 library(igraph)
 bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
