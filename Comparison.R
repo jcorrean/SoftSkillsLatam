@@ -54,6 +54,5 @@ RegionalNetworks %>%
 
 library(ergm.multi)
 SampledNetworks <- Networks(RegionalNetworks)
-ergm(SampledNetworks ~ N(~edges, ~
-                         I(n <= 0.020)+
-                         I(n >= 0.040)))
+SampledNetworks
+ergm(SampledNetworks ~ N(~edges))
