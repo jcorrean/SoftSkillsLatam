@@ -96,18 +96,30 @@ Venezuela
 
 library(igraph)
 bnVEN <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListVE <- as_edgelist(bnVEN)
-edges_ve <- data.frame(
-  Source = paste0("VEN_", EdgeListVE[, 1]),
-  Target = EdgeListVE[, 2],
-  Country = "Venezuela"
-)
-bnVEN <- graph_from_data_frame(edges_ve, directed = F)
+edges_ven <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_ven <- rbind(edges_ven, data.frame(
+        Source = paste0("VEN_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Venezuela"
+      ))
+    }
+  }
+}
+bnVEN <- graph_from_data_frame(edges_ven, directed = F)
 V(bnVEN)$type <- bipartite_mapping(bnVEN)$type
 V(bnVEN)$shape <- ifelse(V(bnVEN)$type, "circle", "square")
 V(bnVEN)$label.cex <- ifelse(V(bnVEN)$type, 0.5, 1)
 V(bnVEN)$size <- sqrt(igraph::degree(bnVEN))
 E(bnVEN)$color <- "lightgrey"
+E(bnVEN)$weight <- edges_ven$Weight
+network::set.edge.attribute(Venezuela, "Frecuencia", edges_ven$Weight)
+Frecuencias <- as.sociomatrix(Venezuela, attrname = "Frecuencia")
+Venezuela
+network::list.edge.attributes(Venezuela)
 png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 plot(bnVEN, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
 dev.off()
@@ -130,22 +142,6 @@ ProgramsVEN$Country <- "Venezuela"
 
 library(psych)
 describeBy(ProgramsVEN$Eigenvector, group = ProgramsVEN$Partition, mat = TRUE, digits = 2)
-library(network)
-verticesVEN <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesVEN, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
-Venezuela <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Venezuela
-SizeVE <- network::network.size(Venezuela)
-DensityVE <- network::network.density(Venezuela)
-ClusteringVE <- tnet::clustering_tm(Matriz)
-set.network.attribute(Venezuela, "Size", SizeVE)
-set.network.attribute(Venezuela, "Density", DensityVE)
-set.network.attribute(Venezuela, "Clustering", ClusteringVE)
-set.network.attribute(Venezuela, "Country", "Venezuela")
-set.network.attribute(Venezuela, "Level", "All")
-set.network.attribute(Venezuela, "OECD", FALSE)
-Venezuela
 
 bnVEN1 <- graph_from_biadjacency_matrix(t(MatrizVESPEC), directed = FALSE)
 EdgeListVE1 <- as_edgelist(bnVEN1)
