@@ -93,12 +93,20 @@ set.network.attribute(Colombia, "OECD", TRUE)
 Colombia
 library(igraph)
 bnCOL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListCOL <- as_edgelist(bnCOL)
-edges_col <- data.frame(
-  Source = paste0("COL_", EdgeListCOL[, 1]),
-  Target = EdgeListCOL[, 2],
-  Country = "Colombia"
-)
+edges_col <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_col <- rbind(edges_col, data.frame(
+        Source = paste0("COL_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Colombia"
+      ))
+    }
+  }
+}
+
 bnCOL <- graph_from_data_frame(edges_col, directed = F)
 bipartite_mapping(bnCOL)
 V(bnCOL)$type <- bipartite_mapping(bnCOL)$type
@@ -106,6 +114,12 @@ V(bnCOL)$shape <- ifelse(V(bnCOL)$type, "circle", "square")
 V(bnCOL)$label.cex <- ifelse(V(bnCOL)$type, 0.5, 1)
 V(bnCOL)$size <- sqrt(igraph::degree(bnCOL))
 E(bnCOL)$color <- "lightgrey"
+E(bnCOL)$weight <- edges_col$Weight
+network::set.edge.attribute(Colombia, "Frecuencia", edges_col$Weight)
+Frecuencias <- as.sociomatrix(Colombia, attrname = "Frecuencia")
+Colombia
+network::list.edge.attributes(Colombia)
+
 plot(bnCOL, vertex.label = NA, layout = layout_as_bipartite)
 ProgramsCOL <- data.frame(Degree = igraph::degree(bnCOL),
                            Closeness = igraph::closeness(bnCOL),
@@ -125,22 +139,7 @@ ProgramsCOL$Country <- "Colombia"
 
 psych::describeBy(ProgramsCOL$Eigenvector, group = ProgramsCOL$Partition, mat = TRUE, digits = 2)
 
-library(network)
-verticesCOL <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesCOL, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
-Colombia <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Colombia
-SizeCOL <- network::network.size(Colombia)
-DensityCOL <- network::network.density(Colombia)
-ClusteringCOL <- tnet::clustering_tm(Matriz)
-set.network.attribute(Colombia, "Size", SizeCOL)
-set.network.attribute(Colombia, "Density", DensityCOL)
-set.network.attribute(Colombia, "Clustering", ClusteringCOL)
-set.network.attribute(Colombia, "Country", "Colombia")
-set.network.attribute(Colombia, "Level", "All")
-set.network.attribute(Colombia, "OECD", TRUE)
-Colombia
+
 
 bnCOL1 <- graph_from_biadjacency_matrix(t(MatrizCOSPEC), directed = FALSE)
 EdgeListCOL1 <- as_edgelist(bnCOL1)
