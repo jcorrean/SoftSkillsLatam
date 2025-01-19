@@ -120,11 +120,13 @@ V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 E(bnARG)$weight <- edges_args$Weight
+network::set.edge.attribute(Argentina, "Frecuencia", edges_args$Weight)
+Frecuencias <- as.sociomatrix(Argentina, attrname = "Frecuencia")
+Argentina
+network::list.edge.attributes(Argentina)
 
-network::set.edge.attribute(Argentina, "weight", edges_args$Weight)
-Argentina %e% "weight" <-  edges_args$Weight
-network::get.edge.attribute(Argentina,"weight")
-as.sociomatrix(Argentina, attrname = "weight")
+network::get.edge.attribute(Argentina, "Frecuencia")
+network::set.edge.value(Argentina, "Frecuencia", )
 Argentina
 network::list.edge.attributes(Argentina)
 summary(Argentina)
