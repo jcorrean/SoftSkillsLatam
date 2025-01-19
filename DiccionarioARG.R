@@ -126,7 +126,7 @@ Argentina
 network::list.edge.attributes(Argentina)
 
 network::get.edge.attribute(Argentina, "Frecuencia")
-network::set.edge.value(Argentina, "Frecuencia", )
+network::set.edge.value(Argentina, "Frecuencia", edges_args)
 Argentina
 network::list.edge.attributes(Argentina)
 summary(Argentina)
@@ -153,23 +153,7 @@ ProgramsARG$Country <- "Argentina"
 library(psych)
 describeBy(ProgramsARG$Eigenvector, group = ProgramsARG$Partition, mat = TRUE, digits = 2)
 
-library(network)
-library(intergraph)
-Argentina <- asNetwork(bnARG)
-argentina <- as.sociomatrix(Argentina)
-Argentina
-SizeARG <- 10 + network::network.size(Argentina)
-DensityARG <- network::network.density(Argentina)
-ClusteringARG <- tnet::clustering_tm(argentina)
-set.network.attribute(Argentina, "Size", SizeARG)
-set.network.attribute(Argentina, "Density", DensityARG)
-set.network.attribute(Argentina, "Clustering", ClusteringARG)
-set.network.attribute(Argentina, "Country", "Argentina")
-set.network.attribute(Argentina, "Level", "All")
-set.network.attribute(Argentina, "OECD", FALSE)
-network::set.edge.attribute(Argentina, "weight", edges_args$Weight)
-network::get.edge.attribute(Argentina,"weight")
-Argentina
+
 
 library(igraph)
 bnARG1 <- graph_from_biadjacency_matrix(MatrizARGSPEC, directed = FALSE)
