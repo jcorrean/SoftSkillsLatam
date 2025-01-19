@@ -94,13 +94,20 @@ set.network.attribute(CostaRica, "OECD", TRUE)
 CostaRica
 
 library(igraph)
-bnCORI <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListCORI <- as_edgelist(bnCORI)
-edges_cr <- data.frame(
-  Source = paste0("CR_", EdgeListCORI[, 1]),
-  Target = EdgeListCORI[, 2],
-  Country = "Costa Rica"
-)
+bnCORI <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+edges_cr <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_cr <- rbind(edges_cr, data.frame(
+        Source = paste0("CR_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Costa Rica"
+      ))
+    }
+  }
+}
 bnCORI <- graph_from_data_frame(edges_cr, directed = F)
 bipartite_mapping(bnCORI)
 V(bnCORI)$type <- bipartite_mapping(bnCORI)$type
@@ -108,6 +115,12 @@ V(bnCORI)$shape <- ifelse(V(bnCORI)$type, "circle", "square")
 V(bnCORI)$label.cex <- ifelse(V(bnCORI)$type, 0.5, 1)
 V(bnCORI)$size <- sqrt(igraph::degree(bnCORI))
 E(bnCORI)$color <- "lightgrey"
+E(bnCORI)$weight <- edges_cr$Weight
+network::set.edge.attribute(CostaRica, "Frecuencia", edges_cr$Weight)
+Frecuencias <- as.sociomatrix(CostaRica, attrname = "Frecuencia")
+CostaRica
+network::list.edge.attributes(CostaRica)
+
 png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 plot(bnCORI, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
 dev.off()
