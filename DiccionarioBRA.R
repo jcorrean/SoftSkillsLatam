@@ -95,12 +95,21 @@ Brazil
 
 library(igraph)
 bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListBR <- as_edgelist(bnBRA)
-edges_br <- data.frame(
-  Source = paste0("BRA_", EdgeListBR[, 1]),
-  Target = EdgeListBR[, 2],
-  Country = "Brazil"
-)
+edges_br <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_br <- rbind(edges_br, data.frame(
+        Source = paste0("BRA_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Brazil"
+      ))
+    }
+  }
+}
+
+
 bnBRA <- graph_from_data_frame(edges_br, directed = FALSE)
 bipartite_mapping(bnBRA)
 V(bnBRA)$type <- bipartite_mapping(bnBRA)$type
@@ -108,7 +117,10 @@ V(bnBRA)$shape <- ifelse(V(bnBRA)$type, "circle", "square")
 V(bnBRA)$label.cex <- ifelse(V(bnBRA)$type, 0.5, 1)
 V(bnBRA)$size <- sqrt(igraph::degree(bnBRA))
 E(bnBRA)$color <- "lightgrey"
-
+E(bnBRA)$weight <- edges_br$Weight
+network::set.edge.attribute(Brazil, "Frecuencia", edges_br$Weight)
+Frecuencias <- as.sociomatrix(Brazil, attrname = "Frecuencia")
+Brazil
 
 ProgramsBRA <- data.frame(Degree = igraph::degree(bnBRA),
                           Closeness = igraph::closeness(bnBRA),
@@ -129,23 +141,7 @@ ProgramsBRA$Country <- "Brazil"
 library(psych)
 describeBy(ProgramsBRA$Eigenvector, group = ProgramsBRA$Partition, mat = TRUE, digits = 2)
 
-library(network)
-verticesBRA <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesBRA, directed = FALSE, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
 
-Brazil <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Brazil
-SizeBR <- network::network.size(Brazil)
-DensityBR <- network::network.density(Brazil)
-ClusteringBR <- tnet::clustering_tm(Matriz)
-set.network.attribute(Brazil, "Size", SizeBR)
-set.network.attribute(Brazil, "Density", DensityBR)
-set.network.attribute(Brazil, "Clustering", ClusteringBR)
-set.network.attribute(Brazil, "Country", "Brazil")
-set.network.attribute(Brazil, "Level", "All")
-set.network.attribute(Brazil, "OECD", FALSE)
-Brazil
 
 bnBRA1 <- graph_from_biadjacency_matrix(t(MatrizBRASPEC), directed = FALSE)
 EdgeListBR1 <- as_edgelist(bnBRA1)
