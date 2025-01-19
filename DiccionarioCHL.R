@@ -94,13 +94,21 @@ set.network.attribute(Chile, "Country", "Chile")
 set.network.attribute(Chile, "Level", "All")
 set.network.attribute(Chile, "OECD", TRUE)
 library(igraph)
-bnCHL <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListCHL <- as_edgelist(bnCHL)
-edges_chl <- data.frame(
-  Source = paste0("CHL_", EdgeListCHL[, 1]),
-  Target = EdgeListCHL[, 2],
-  Country = "Chile"
-)
+bnCHL <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+edges_chl <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_chl <- rbind(edges_chl, data.frame(
+        Source = paste0("CHL_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Chile"
+      ))
+    }
+  }
+}
+
 bnCHL <- graph_from_data_frame(edges_chl, directed = F)
 bipartite_mapping(bnCHL)
 V(bnCHL)$type <- bipartite_mapping(bnCHL)$type
@@ -108,6 +116,12 @@ V(bnCHL)$shape <- ifelse(V(bnCHL)$type, "circle", "square")
 V(bnCHL)$label.cex <- ifelse(V(bnCHL)$type, 0.5, 1)
 V(bnCHL)$size <- sqrt(igraph::degree(bnCHL))
 E(bnCHL)$color <- "lightgrey"
+E(bnCHL)$weight <- edges_chl$Weight
+network::set.edge.attribute(Chile, "Frecuencia", edges_chl$Weight)
+Frecuencias <- as.sociomatrix(Chile, attrname = "Frecuencia")
+Chile
+network::list.edge.attributes(Chile)
+
 plot(bnCHL, vertex.label = NA, layout = layout_as_bipartite)
 
 ProgramsCHL <- data.frame(Degree = igraph::degree(bnCHL),
@@ -129,23 +143,7 @@ ProgramsCHL$Country <- "Chile"
 library(psych)
 describeBy(ProgramsCHL$Eigenvector, group = ProgramsCHL$Partition, mat = TRUE, digits = 2)
 
-library(network)
-verticesCHL <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesCHL, directed = FALSE, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
 
-Chile <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Chile
-SizeCHL <- network::network.size(Chile)
-DensityCHL <- network::network.density(Chile)
-ClusteringCHL <- tnet::clustering_tm(Matriz)
-set.network.attribute(Chile, "Size", SizeCHL)
-set.network.attribute(Chile, "Density", DensityCHL)
-set.network.attribute(Chile, "Clustering", ClusteringCHL)
-set.network.attribute(Chile, "Country", "Chile")
-set.network.attribute(Chile, "Level", "All")
-set.network.attribute(Chile, "OECD", TRUE)
-Chile
 
 bnCHL1 <- graph_from_biadjacency_matrix(t(MatrizCHLSPEC), directed = FALSE)
 EdgeListCHL1 <- as_edgelist(bnCHL1)
