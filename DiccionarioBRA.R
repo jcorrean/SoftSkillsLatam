@@ -94,7 +94,7 @@ set.network.attribute(Brazil, "OECD", FALSE)
 Brazil
 
 library(igraph)
-bnBRA <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
+bnBRA <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 edges_br <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
