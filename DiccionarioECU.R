@@ -92,19 +92,31 @@ set.network.attribute(Ecuador, "Country", "Ecuador")
 set.network.attribute(Ecuador, "Level", "All")
 set.network.attribute(Ecuador, "OECD", FALSE)
 library(igraph)
-bnECU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListECU <- as_edgelist(bnECU)
-edges_ec <- data.frame(
-  Source = paste0("ECU_", EdgeListECU[, 1]),
-  Target = EdgeListECU[, 2],
-  Country = "Ecuador"
-)
-bnECU <- graph_from_data_frame(edges_ec, directed = F)
+bnECU <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+edges_ecu <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_ecu <- rbind(edges_ecu, data.frame(
+        Source = paste0("ECU_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Ecuador"
+      ))
+    }
+  }
+}
+bnECU <- graph_from_data_frame(edges_ecu, directed = F)
 V(bnECU)$type <- bipartite_mapping(bnECU)$type
 V(bnECU)$shape <- ifelse(V(bnECU)$type, "circle", "square")
 V(bnECU)$label.cex <- ifelse(V(bnECU)$type, 0.5, 1)
 V(bnECU)$size <- sqrt(igraph::degree(bnECU))
 E(bnECU)$color <- "lightgrey"
+E(bnECU)$weight <- edges_ecu$Weight
+network::set.edge.attribute(Ecuador, "Frecuencia", edges_ecu$Weight)
+Frecuencias <- as.sociomatrix(Ecuador, attrname = "Frecuencia")
+network::list.edge.attributes(Ecuador)
+Ecuador
 png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 plot(bnECU, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
 dev.off()
@@ -125,22 +137,6 @@ ProgramsECU <- mutate(ProgramsECU,
 ProgramsECU$Country <- "Ecuador"
 
 psych::describeBy(ProgramsECU$Eigenvector, group = ProgramsECU$Partition, mat = TRUE, digits = 2)
-library(network)
-verticesECU <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesECU, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
-Ecuador <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Ecuador
-SizeECU <- network::network.size(Ecuador)
-DensityECU <- network::network.density(Ecuador)
-ClusteringECU <- tnet::clustering_tm(Matriz)
-set.network.attribute(Ecuador, "Size", SizeECU)
-set.network.attribute(Ecuador, "Density", DensityECU)
-set.network.attribute(Ecuador, "Clustering", ClusteringECU)
-set.network.attribute(Ecuador, "Country", "Ecuador")
-set.network.attribute(Ecuador, "Level", "All")
-set.network.attribute(Ecuador, "OECD", FALSE)
-Ecuador
 
 bnECU1 <- graph_from_biadjacency_matrix(t(MatrizECUSPEC), directed = FALSE)
 EdgeListECU1 <- as_edgelist(bnECU1)
