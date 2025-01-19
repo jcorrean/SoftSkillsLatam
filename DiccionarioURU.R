@@ -92,19 +92,32 @@ set.network.attribute(Uruguay, "Level", "All")
 set.network.attribute(Uruguay, "OECD", FALSE)
 Uruguay
 library(igraph)
-bnURU <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListURU <- as_edgelist(bnURU)
-edges_ur <- data.frame(
-  Source = paste0("URU_", EdgeListURU[, 1]),
-  Target = EdgeListURU[, 2],
-  Country = "Uruguay"
-)
-bnURU <- graph_from_data_frame(edges_ur, directed = F)
+bnURU <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+edges_uy <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_uy <- rbind(edges_uy, data.frame(
+        Source = paste0("URU_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Uruguay"
+      ))
+    }
+  }
+}
+bnURU <- graph_from_data_frame(edges_uy, directed = F)
 V(bnURU)$type <- bipartite_mapping(bnURU)$type
 V(bnURU)$shape <- ifelse(V(bnURU)$type, "circle", "square")
 V(bnURU)$label.cex <- ifelse(V(bnURU)$type, 0.5, 1)
 V(bnURU)$size <- sqrt(igraph::degree(bnURU))
 E(bnURU)$color <- "lightgrey"
+E(bnURU)$weight <- edges_uy$Weight
+network::set.edge.attribute(Uruguay, "Frecuencia", edges_uy$Weight)
+Frecuencias <- as.sociomatrix(Uruguay, attrname = "Frecuencia")
+Uruguay
+network::list.edge.attributes(Uruguay)
+
 png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 plot(bnURU, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
 dev.off()
@@ -126,23 +139,6 @@ ProgramsURU <- mutate(ProgramsURU,
 ProgramsURU$Country <- "Uruguay"
 
 psych::describeBy(ProgramsURU$Eigenvector, group = ProgramsURU$Partition, mat = TRUE, digits = 2)
-library(network)
-verticesURU <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesURU, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
-
-Uruguay <- network(pave, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Uruguay
-SizeURU <- network::network.size(Uruguay)
-DensityURU <- network::network.density(Uruguay)
-ClusteringURU <- tnet::clustering_tm(Matriz)
-set.network.attribute(Uruguay, "Size", SizeURU)
-set.network.attribute(Uruguay, "Density", DensityURU)
-set.network.attribute(Uruguay, "Clustering", ClusteringURU)
-set.network.attribute(Uruguay, "Country", "Uruguay")
-set.network.attribute(Uruguay, "Level", "All")
-set.network.attribute(Uruguay, "OECD", FALSE)
-Uruguay
 
 library(igraph)
 bnURU1 <- graph_from_biadjacency_matrix(t(MatrizURUSPEC), directed = FALSE)
