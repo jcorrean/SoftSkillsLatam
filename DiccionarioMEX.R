@@ -93,19 +93,32 @@ set.network.attribute(Mexico, "OECD", TRUE)
 Mexico
 
 library(igraph)
-bnMEX <- graph_from_biadjacency_matrix(t(Matriz), directed = FALSE)
-EdgeListMEX <- as_edgelist(bnMEX)
-edges_mx <- data.frame(
-  Source = paste0("MEX_", EdgeListMEX[, 1]),
-  Target = EdgeListMEX[, 2],
-  Country = "Mexico"
-)
+bnMEX <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+edges_mx <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_mx <- rbind(edges_mx, data.frame(
+        Source = paste0("MEX_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Mexico"
+      ))
+    }
+  }
+}
 bnMEX <- graph_from_data_frame(edges_mx, directed = F)
 V(bnMEX)$type <- bipartite_mapping(bnMEX)$type
 V(bnMEX)$shape <- ifelse(V(bnMEX)$type, "circle", "square")
 V(bnMEX)$label.cex <- ifelse(V(bnMEX)$type, 0.5, 1)
 V(bnMEX)$size <- sqrt(igraph::degree(bnMEX))
 E(bnMEX)$color <- "lightgrey"
+E(bnMEX)$weight <- edges_mx$Weight
+network::set.edge.attribute(Mexico, "Frecuencia", edges_mx$Weight)
+Frecuencias <- as.sociomatrix(Mexico, attrname = "Frecuencia")
+Mexico
+network::list.edge.attributes(Mexico)
+
 png(filename = "f1.png", width = 10, height = 8, units = "in", res = 300)
 plot(bnMEX, vertex.label = NA, layout = layout_as_bipartite, edge.arrow.size = 0.5,edge.arrow.width = 0.5)
 dev.off()
@@ -127,22 +140,7 @@ ProgramsMEX$Country <- "Mexico"
 
 psych::describeBy(ProgramsMEX$Eigenvector, group = ProgramsMEX$Partition, mat = TRUE, digits = 2)
 
-library(network)
-verticesMEX <- nrow(Matriz) + ncol(Matriz)
-g <- network.initialize(verticesMEX, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matriz, g)
-Mexico <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Mexico
-SizeMEX <- network::network.size(Mexico)
-DensityMEX <- network::network.density(Mexico)
-ClusteringMEX <- tnet::clustering_tm(Matriz)
-set.network.attribute(Mexico, "Size", SizeMEX)
-set.network.attribute(Mexico, "Density", DensityMEX)
-set.network.attribute(Mexico, "Clustering", ClusteringMEX)
-set.network.attribute(Mexico, "Country", "Mexico")
-set.network.attribute(Mexico, "Level", "All")
-set.network.attribute(Mexico, "OECD", TRUE)
-Mexico
+
 
 bnMEX1 <- graph_from_biadjacency_matrix(t(MatrizMEXSPEC), directed = FALSE)
 EdgeListMEX1 <- as_edgelist(bnMEX1)
