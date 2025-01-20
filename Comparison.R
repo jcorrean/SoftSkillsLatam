@@ -19,7 +19,8 @@ library(tibble)
 library(knitr)
 library(dplyr)
 RegionalNetworks <- readRDS("RegionalNetworks.RDS")
-RegionalNetworks
+RegionalNetworks$Argentina
+
 length(RegionalNetworks)
 RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
