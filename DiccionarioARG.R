@@ -76,8 +76,11 @@ MatrizARGMS <- as.matrix(ARG_MS)
 MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
+
 rowSums(Matriz)
 str(Matriz)
+rm(list=setdiff(ls(), c("Matriz", "MatrizARGMS", "MatrizARGPHD", "MatrizARGSPEC")))
+save.image("~/Documents/GitHub/SoftSkillsLatam/Results/MatricesArgentina.RData")
 
 library(network)
 Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
@@ -122,6 +125,8 @@ E(bnARG)$color <- "lightgrey"
 E(bnARG)$weight <- edges_args$Weight
 network::set.edge.attribute(Argentina, "Frecuencia", edges_args$Weight)
 Frecuencias <- as.sociomatrix(Argentina, attrname = "Frecuencia")
+network::set.vertex.attribute(Argentina, "Country", "Argentina")
+network::get.vertex.attribute(Argentina, "Country")
 Argentina
 network::list.edge.attributes(Argentina)
 
@@ -129,6 +134,7 @@ network::get.edge.attribute(Argentina, "Frecuencia")
 network::set.edge.value(Argentina, "Frecuencia", edges_args)
 Argentina
 network::list.edge.attributes(Argentina)
+network::set.verte
 summary(Argentina)
 
 igraph::is.bipartite(bnARG)
