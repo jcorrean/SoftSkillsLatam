@@ -11,7 +11,6 @@ RegionalNetworks <- list(Argentina, Brazil, Chile, Colombia, CostaRica, Ecuador,
 class(RegionalNetworks)
 rm(list=setdiff(ls(), c("RegionalNetworks")))
 country_names <- c("Argentina", "Brazil", "Chile", "Colombia", "CostaRica", "Ecuador", "Mexico", "Uruguay", "Venezuela")
-RegionalNetworks
 RegionalNetworks <- setNames(RegionalNetworks[1:9],country_names)
 saveRDS(RegionalNetworks, file = "RegionalNetworks.RDS")
 library(network)
