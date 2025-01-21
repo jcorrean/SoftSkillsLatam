@@ -79,11 +79,19 @@ Matriz <- as.matrix(ProgramsARG)
 
 rowSums(Matriz)
 str(Matriz)
-rm(list=setdiff(ls(), c("Matriz", "MatrizARGMS", "MatrizARGPHD", "MatrizARGSPEC")))
-save.image("~/Documents/GitHub/SoftSkillsLatam/Results/MatricesArgentina.RData")
 
 library(network)
 Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Argentina %v% "InfoLength" <- ARGTexts$Sentences
+set.vertex.attribute(Argentina, "InfoLength")[515:524] <- NA
+set.ver
+Argentina %v% "InfoLength"[515:524] <- NA
+set.vertex.attribute(Argentina, "InfoLength", ARGTexts$Sentences)
+Argentina
+get.vertex.attribute(Argentina, "InfoLength")
+get.vertex.attribute(Argentina, "vertex.names")
+
+
 Argentina1 <- as.network(MatrizARGSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Argentina2 <- as.network(MatrizARGMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Argentina3 <- as.network(MatrizARGPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
