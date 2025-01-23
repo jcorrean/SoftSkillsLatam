@@ -82,16 +82,12 @@ str(Matriz)
 
 library(network)
 Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
-Argentina %v% "InfoLength" <- ARGTexts$Sentences
+Longitud <- ARGTexts$Sentences
+Longitud2 <- c(Longitud, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
+Argentina %v% "InfoLength" <- Longitud2
 set.vertex.attribute(Argentina, "InfoLength")[515:524] <- NA
-set.ver
-Argentina %v% "InfoLength"[515:524] <- NA
 set.vertex.attribute(Argentina, "InfoLength", ARGTexts$Sentences)
 Argentina
-get.vertex.attribute(Argentina, "InfoLength")
-get.vertex.attribute(Argentina, "vertex.names")
-
-
 Argentina1 <- as.network(MatrizARGSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Argentina2 <- as.network(MatrizARGMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Argentina3 <- as.network(MatrizARGPHD, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
