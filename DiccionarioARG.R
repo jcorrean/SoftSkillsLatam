@@ -85,8 +85,8 @@ Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bip
 Longitud <- ARGTexts$Sentences
 Longitud2 <- c(Longitud, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
 Argentina %v% "InfoLength" <- Longitud2
-set.vertex.attribute(Argentina, "InfoLength")[515:524] <- NA
-set.vertex.attribute(Argentina, "InfoLength", ARGTexts$Sentences)
+get.vertex.attribute(Argentina, "InfoLength")
+# Ahora falta adjuntar el atributo de las edges
 Argentina
 Argentina1 <- as.network(MatrizARGSPEC, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
 Argentina2 <- as.network(MatrizARGMS, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
