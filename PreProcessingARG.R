@@ -76,8 +76,8 @@ MatrizARGMS <- as.matrix(ARG_MS)
 MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
-rows_with_all_zeros <- which(rowSums(Matriz) == 0)
-ARGTexts <- ARGTexts[-rows_with_all_zeros, ]
+#rows_with_all_zeros <- which(rowSums(Matriz) == 0)
+#ARGTexts <- ARGTexts[-rows_with_all_zeros, ]
 
 library(network)
 Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
@@ -92,41 +92,41 @@ set.network.attribute(Argentina, "Clustering", ClusteringARG)
 set.network.attribute(Argentina, "Country", "Argentina")
 set.network.attribute(Argentina, "Level", "All")
 set.network.attribute(Argentina, "OECD", FALSE)
-Program <- c(ARGTexts$Program)
-BrochureLength <- c(ARGTexts$Tokens)
+Program <- c(ARGTexts$Program, rep(NA, ncol(Matriz)))
+BrochureLength <- c(ARGTexts$Tokens, rep(NA, ncol(Matriz)))
 network::set.vertex.attribute(Argentina, "Program", Program)
 network::set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
 
 network::get.vertex.attribute(Argentina, "vertex.names")
 network::get.vertex.attribute(Argentina, "Program")
 network::get.vertex.attribute(Argentina, "Brochure.Length")
-as.sociomatrix(Argentina)
+
 Argentina
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 
-#edges_args <- data.frame()
-#for (i in 1:nrow(Matriz)) {
-#  for (j in 1:ncol(Matriz)) {
-#    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
-#      edges_args <- rbind(edges_args, data.frame(
-#        Source = paste0("ARG_", rownames(Matriz)[i]),
-#        Target = colnames(Matriz)[j],
-#        Weight = Matriz[i, j], # Store the weight
-#        Country = "Argentina"
-#      ))
-#    }
-#  }
-#}
+edges_args <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] >= 0) { # Only include edges where there's a connection
+      edges_args <- rbind(edges_args, data.frame(
+        Source = paste0("ARG_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Argentina"
+      ))
+    }
+  }
+}
 
 #bnARG <- graph_from_data_frame(edges_args, directed = FALSE)
 #bipartite_mapping(bnARG)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
-
+V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
-E(bnARG)$weight <- edges_args$Weight
+#E(bnARG)$weight <- edges_args$Weight
 
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
@@ -147,28 +147,27 @@ ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsA
 ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
 P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
-# Calculate centralities (using the igraph object)
-degree_centrality <- igraph::degree(bnARG)
-closeness_centrality <- igraph::closeness(bnARG)
-betweenness_centrality <- igraph::betweenness(bnARG)
-eigenvector_centrality <- igraph::eigen_centrality(bnARG)$vector
-
 # Assign centralities as vertex attributes in the NETWORK object
-network::set.vertex.attribute(Argentina, "Centrality", degree_centrality)
-network::set.vertex.attribute(Argentina, "Closeness", closeness_centrality)
-network::set.vertex.attribute(Argentina, "Betweenness", betweenness_centrality)
-network::set.vertex.attribute(Argentina, "Eigenvector", eigenvector_centrality)
+network::set.vertex.attribute(Argentina, "Centrality", P.ARG$Degree)
+network::set.vertex.attribute(Argentina, "Closeness", P.ARG$Closeness)
+network::set.vertex.attribute(Argentina, "Betweenness", P.ARG$Betweennes)
+network::set.vertex.attribute(Argentina, "Eigenvector", P.ARG$Eigenvector)
 
 # Verify
+network::get.vertex.attribute(Argentina, "vertex.names")
 network::get.vertex.attribute(Argentina, "Centrality")
 network::get.vertex.attribute(Argentina, "Closeness")
 network::get.vertex.attribute(Argentina, "Betweenness")
 network::get.vertex.attribute(Argentina, "Eigenvector")
 
-#Check if vertex names are the same
-network::get.vertex.attribute(Argentina, "vertex.names")
+edge_list <- which(Matriz != 0, arr.ind = TRUE)
+edge_weights <- Matriz[Matriz != 0]
 
 
-network::set.vertex.attribute(Argentina, "Centrality", full_degree_centrality)
-network::get.vertex.attribute(Argentina, "Centrality")
+network::set.edge.attribute(Argentina, "weight", edge_weights)
+Argentina
+# Verify
+network::get.edge.attribute(Argentina, "weight")
+
+
 Argentina
