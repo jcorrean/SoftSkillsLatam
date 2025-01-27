@@ -92,34 +92,35 @@ set.network.attribute(Argentina, "Clustering", ClusteringARG)
 set.network.attribute(Argentina, "Country", "Argentina")
 set.network.attribute(Argentina, "Level", "All")
 set.network.attribute(Argentina, "OECD", FALSE)
-Program <- c(ARGTexts$Program, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
-BrochureLength <- c(ARGTexts$Tokens, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
+Program <- c(ARGTexts$Program)
+BrochureLength <- c(ARGTexts$Tokens)
 network::set.vertex.attribute(Argentina, "Program", Program)
 network::set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
 
 network::get.vertex.attribute(Argentina, "vertex.names")
 network::get.vertex.attribute(Argentina, "Program")
-
+network::get.vertex.attribute(Argentina, "Brochure.Length")
+as.sociomatrix(Argentina)
 Argentina
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 
-edges_args <- data.frame()
-for (i in 1:nrow(Matriz)) {
-  for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
-      edges_args <- rbind(edges_args, data.frame(
-        Source = paste0("ARG_", rownames(Matriz)[i]),
-        Target = colnames(Matriz)[j],
-        Weight = Matriz[i, j], # Store the weight
-        Country = "Argentina"
-      ))
-    }
-  }
-}
+#edges_args <- data.frame()
+#for (i in 1:nrow(Matriz)) {
+#  for (j in 1:ncol(Matriz)) {
+#    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+#      edges_args <- rbind(edges_args, data.frame(
+#        Source = paste0("ARG_", rownames(Matriz)[i]),
+#        Target = colnames(Matriz)[j],
+#        Weight = Matriz[i, j], # Store the weight
+#        Country = "Argentina"
+#      ))
+#    }
+#  }
+#}
 
-bnARG <- graph_from_data_frame(edges_args, directed = FALSE)
-bipartite_mapping(bnARG)
+#bnARG <- graph_from_data_frame(edges_args, directed = FALSE)
+#bipartite_mapping(bnARG)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
 
@@ -141,7 +142,10 @@ ProgramsARG <- mutate(ProgramsARG,
                         grepl("text", Node), "Program", "Skill"))
 ProgramsARG$Country <- "Argentina"
 
-
+library(gtools)
+ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
+ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
+P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
 # Calculate centralities (using the igraph object)
 degree_centrality <- igraph::degree(bnARG)
