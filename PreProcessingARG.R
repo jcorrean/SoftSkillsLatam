@@ -120,7 +120,7 @@ bnARG <- graph_from_data_frame(edges_args, directed = FALSE)
 bipartite_mapping(bnARG)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
-V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
+
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 E(bnARG)$weight <- edges_args$Weight
@@ -142,8 +142,8 @@ ProgramsARG <- mutate(ProgramsARG,
 ProgramsARG$Country <- "Argentina"
 
 pave <- ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
-
+rm(pave)
 library(gtools)
-
 ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
 ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
+P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
