@@ -147,3 +147,7 @@ library(gtools)
 ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
 ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
 P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
+
+network::set.vertex.attribute(Argentina, "Centrality", P.ARG$Degree)
+network::get.vertex.attribute(Argentina, "Centrality")
+Argentina
