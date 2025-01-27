@@ -80,7 +80,7 @@ Matriz <- as.matrix(ProgramsARG)
 #ARGTexts <- ARGTexts[-rows_with_all_zeros, ]
 
 library(network)
-Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
+Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE, names.eval = "frequency")
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::clustering_tm(t(Matriz))
@@ -110,7 +110,7 @@ for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
     if (Matriz[i, j] >= 0) { # Only include edges where there's a connection
       edges_args <- rbind(edges_args, data.frame(
-        Source = paste0("ARG_", rownames(Matriz)[i]),
+        Source = rownames(Matriz)[i],
         Target = colnames(Matriz)[j],
         Weight = Matriz[i, j], # Store the weight
         Country = "Argentina"
@@ -126,11 +126,13 @@ V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
 V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
+E(bnARG)$weight <- Matriz[which(Matriz != 0, arr.ind = TRUE)]
+edge_list_igraph <- as_edgelist(bnARG, names = TRUE)
 #E(bnARG)$weight <- edges_args$Weight
 
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
-                          Betweennes = igraph::betweenness(bnARG),
+                          Betweenness = igraph::betweenness(bnARG),
                           Eigen = igraph::eigen_centrality(bnARG)$vector)
 rownames(ProgramsARG)
 ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
@@ -160,14 +162,10 @@ network::get.vertex.attribute(Argentina, "Closeness")
 network::get.vertex.attribute(Argentina, "Betweenness")
 network::get.vertex.attribute(Argentina, "Eigenvector")
 
-edge_list <- which(Matriz != 0, arr.ind = TRUE)
-edge_weights <- Matriz[Matriz != 0]
 
-
-network::set.edge.attribute(Argentina, "weight", edge_weights)
+Argentina <- network::set.edge.attribute(Argentina, "Frequency", edges_args$Weight)
 Argentina
-# Verify
-network::get.edge.attribute(Argentina, "weight")
 
-
-Argentina
+network::get.edge.attribute(Argentina, "Frequency") # Returns all edge weights
+Argentina["text1", "science"] 
+Argentina["text4", "science"] 
