@@ -128,10 +128,8 @@ E(bnARG)$weight <- edges_args$Weight
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
                           Betweennes = igraph::betweenness(bnARG),
-                          Eigen = igraph::eigen_centrality(bnARG))
-ProgramsARG <- ProgramsARG[ -c(5:25) ]
+                          Eigen = igraph::eigen_centrality(bnARG)$vector)
 rownames(ProgramsARG)
-ProgramsARG$SS <- rownames(ProgramsARG)
 ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
 variable.names(ProgramsARG)
 colnames(ProgramsARG)[4] <- "Eigenvector"
@@ -141,13 +139,30 @@ ProgramsARG <- mutate(ProgramsARG,
                         grepl("text", Node), "Program", "Skill"))
 ProgramsARG$Country <- "Argentina"
 
-pave <- ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
-rm(pave)
-library(gtools)
-ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
-ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
-P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
-network::set.vertex.attribute(Argentina, "Centrality", P.ARG$Degree)
+
+# Calculate centralities (using the igraph object)
+degree_centrality <- igraph::degree(bnARG)
+closeness_centrality <- igraph::closeness(bnARG)
+betweenness_centrality <- igraph::betweenness(bnARG)
+eigenvector_centrality <- igraph::eigen_centrality(bnARG)$vector
+
+# Assign centralities as vertex attributes in the NETWORK object
+network::set.vertex.attribute(ARGENTINA, "Centrality", degree_centrality)
+network::set.vertex.attribute(Argentina, "Closeness", closeness_centrality)
+network::set.vertex.attribute(Argentina, "Betweenness", betweenness_centrality)
+network::set.vertex.attribute(Argentina, "Eigenvector", eigenvector_centrality)
+
+# Verify
+network::get.vertex.attribute(ARGENTINA, "Centrality")
+network::get.vertex.attribute(Argentina, "Closeness")
+network::get.vertex.attribute(Argentina, "Betweenness")
+network::get.vertex.attribute(Argentina, "Eigenvector")
+
+#Check if vertex names are the same
+network::get.vertex.attribute(Argentina, "vertex.names")
+
+
+network::set.vertex.attribute(Argentina, "Centrality", full_degree_centrality)
 network::get.vertex.attribute(Argentina, "Centrality")
 Argentina
