@@ -99,3 +99,51 @@ get.vertex.attribute(Argentina, "vertex.names")
 get.vertex.attribute(Argentina, "Program")
 
 Argentina
+library(igraph)
+bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+
+edges_args <- data.frame()
+for (i in 1:nrow(Matriz)) {
+  for (j in 1:ncol(Matriz)) {
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+      edges_args <- rbind(edges_args, data.frame(
+        Source = paste0("ARG_", rownames(Matriz)[i]),
+        Target = colnames(Matriz)[j],
+        Weight = Matriz[i, j], # Store the weight
+        Country = "Argentina"
+      ))
+    }
+  }
+}
+
+bnARG <- graph_from_data_frame(edges_args, directed = FALSE)
+bipartite_mapping(bnARG)
+V(bnARG)$type <- bipartite_mapping(bnARG)$type
+V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
+V(bnARG)$label.cex <- ifelse(V(bnARG)$type, 0.5, 1)
+V(bnARG)$size <- sqrt(igraph::degree(bnARG))
+E(bnARG)$color <- "lightgrey"
+E(bnARG)$weight <- edges_args$Weight
+
+ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
+                          Closeness = igraph::closeness(bnARG),
+                          Betweennes = igraph::betweenness(bnARG),
+                          Eigen = igraph::eigen_centrality(bnARG))
+ProgramsARG <- ProgramsARG[ -c(5:25) ]
+rownames(ProgramsARG)
+ProgramsARG$SS <- rownames(ProgramsARG)
+ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
+variable.names(ProgramsARG)
+colnames(ProgramsARG)[4] <- "Eigenvector"
+ProgramsARG$Node <- rownames(ProgramsARG)
+ProgramsARG <- mutate(ProgramsARG, 
+                      Partition = ifelse(
+                        grepl("text", Node), "Program", "Skill"))
+ProgramsARG$Country <- "Argentina"
+
+pave <- ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
+
+library(gtools)
+
+ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
+ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
