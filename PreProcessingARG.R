@@ -76,6 +76,8 @@ MatrizARGMS <- as.matrix(ARG_MS)
 MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
+rows_with_all_zeros <- which(rowSums(Matriz) == 0)
+ARGTexts <- ARGTexts[-rows_with_all_zeros, ]
 
 library(network)
 Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE)
@@ -92,11 +94,11 @@ set.network.attribute(Argentina, "Level", "All")
 set.network.attribute(Argentina, "OECD", FALSE)
 Program <- c(ARGTexts$Program, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
 BrochureLength <- c(ARGTexts$Tokens, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA)
-set.vertex.attribute(Argentina, "Program", Program)
-set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
+network::set.vertex.attribute(Argentina, "Program", Program)
+network::set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
 
-get.vertex.attribute(Argentina, "vertex.names")
-get.vertex.attribute(Argentina, "Program")
+network::get.vertex.attribute(Argentina, "vertex.names")
+network::get.vertex.attribute(Argentina, "Program")
 
 Argentina
 library(igraph)
@@ -148,13 +150,13 @@ betweenness_centrality <- igraph::betweenness(bnARG)
 eigenvector_centrality <- igraph::eigen_centrality(bnARG)$vector
 
 # Assign centralities as vertex attributes in the NETWORK object
-network::set.vertex.attribute(ARGENTINA, "Centrality", degree_centrality)
+network::set.vertex.attribute(Argentina, "Centrality", degree_centrality)
 network::set.vertex.attribute(Argentina, "Closeness", closeness_centrality)
 network::set.vertex.attribute(Argentina, "Betweenness", betweenness_centrality)
 network::set.vertex.attribute(Argentina, "Eigenvector", eigenvector_centrality)
 
 # Verify
-network::get.vertex.attribute(ARGENTINA, "Centrality")
+network::get.vertex.attribute(Argentina, "Centrality")
 network::get.vertex.attribute(Argentina, "Closeness")
 network::get.vertex.attribute(Argentina, "Betweenness")
 network::get.vertex.attribute(Argentina, "Eigenvector")
