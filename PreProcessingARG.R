@@ -76,16 +76,17 @@ MatrizARGMS <- as.matrix(ARG_MS)
 MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
-#rows_with_all_zeros <- which(rowSums(Matriz) == 0)
-#ARGTexts <- ARGTexts[-rows_with_all_zeros, ]
+str(Matriz)
+matriz <- matrix(Matriz, nrow = nrow(Matriz), ncol = ncol(Matriz))
+str(matriz)
 
 library(network)
-Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE, names.eval = "frequency")
+Argentina <- as.network(matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE, ignore.eval = FALSE, names.eval = 'Carajo')
+Argentina
+
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
-ClusteringARG <- tnet::clustering_tm(t(Matriz))
 ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
-ClusteringARG2 <- tnet::reinforcement_tm(Matriz)
 # también podría usar C4 como indicador de clustering
 # llamado como "reinforcing"
 set.network.attribute(Argentina, "Size", SizeARG)
@@ -110,11 +111,11 @@ bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] >= 0) { # Only include edges where there's a connection
+    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
       edges_args <- rbind(edges_args, data.frame(
-        Source = rownames(Matriz)[i],
-        Target = colnames(Matriz)[j],
-        Weight = Matriz[i, j], # Store the weight
+        docs = rownames(Matriz)[i],
+        features = colnames(Matriz)[j],
+        Frequency = Matriz[i, j], # Store the weight
         Country = "Argentina"
       ))
     }
@@ -128,7 +129,7 @@ V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
 V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
-E(bnARG)$weight <- Matriz[which(Matriz != 0, arr.ind = TRUE)]
+E(bnARG)$Frequency <- edges_args$Frequency
 edge_list_igraph <- as_edgelist(bnARG, names = TRUE)
 #E(bnARG)$weight <- edges_args$Weight
 
@@ -164,9 +165,17 @@ network::get.vertex.attribute(Argentina, "Closeness")
 network::get.vertex.attribute(Argentina, "Betweenness")
 network::get.vertex.attribute(Argentina, "Eigenvector")
 
+get.edgeIDs(Argentina, 1,519)
+get.edgeIDs(Argentina, 2,518)
+get.edgeI
 
-Argentina <- network::set.edge.attribute(Argentina, "Frequency", edges_args$Weight)
+network::get.edge.value(Argentina, "Frequency")
+
+Argentina <- network::set.edge.value(Argentina, "Frequency", )
 Argentina
+network::list.edge.attributes(Argentina)
+Argentina2 <- network.edgelist(edges_args[1:3], Argentina, ignore.eval = FALSE)
+Argentina2
 
 network::get.edge.attribute(Argentina, "Frequency") # Returns all edge weights
 Argentina["text1", "science"] 
