@@ -84,6 +84,8 @@ Argentina <- as.network(Matriz, matrix.type = "adjacency", directed = FALSE, bip
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::clustering_tm(t(Matriz))
+ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
+ClusteringARG2 <- tnet::reinforcement_tm(Matriz)
 # también podría usar C4 como indicador de clustering
 # llamado como "reinforcing"
 set.network.attribute(Argentina, "Size", SizeARG)
