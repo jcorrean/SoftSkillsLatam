@@ -130,6 +130,13 @@ V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 E(bnARG)$Frequency <- edges_args$Frequency
+bnARG
+library(intergraph)
+argentina <- asNetwork(bnARG)
+argentina
+
+concha <- asIgraph(Argentina)
+
 edge_list_igraph <- as_edgelist(bnARG, names = TRUE)
 #E(bnARG)$weight <- edges_args$Weight
 
