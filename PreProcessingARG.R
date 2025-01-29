@@ -77,12 +77,36 @@ MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
 str(Matriz)
-matriz <- matrix(Matriz, nrow = nrow(Matriz), ncol = ncol(Matriz))
+matriz <- matrix(0, nrow = nrow(Matriz) + ncol(Matriz), ncol = ncol(Matriz) + nrow(Matriz))
+rownames(matriz) <- c(rownames(Matriz), colnames(Matriz))
+colnames(matriz) <- c(rownames(Matriz), colnames(Matriz))
+matriz[1:514, 515:524] <- Matriz  # Esquina superior derecha
+matriz[515:524, 1:514] <- t(Matriz)  # Esquina inferior izquierda
+
+matriz[518, 1] == matriz[1,518]
+matriz[519, 1] == matriz[1,519]
+matriz[6,518] == matriz[518,6]
+
+write.csv(matriz, file = "matrizcompleta.csv")
+matriz
 str(matriz)
+dim(matriz)
 
 library(network)
-Argentina <- as.network(matriz, matrix.type = "adjacency", directed = FALSE, bipartite = TRUE, ignore.eval = FALSE, names.eval = 'Carajo')
+Argentina <- network(matriz,
+                     directed = FALSE,
+                     bipartite = TRUE,
+                     ignore.eval = FALSE,
+                     names.eval = "Frequency")
 Argentina
+list.edge.attributes(Argentina)
+Argentina
+
+
+set.edge.attribute(Argentina, "Carajo", matriz)
+print(Argentina)
+list.edge.attributes(Argentina)
+rm(Argentina)
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
@@ -130,12 +154,8 @@ V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
 V(bnARG)$size <- sqrt(igraph::degree(bnARG))
 E(bnARG)$color <- "lightgrey"
 E(bnARG)$Frequency <- edges_args$Frequency
-bnARG
-library(intergraph)
-argentina <- asNetwork(bnARG)
-argentina
-
-concha <- asIgraph(Argentina)
+igraph::edge_attr_names(bnARG)
+igraph::edge_attr(bnARG)
 
 edge_list_igraph <- as_edgelist(bnARG, names = TRUE)
 #E(bnARG)$weight <- edges_args$Weight
