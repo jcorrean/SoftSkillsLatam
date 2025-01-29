@@ -76,62 +76,9 @@ MatrizARGMS <- as.matrix(ARG_MS)
 MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
-str(Matriz)
-matriz <- matrix(0, nrow = nrow(Matriz) + ncol(Matriz), ncol = ncol(Matriz) + nrow(Matriz))
-rownames(matriz) <- c(rownames(Matriz), colnames(Matriz))
-colnames(matriz) <- c(rownames(Matriz), colnames(Matriz))
-matriz[1:514, 515:524] <- Matriz  # Esquina superior derecha
-matriz[515:524, 1:514] <- t(Matriz)  # Esquina inferior izquierda
 
-matriz[518, 1] == matriz[1,518]
-matriz[519, 1] == matriz[1,519]
-matriz[6,518] == matriz[518,6]
-
-write.csv(matriz, file = "matrizcompleta.csv")
-matriz
-str(matriz)
-dim(matriz)
-
-library(network)
-Argentina <- network(matriz,
-                     directed = FALSE,
-                     bipartite = TRUE,
-                     ignore.eval = FALSE,
-                     names.eval = "Frequency")
-Argentina
-list.edge.attributes(Argentina)
-Argentina
-
-
-set.edge.attribute(Argentina, "Carajo", matriz)
-print(Argentina)
-list.edge.attributes(Argentina)
-rm(Argentina)
-
-SizeARG <- network::network.size(Argentina)
-DensityARG <- network::network.density(Argentina)
-ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
-# también podría usar C4 como indicador de clustering
-# llamado como "reinforcing"
-set.network.attribute(Argentina, "Size", SizeARG)
-set.network.attribute(Argentina, "Density", DensityARG)
-set.network.attribute(Argentina, "Clustering", ClusteringARG)
-set.network.attribute(Argentina, "Country", "Argentina")
-set.network.attribute(Argentina, "Level", "All")
-set.network.attribute(Argentina, "OECD", FALSE)
-Program <- c(ARGTexts$Program, rep(NA, ncol(Matriz)))
-BrochureLength <- c(ARGTexts$Tokens, rep(NA, ncol(Matriz)))
-network::set.vertex.attribute(Argentina, "Program", Program)
-network::set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
-
-network::get.vertex.attribute(Argentina, "vertex.names")
-network::get.vertex.attribute(Argentina, "Program")
-network::get.vertex.attribute(Argentina, "Brochure.Length")
-
-Argentina
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
-
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
@@ -158,7 +105,7 @@ igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
 
 edge_list_igraph <- as_edgelist(bnARG, names = TRUE)
-#E(bnARG)$weight <- edges_args$Weight
+
 
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
@@ -178,6 +125,46 @@ library(gtools)
 ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
 ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
 P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
+
+library(intergraph)
+
+
+library(network)
+Argentina <- network.initialize(524, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = 514)
+Argentina
+Argentina <- network.bipartite(matriz,
+                               Argentina,
+                               ignore.eval = FALSE,
+                               names.eval = "Frequency")
+Argentina
+list.edge.attributes(Argentina)
+Argentina
+set.edge.value(Argentina, "Frequency", matriz)
+print(Argentina)
+list.edge.attributes(Argentina)
+rm(Argentina)
+
+SizeARG <- network::network.size(Argentina)
+DensityARG <- network::network.density(Argentina)
+ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
+# también podría usar C4 como indicador de clustering
+# llamado como "reinforcing"
+set.network.attribute(Argentina, "Size", SizeARG)
+set.network.attribute(Argentina, "Density", DensityARG)
+set.network.attribute(Argentina, "Clustering", ClusteringARG)
+set.network.attribute(Argentina, "Country", "Argentina")
+set.network.attribute(Argentina, "Level", "All")
+set.network.attribute(Argentina, "OECD", FALSE)
+Program <- c(ARGTexts$Program, rep(NA, ncol(Matriz)))
+BrochureLength <- c(ARGTexts$Tokens, rep(NA, ncol(Matriz)))
+network::set.vertex.attribute(Argentina, "Program", Program)
+network::set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
+
+network::get.vertex.attribute(Argentina, "vertex.names")
+network::get.vertex.attribute(Argentina, "Program")
+network::get.vertex.attribute(Argentina, "Brochure.Length")
+
+Argentina
 
 # Assign centralities as vertex attributes in the NETWORK object
 network::set.vertex.attribute(Argentina, "Centrality", P.ARG$Degree)
