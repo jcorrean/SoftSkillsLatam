@@ -49,6 +49,7 @@ ProgramsARG <- tokens(TextsARG,
 
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
+str(Matriz)
 
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
@@ -76,9 +77,10 @@ E(bnARG)$color <- "lightgrey"
 E(bnARG)$Frequency <- edges_args$Frequency
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
+igraph::vertex.attributes(bnARG)
 
-edge_list_igraph <- as_edgelist(bnARG, names = TRUE)
-
+verga <- data.frame(as_edgelist(bnARG, names = TRUE))
+verga$Frequency <- edge_attr(bnARG, "Frequency")
 
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
@@ -99,20 +101,54 @@ ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsA
 ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
 P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
- library(intergraph)
-
+library(intergraph)
+pave <- asNetwork(bnARG)
+pave
+attrmap()
 
 library(network)
 Argentina <- network.initialize(524, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = 514)
+Argentina <- network.bipartite(Matriz, Argentina, ignore.eval = FALSE, names.eval = "Frequency")
 Argentina
-Argentina <- network.bipartite(matriz,
-                               Argentina,
-                               ignore.eval = FALSE,
-                               names.eval = "Frequency")
+# 2. Get the edges as a data frame (this is the KEY)
+edges_df <- as.data.frame(as.matrix.network(Argentina, matrix.type = "edgelist"))
+colnames(edges_df) <- c("tail", "head") 
+edge_values <- numeric(nrow(edges_df)) #Initialize a vector to store the values
+for (i in 1:nrow(edges_df)) {
+  tail_node <- edges_df$tail[i]
+  head_node <- edges_df$head[i]
+  
+  # Adjust indices for bipartite structure
+  if (tail_node <= 514) { # Node from the first partition
+    row_index <- tail_node
+    col_index <- head_node - 514 # Node from the second partition
+  } else { #Node from the second partition
+    row_index <- head_node
+    col_index <- tail_node - 514
+  }
+  
+  edge_values[i] <- Matriz[row_index, col_index]
+  
+}
+set.edge.attribute(Argentina, "Frequency", edge_values)
+Argentina
+list.edge.attributes(Argentina)
+get.edge.attribute(Argentina, "Frequency")
+
+Argentina <- network.initialize(524, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = 514)
+Argentina
+Argentina <- network.bipartite(
+  x = Matriz,
+  g = Argentina,
+  ignore.eval = FALSE,
+  names.eval = "Frequency",
+  bipartite = 514
+)
+
 Argentina
 list.edge.attributes(Argentina)
 Argentina
-set.edge.value(Argentina, "Frequency", matriz)
+set.edge.value(Argentina, "Frequency", Matriz)
 print(Argentina)
 list.edge.attributes(Argentina)
 rm(Argentina)
