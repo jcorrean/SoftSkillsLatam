@@ -4,15 +4,14 @@ for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
     if (Matriz[i, j] > 0) { # Only include edges where there's a connection
       edges_args <- rbind(edges_args, data.frame(
-        docs = rownames(Matriz)[i],
-        features = colnames(Matriz)[j],
+        tails = rownames(Matriz)[i],
+        heads = colnames(Matriz)[j],
         Frequency = Matriz[i, j], # Store the weight
         Country = "Argentina"
       ))
     }
   }
 }
-
 
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
@@ -24,36 +23,33 @@ V(bnARG)$closeness <- igraph::closeness(bnARG)
 V(bnARG)$betweenness <- igraph::betweenness(bnARG)
 V(bnARG)$Eigenvector <- igraph::eigen_centrality(bnARG)$vector
 E(bnARG)$Frequency <- edges_args$Frequency
-E(bnARG)$color <- "lightgrey"
+#E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
 igraph::vertex.attributes(bnARG)$name
+adj_matrix <- as_adjacency_matrix(bnARG)
 
 ProgramsARG <- data.frame(Node = igraph::vertex.attributes(bnARG)$name,
                           Degree = V(bnARG)$degree,
                           Closeness = V(bnARG)$closeness,
                           Betweenness = V(bnARG)$betweenness,
                           Eigenvector = V(bnARG)$Eigenvector)
-ProgramsARG <- ProgramsARG[order(-ProgramsARG$Eigenvector), ]
+#ProgramsARG <- ProgramsARG[order(-ProgramsARG$Eigenvector), ]
 library(dplyr)
 ProgramsARG <- mutate(ProgramsARG, 
                       Partition = ifelse(
                         grepl("text", Node), "Program", "Skill"))
+ProgramsARG <- mutate(ProgramsARG,
+                      is_actor = ifelse(
+                        grepl("Program", Partition), TRUE, FALSE))
 ProgramsARG$Country <- "Argentina"
 
-
-library(intergraph)
-new_rule <- data.frame(type=c("edge", "vertex", "vertex", "vertex", "vertex"), 
-                       fromcls=c("igraph", "igraph", "igraph", "igraph", "igraph"), 
-                       fromattr=c("Frequency", "degree", "closeness", "betweenness", "Eigenvector"),
-                       tocls=c("network", "network", "network", "network", "network"), 
-                       toattr=c("Frequency", "degree", "closeness", "betweeness", "Eigenvector"),
-                       stringsAsFactors=FALSE)
-# combine with the default rules
-rules <- rbind( attrmap(), new_rule )
-rules
-Argentina <- asNetwork(bnARG, rules)
-Argentina
+library(network)
+veamos <- as.network(adj_matrix, 
+                     directed = FALSE,
+                     bipartite = TRUE,
+                     bipartite_col = "is_actor")
+veamos
 
 library(network)
 
