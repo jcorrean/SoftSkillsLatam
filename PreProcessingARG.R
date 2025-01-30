@@ -1,55 +1,4 @@
-library(readtext)
-ARG <- readtext("Argentina")
-ARG$doc_id <- gsub("\\.pdf$|\\.docx$", "", ARG$doc_id)
-
-library(dplyr)
-ARG <- mutate(ARG, 
-              Program = ifelse(
-                grepl("Doctor|Doctorado en", text), "Doctorado",
-                ifelse(grepl("Maestría|Magíster en|MAGISTER EN", text), "Maestría", 
-                       "Especialización")))
-
-library(stringr)
-ARG <- ARG %>%
-  mutate(University.Code = str_extract(doc_id, "^\\d+")) 
-
-Programas <- data.frame(table(ARG$Program))
-colnames(Programas)[1] <- "Programa" 
-colnames(Programas)[2] <- "Total"
-
-library(quanteda)
-TextsARG <- corpus(ARG$text)
-docvars(TextsARG, "Program") <- ARG$Program
-docvars(TextsARG, "Country") <- "Argentina"
-head(summary(TextsARG), 10)
-ARGTexts <- data.frame(summary(TextsARG, length(TextsARG)))
-#ARGSpec <- corpus_subset(TextsARG, Program == "Especialización")
-#ARGMS <- corpus_subset(TextsARG, Program == "Maestría")
-#ARGPhD <- corpus_subset(TextsARG, Program == "Doctorado")
-
-Dictionary <- dictionary(list(
-  active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
-  mathematics = c("matemática", "resolver problemas matemáticos", "cálculos", "calcular"),
-  reading_comprehension = c("lectura", "leer", "oraciones", "párrafo*", "textos", "documento*"),
-  science = c("ciencia*", "científic*", "método*", "resolver problemas", "investiga*"),
-  speaking = c("oratoria", "comunica*"),
-  writing = c("escrib*", "redact*", "escrito"),
-  active_learning = c("implicaciones", "comprende", "decisión", "futur*", "nueva información"),
-  critical_thinking = c("crítico", "pensamiento crítico", "lógic*", "razona*"),
-  learning_strategy = c("aprend*", "enseñ*", "instrucci*"),
-  monitoring = c("auto-evalu*",  "reflexi*", "desempeñ", "ejecución")
-))
-ProgramsARG <- tokens(TextsARG, 
-                      remove_numbers = TRUE, 
-                      remove_punct = TRUE, 
-                      remove_url = TRUE, 
-                      remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-ProgramsARG
-Matriz <- as.matrix(ProgramsARG)
-str(Matriz)
+load("~/Documents/GitHub/SoftSkillsLatam/Matriz.RData")
 
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
@@ -81,6 +30,7 @@ igraph::vertex.attributes(bnARG)
 
 verga <- data.frame(as_edgelist(bnARG, names = TRUE))
 verga$Frequency <- edge_attr(bnARG, "Frequency")
+colnames(verga)[1:2] <- c("V1", "V2")
 
 ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
                           Closeness = igraph::closeness(bnARG),
@@ -103,10 +53,17 @@ P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
 library(intergraph)
 pave <- asNetwork(bnARG)
+pave2 <- asDF(bnARG)
 pave
+pave2
+pave3 <- asNetwork(pave2$edges, directed = FALSE, pave2$vertexes)
+pave3
+pave4 <- asNetwork(verga)
+pave4
 attrmap()
 
 library(network)
+Argentina <- asNetwork(verga, directed = FALSE)
 Argentina <- network.initialize(524, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = 514)
 Argentina <- network.bipartite(Matriz, Argentina, ignore.eval = FALSE, names.eval = "Frequency")
 Argentina
