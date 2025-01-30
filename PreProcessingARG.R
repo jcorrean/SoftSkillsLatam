@@ -1,7 +1,4 @@
 load("~/Documents/GitHub/SoftSkillsLatam/Matriz.RData")
-
-library(igraph)
-bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
@@ -16,31 +13,28 @@ for (i in 1:nrow(Matriz)) {
   }
 }
 
-#bnARG <- graph_from_data_frame(edges_args, directed = FALSE)
-#bipartite_mapping(bnARG)
+
+library(igraph)
+bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
 V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
-V(bnARG)$size <- sqrt(igraph::degree(bnARG))
-E(bnARG)$color <- "lightgrey"
+V(bnARG)$degree <- igraph::degree(bnARG)
+V(bnARG)$closeness <- igraph::closeness(bnARG)
+V(bnARG)$betweenness <- igraph::betweenness(bnARG)
+V(bnARG)$Eigenvector <- igraph::eigen_centrality(bnARG)$vector
 E(bnARG)$Frequency <- edges_args$Frequency
+E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
-igraph::vertex.attributes(bnARG)
+igraph::vertex.attributes(bnARG)$name
 
-verga <- data.frame(as_edgelist(bnARG, names = TRUE))
-verga$Frequency <- edge_attr(bnARG, "Frequency")
-colnames(verga)[1:2] <- c("V1", "V2")
-
-ProgramsARG <- data.frame(Degree = igraph::degree(bnARG),
-                          Closeness = igraph::closeness(bnARG),
-                          Betweenness = igraph::betweenness(bnARG),
-                          Eigen = igraph::eigen_centrality(bnARG)$vector)
-rownames(ProgramsARG)
-ProgramsARG <- ProgramsARG[order(-ProgramsARG$Degree), ]
-variable.names(ProgramsARG)
-colnames(ProgramsARG)[4] <- "Eigenvector"
-ProgramsARG$Node <- rownames(ProgramsARG)
+ProgramsARG <- data.frame(Node = igraph::vertex.attributes(bnARG)$name,
+                          Degree = V(bnARG)$degree,
+                          Closeness = V(bnARG)$closeness,
+                          Betweenness = V(bnARG)$betweenness,
+                          Eigenvector = V(bnARG)$Eigenvector)
+ProgramsARG <- ProgramsARG[order(-ProgramsARG$Eigenvector), ]
 ProgramsARG <- mutate(ProgramsARG, 
                       Partition = ifelse(
                         grepl("text", Node), "Program", "Skill"))
