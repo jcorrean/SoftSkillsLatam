@@ -52,20 +52,15 @@ ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
 P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
 library(intergraph)
-pave <- asNetwork(bnARG)
 pave2 <- asDF(bnARG)
-pave
-pave2
+pave2$edges
+pave2$vertexes
 pave3 <- asNetwork(pave2$edges, directed = FALSE, pave2$vertexes)
-pave3
-pave4 <- asNetwork(verga)
-pave4
 attrmap()
 
 library(network)
-Argentina <- asNetwork(verga, directed = FALSE)
-Argentina <- network.initialize(524, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = 514)
-Argentina <- network.bipartite(Matriz, Argentina, ignore.eval = FALSE, names.eval = "Frequency")
+Argentina <- asNetwork(pave2$edges, directed = FALSE, pave2$vertexes)
+summary(Argentina)
 Argentina
 # 2. Get the edges as a data frame (this is the KEY)
 edges_df <- as.data.frame(as.matrix.network(Argentina, matrix.type = "edgelist"))
@@ -92,23 +87,6 @@ Argentina
 list.edge.attributes(Argentina)
 get.edge.attribute(Argentina, "Frequency")
 
-Argentina <- network.initialize(524, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = 514)
-Argentina
-Argentina <- network.bipartite(
-  x = Matriz,
-  g = Argentina,
-  ignore.eval = FALSE,
-  names.eval = "Frequency",
-  bipartite = 514
-)
-
-Argentina
-list.edge.attributes(Argentina)
-Argentina
-set.edge.value(Argentina, "Frequency", Matriz)
-print(Argentina)
-list.edge.attributes(Argentina)
-rm(Argentina)
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
@@ -147,16 +125,5 @@ network::get.vertex.attribute(Argentina, "Eigenvector")
 
 get.edgeIDs(Argentina, 1,519)
 get.edgeIDs(Argentina, 2,518)
-get.edgeI
-
 network::get.edge.value(Argentina, "Frequency")
 
-Argentina <- network::set.edge.value(Argentina, "Frequency", )
-Argentina
-network::list.edge.attributes(Argentina)
-Argentina2 <- network.edgelist(edges_args[1:3], Argentina, ignore.eval = FALSE)
-Argentina2
-
-network::get.edge.attribute(Argentina, "Frequency") # Returns all edge weights
-Argentina["text1", "science"] 
-Argentina["text4", "science"] 
