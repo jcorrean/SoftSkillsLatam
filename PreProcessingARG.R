@@ -48,8 +48,10 @@ P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 library(intergraph)
 pave2 <- asDF(bnARG)
 pave2$edges
-pave2$vertexes
-pave3 <- asNetwork(pave2$edges, directed = FALSE, pave2$vertexes)
+vertices <- pave2$vertexes
+aristas <- pave2$edges
+pave3 <- asNetwork(aristas, directed = FALSE, vertices)
+pave3
 attrmap()
 
 library(network)
