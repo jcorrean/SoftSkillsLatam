@@ -35,54 +35,27 @@ ProgramsARG <- data.frame(Node = igraph::vertex.attributes(bnARG)$name,
                           Betweenness = V(bnARG)$betweenness,
                           Eigenvector = V(bnARG)$Eigenvector)
 ProgramsARG <- ProgramsARG[order(-ProgramsARG$Eigenvector), ]
+library(dplyr)
 ProgramsARG <- mutate(ProgramsARG, 
                       Partition = ifelse(
                         grepl("text", Node), "Program", "Skill"))
 ProgramsARG$Country <- "Argentina"
 
-library(gtools)
-ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsARG$Node)))
-ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
-P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
 library(intergraph)
-pave2 <- asDF(bnARG)
-pave2$edges
-vertices <- pave2$vertexes
-aristas <- pave2$edges
-pave3 <- asNetwork(aristas, directed = FALSE, vertices)
-pave3
-attrmap()
+new_rule <- data.frame(type=c("edge", "vertex", "vertex", "vertex", "vertex"), 
+                       fromcls=c("igraph", "igraph", "igraph", "igraph", "igraph"), 
+                       fromattr=c("Frequency", "degree", "closeness", "betweenness", "Eigenvector"),
+                       tocls=c("network", "network", "network", "network", "network"), 
+                       toattr=c("Frequency", "degree", "closeness", "betweeness", "Eigenvector"),
+                       stringsAsFactors=FALSE)
+# combine with the default rules
+rules <- rbind( attrmap(), new_rule )
+rules
+Argentina <- asNetwork(bnARG, rules)
+Argentina
 
 library(network)
-Argentina <- asNetwork(pave2$edges, directed = FALSE, pave2$vertexes)
-summary(Argentina)
-Argentina
-# 2. Get the edges as a data frame (this is the KEY)
-edges_df <- as.data.frame(as.matrix.network(Argentina, matrix.type = "edgelist"))
-colnames(edges_df) <- c("tail", "head") 
-edge_values <- numeric(nrow(edges_df)) #Initialize a vector to store the values
-for (i in 1:nrow(edges_df)) {
-  tail_node <- edges_df$tail[i]
-  head_node <- edges_df$head[i]
-  
-  # Adjust indices for bipartite structure
-  if (tail_node <= 514) { # Node from the first partition
-    row_index <- tail_node
-    col_index <- head_node - 514 # Node from the second partition
-  } else { #Node from the second partition
-    row_index <- head_node
-    col_index <- tail_node - 514
-  }
-  
-  edge_values[i] <- Matriz[row_index, col_index]
-  
-}
-set.edge.attribute(Argentina, "Frequency", edge_values)
-Argentina
-list.edge.attributes(Argentina)
-get.edge.attribute(Argentina, "Frequency")
-
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
@@ -106,20 +79,7 @@ network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
 
-# Assign centralities as vertex attributes in the NETWORK object
-network::set.vertex.attribute(Argentina, "Centrality", P.ARG$Degree)
-network::set.vertex.attribute(Argentina, "Closeness", P.ARG$Closeness)
-network::set.vertex.attribute(Argentina, "Betweenness", P.ARG$Betweennes)
-network::set.vertex.attribute(Argentina, "Eigenvector", P.ARG$Eigenvector)
-
-# Verify
 network::get.vertex.attribute(Argentina, "vertex.names")
-network::get.vertex.attribute(Argentina, "Centrality")
-network::get.vertex.attribute(Argentina, "Closeness")
-network::get.vertex.attribute(Argentina, "Betweenness")
-network::get.vertex.attribute(Argentina, "Eigenvector")
 
-get.edgeIDs(Argentina, 1,519)
-get.edgeIDs(Argentina, 2,518)
 network::get.edge.value(Argentina, "Frequency")
-
+network::get.edge.attribute(Argentina, "Frequency")
