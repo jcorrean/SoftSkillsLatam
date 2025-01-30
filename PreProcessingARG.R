@@ -23,9 +23,9 @@ docvars(TextsARG, "Program") <- ARG$Program
 docvars(TextsARG, "Country") <- "Argentina"
 head(summary(TextsARG), 10)
 ARGTexts <- data.frame(summary(TextsARG, length(TextsARG)))
-ARGSpec <- corpus_subset(TextsARG, Program == "Especialización")
-ARGMS <- corpus_subset(TextsARG, Program == "Maestría")
-ARGPhD <- corpus_subset(TextsARG, Program == "Doctorado")
+#ARGSpec <- corpus_subset(TextsARG, Program == "Especialización")
+#ARGMS <- corpus_subset(TextsARG, Program == "Maestría")
+#ARGPhD <- corpus_subset(TextsARG, Program == "Doctorado")
 
 Dictionary <- dictionary(list(
   active_listening = c("escucha*", "pregunta*", "cuestiona*", "entend*", "comprend*", "silencio"),
@@ -47,33 +47,6 @@ ProgramsARG <- tokens(TextsARG,
   tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
   dfm()
 
-ARG_Spec <- tokens(ARGSpec, 
-                   remove_numbers = TRUE, 
-                   remove_punct = TRUE, 
-                   remove_url = TRUE, 
-                   remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-ARG_MS <- tokens(ARGMS, 
-                 remove_numbers = TRUE, 
-                 remove_punct = TRUE, 
-                 remove_url = TRUE, 
-                 remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-ARG_PhD <- tokens(ARGPhD, 
-                  remove_numbers = TRUE, 
-                  remove_punct = TRUE, 
-                  remove_url = TRUE, 
-                  remove_symbols = TRUE) %>%  
-  tokens_remove(stopwords("spanish")) |> tokens_lookup(dictionary = Dictionary) |>
-  dfm()
-
-MatrizARGSPEC <- as.matrix(ARG_Spec)
-MatrizARGMS <- as.matrix(ARG_MS)
-MatrizARGPHD <- as.matrix(ARG_PhD)
 ProgramsARG
 Matriz <- as.matrix(ProgramsARG)
 
@@ -126,7 +99,7 @@ ProgramsARG$Node <- factor(ProgramsARG$Node, levels = mixedsort(unique(ProgramsA
 ProgramsARG <- ProgramsARG[order(ProgramsARG$Node), ]
 P.ARG <- ProgramsARG[order(ProgramsARG$Partition), ]
 
-library(intergraph)
+ library(intergraph)
 
 
 library(network)
