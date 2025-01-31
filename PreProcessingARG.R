@@ -4,14 +4,15 @@ for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
     if (Matriz[i, j] > 0) { # Only include edges where there's a connection
       edges_args <- rbind(edges_args, data.frame(
-        tails = rownames(Matriz)[i],
-        heads = colnames(Matriz)[j],
+        actor = rownames(Matriz)[i],
+        event = colnames(Matriz)[j],
         Frequency = Matriz[i, j], # Store the weight
         Country = "Argentina"
       ))
     }
   }
 }
+
 
 library(igraph)
 bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
@@ -29,30 +30,23 @@ igraph::edge_attr(bnARG)
 igraph::vertex.attributes(bnARG)$name
 adj_matrix <- as_adjacency_matrix(bnARG)
 
-ProgramsARG <- data.frame(Node = igraph::vertex.attributes(bnARG)$name,
+ProgramsARG <- data.frame(node.id = igraph::vertex.attributes(bnARG)$name,
                           Degree = V(bnARG)$degree,
                           Closeness = V(bnARG)$closeness,
                           Betweenness = V(bnARG)$betweenness,
-                          Eigenvector = V(bnARG)$Eigenvector)
-#ProgramsARG <- ProgramsARG[order(-ProgramsARG$Eigenvector), ]
-library(dplyr)
-ProgramsARG <- mutate(ProgramsARG, 
-                      Partition = ifelse(
-                        grepl("text", Node), "Program", "Skill"))
-ProgramsARG <- mutate(ProgramsARG,
-                      is_actor = ifelse(
-                        grepl("Program", Partition), TRUE, FALSE))
-ProgramsARG$Country <- "Argentina"
+                          Eigenvector = V(bnARG)$Eigenvector,
+                          Program = c(ARGTexts$Program, rep(NA, 10)),
+                          is_actor = c(rep(TRUE, 514), rep(FALSE, 10)))
+
+NODES <- ProgramsARG[ProgramsARG$Degree > 0, ]
 
 library(network)
-veamos <- as.network(adj_matrix, 
+Argentina <- as.network(edges_args, 
                      directed = FALSE,
-                     bipartite = TRUE,
-                     bipartite_col = "is_actor")
-veamos
+                     vertices = NODES,
+                     bipartite = TRUE)
 
-library(network)
-
+Argentina
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
