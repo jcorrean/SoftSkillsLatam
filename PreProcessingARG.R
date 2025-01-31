@@ -2,12 +2,12 @@ load("~/Documents/GitHub/SoftSkillsLatam/Matriz.RData")
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] > 0) { # Only include edges where there's a connection
+    if (Matriz[i, j] >= 0) { # Only include edges where there's a connection
       edges_args <- rbind(edges_args, data.frame(
         actor = rownames(Matriz)[i],
         event = colnames(Matriz)[j],
-        Frequency = Matriz[i, j], # Store the weight
-        Country = "Argentina"
+        Frequency = Matriz[i, j] # Store the weight
+        #Country = "Argentina"
       ))
     }
   }
@@ -23,12 +23,14 @@ V(bnARG)$degree <- igraph::degree(bnARG)
 V(bnARG)$closeness <- igraph::closeness(bnARG)
 V(bnARG)$betweenness <- igraph::betweenness(bnARG)
 V(bnARG)$Eigenvector <- igraph::eigen_centrality(bnARG)$vector
-E(bnARG)$Frequency <- edges_args$Frequency
+vertices <- edges_args[edges_args$Frequency > 0, ]
+E(bnARG)$Frequency <- vertices$Frequency
 #E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
 igraph::vertex.attributes(bnARG)$name
 adj_matrix <- as_adjacency_matrix(bnARG)
+str(adj_matrix)
 
 ProgramsARG <- data.frame(node.id = igraph::vertex.attributes(bnARG)$name,
                           Degree = V(bnARG)$degree,
@@ -36,14 +38,16 @@ ProgramsARG <- data.frame(node.id = igraph::vertex.attributes(bnARG)$name,
                           Betweenness = V(bnARG)$betweenness,
                           Eigenvector = V(bnARG)$Eigenvector,
                           Program = c(ARGTexts$Program, rep(NA, 10)),
+                          Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)),
                           is_actor = c(rep(TRUE, 514), rep(FALSE, 10)))
 
-NODES <- ProgramsARG[ProgramsARG$Degree > 0, ]
+EDGES <- edges_args[edges_args$Frequency > 0, ]
+
 
 library(network)
-Argentina <- as.network(edges_args, 
+Argentina <- as.network(EDGES, 
                      directed = FALSE,
-                     vertices = NODES,
+                     vertices = ProgramsARG,
                      bipartite = TRUE)
 
 Argentina
@@ -68,8 +72,5 @@ network::get.vertex.attribute(Argentina, "Program")
 network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
-
-network::get.vertex.attribute(Argentina, "vertex.names")
-
-network::get.edge.value(Argentina, "Frequency")
-network::get.edge.attribute(Argentina, "Frequency")
+network::set.edge.value(Argentina, "Frequency", EDGES$Frequency)
+network::set.edge.attribute(Argentina, "Frequency", EDGES$Frequency)
