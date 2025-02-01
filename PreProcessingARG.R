@@ -49,9 +49,12 @@ Argentina <- as.network(EDGES,
                      directed = FALSE,
                      vertices = ProgramsARG,
                      bipartite = TRUE)
+network::set.edge.attribute(Argentina, "Frequency", as.numeric(EDGES$Frequency))
+
 
 Argentina
 SizeARG <- network::network.size(Argentina)
+get.edge.attribute(Argentina, "Frequency")
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
 # también podría usar C4 como indicador de clustering
@@ -72,5 +75,5 @@ network::get.vertex.attribute(Argentina, "Program")
 network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
-network::set.edge.value(Argentina, "Frequency", EDGES$Frequency)
 network::set.edge.attribute(Argentina, "Frequency", EDGES$Frequency)
+print(network::get.edge.attribute(Argentina, "Frequency"))
