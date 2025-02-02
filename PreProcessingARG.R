@@ -13,9 +13,9 @@ for (i in 1:nrow(Matriz)) {
   }
 }
 
-isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
-isolated_programs
-Matriz[rownames(Matriz) %in% isolated_programs, ]
+#isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
+#isolated_programs
+#Matriz[rownames(Matriz) %in% isolated_programs, ]
 
 
 library(igraph)
@@ -32,8 +32,6 @@ E(bnARG)$Frequency <- vertices$Frequency
 #E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
-Aristas <- data.frame(as_edgelist(bnARG, names = TRUE))
-Aristas$Frequency <- edges_args$Frequency
 igraph::vertex.attributes(bnARG)$name
 
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
@@ -45,7 +43,7 @@ ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           Eigenvector = V(bnARG)$Eigenvector,
                           Program = c(ARGTexts$Program, rep(NA, 10)),
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
-Vertices <- rbind(ProgramsARG, ProgramsARG)
+
 
 library(network)
 Argentina <- as.network(edges_args, 
@@ -74,15 +72,9 @@ set.network.attribute(Argentina, "Clustering", ClusteringARG)
 set.network.attribute(Argentina, "Country", "Argentina")
 set.network.attribute(Argentina, "Level", "All")
 set.network.attribute(Argentina, "OECD", FALSE)
-Program <- c(ARGTexts$Program, rep(NA, ncol(Matriz)))
-BrochureLength <- c(ARGTexts$Tokens, rep(NA, ncol(Matriz)))
-network::set.vertex.attribute(Argentina, "Program", Program)
-network::set.vertex.attribute(Argentina, "Brochure.Length", BrochureLength)
 
 network::get.vertex.attribute(Argentina, "vertex.names")
 network::get.vertex.attribute(Argentina, "Program")
 network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
-network::set.edge.attribute(Argentina, "Frequency", EDGES$Frequency)
-print(network::get.edge.attribute(Argentina, "Frequency"))
