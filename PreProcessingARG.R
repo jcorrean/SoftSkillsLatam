@@ -2,16 +2,19 @@ load("~/Documents/GitHub/SoftSkillsLatam/Matriz.RData")
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] >= 0) { # Only include edges where there's a connection
+    if (Matriz[i, j] > 0) { 
       edges_args <- rbind(edges_args, data.frame(
-        actor = rownames(Matriz)[i],
-        event = colnames(Matriz)[j],
-        Frequency = Matriz[i, j] # Store the weight
-        #Country = "Argentina"
+        Program = rownames(Matriz)[i],
+        Skill = colnames(Matriz)[j],
+        Program.Skill = Matriz[i, j] > 0,
+        Frequency = Matriz[i, j]
       ))
     }
   }
 }
+
+isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
+Matriz[rownames(Matriz) %in% isolated_programs, ]
 
 
 library(igraph)
@@ -32,29 +35,56 @@ igraph::vertex.attributes(bnARG)$name
 adj_matrix <- as_adjacency_matrix(bnARG)
 str(adj_matrix)
 
-ProgramsARG <- data.frame(node.id = igraph::vertex.attributes(bnARG)$name,
+ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
+                          node.type = c(rep("Program", 514), rep("Skill", 10)),
                           Degree = V(bnARG)$degree,
                           Closeness = V(bnARG)$closeness,
                           Betweenness = V(bnARG)$betweenness,
                           Eigenvector = V(bnARG)$Eigenvector,
                           Program = c(ARGTexts$Program, rep(NA, 10)),
-                          Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)),
-                          is_actor = c(rep(TRUE, 514), rep(FALSE, 10)))
-
-EDGES <- edges_args[edges_args$Frequency > 0, ]
-
+                          Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
 
 library(network)
-Argentina <- as.network(EDGES, 
-                     directed = FALSE,
-                     vertices = ProgramsARG,
-                     bipartite = TRUE)
-network::set.edge.attribute(Argentina, "Frequency", as.numeric(EDGES$Frequency))
+Argentina <- network::network(
+  edges_args,
+  directed = FALSE,
+  vertices = ProgramsARG,
+  bipartite = TRUE,
+  matrix.type = "edgelist",
+  ignore.eval = FALSE  # Ensure edge attributes are parsed
+)
+network::set.network.attribute(Argentina, "bipartite", 514)
+network::delete.edge.attribute(Argentina, "na")
+network::get.network.attribute(Argentina, "bipartite") 
+network::list.edge.attributes(Argentina)
+Argentina
+network::set.network.attribute(Argentina, "bipartite", 514)
+network::list.edge.attributes(Argentina)  # Should include "Frequency"
 
+network::set.edge.attribute(Argentina, "Frequency", as.numeric(edges_args$Frequency))
+network::set.edge.attribute(Argentina, "Program.Skill", as.logical(edges_args$Program.Skill))
+if ("na" %in% network::list.edge.attributes(Argentina)) {
+  network::delete.edge.attribute(Argentina, "na")
+}
+
+print(network::list.edge.attributes(Argentina))
+print(summary(network::get.edge.attribute(Argentina, "Frequency")))
+Argentina
+
+network::list.edge.attributes(Argentina)
+
+network::set.edge.attribute(Argentina, "Frequency", as.numeric(edges_args$Frequency))
+network::delete.edge.attribute(Argentina, "na")
+print(summary(network::get.edge.attribute(Argentina, "Frequency")))
 
 Argentina
-SizeARG <- network::network.size(Argentina)
+
+print(dim(EDGES))  # Should show (1574, 3) with "actor", "event", "Frequency"
+print(head(EDGES))
+
 get.edge.attribute(Argentina, "Frequency")
+
+SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
 ClusteringARG <- tnet::reinforcement_tm(t(Matriz))
 # también podría usar C4 como indicador de clustering
