@@ -36,10 +36,9 @@ Aristas <- data.frame(as_edgelist(bnARG, names = TRUE))
 Aristas$Frequency <- edges_args$Frequency
 #colnames(Aristas)[1:2] <- c("tails", "heads")
 igraph::vertex.attributes(bnARG)$name
-ADY <- as_adjacency_matrix(bnARG)
+
 class(ADY)
-biadyacencia <- as_biadjacency_matrix(bnARG, attr = "Frequency", names = FALSE)
-str(adj_matrix)
+#biadyacencia <- as_biadjacency_matrix(bnARG, attr = "Frequency", names = FALSE)
 
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           is_actor = c(rep(TRUE, 514), rep(FALSE, 10)),
@@ -50,53 +49,21 @@ ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           Eigenvector = V(bnARG)$Eigenvector,
                           Program = c(ARGTexts$Program, rep(NA, 10)),
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
+Vertices <- rbind(ProgramsARG, ProgramsARG)
 
 library(network)
-ARG <- as.network(adj_matrix, directed = FALSE, bipartite = TRUE)
-class(ARG)
-ARG
-network::list.edge.attributes(ARG)
-network::delete.edge.attribute(ARG, "na")
-network::list.edge.attributes(ARG)
-
-
-Argentina <- network::as.netwoARGTextsArgentina <- network::as.network(
-  edges_args,
-  directed = FALSE,
-  vertices = ProgramsARG,
-  bipartite = TRUE,
-  matrix.type = "edgelist",
-  ignore.eval = FALSE)
+Argentina <- as.network(edges_args, 
+                        directed = FALSE, 
+                        bipartite = TRUE, 
+                        bipartite_col = "is_actor", 
+                        vertices = ProgramsARG)
+class(Argentina)
 Argentina
-
-
 network::list.edge.attributes(Argentina)
-summary(network::get.edge.attribute(Argentina, "Frequency"))
-
-Argentina
-network::set.network.attribute(Argentina, "bipartite", 514)
-network::list.edge.attributes(Argentina)  # Should include "Frequency"
-
-network::set.edge.attribute(Argentina, "Frequency", as.numeric(edges_args$Frequency))
-network::set.edge.attribute(Argentina, "Program.Skill", as.logical(edges_args$Program.Skill))
-if ("na" %in% network::list.edge.attributes(Argentina)) {
-  network::delete.edge.attribute(Argentina, "na")
-}
-
-print(network::list.edge.attributes(Argentina))
-print(summary(network::get.edge.attribute(Argentina, "Frequency")))
-Argentina
-
-network::list.edge.attributes(Argentina)
-
-network::set.edge.attribute(Argentina, "Frequency", as.numeric(edges_args$Frequency))
 network::delete.edge.attribute(Argentina, "na")
+network::list.edge.attributes(Argentina)
+
 print(summary(network::get.edge.attribute(Argentina, "Frequency")))
-
-Argentina
-
-print(dim(EDGES))  # Should show (1574, 3) with "actor", "event", "Frequency"
-print(head(EDGES))
 
 get.edge.attribute(Argentina, "Frequency")
 
