@@ -2,11 +2,11 @@ load("~/Documents/GitHub/SoftSkillsLatam/Matriz.RData")
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] > 0) { 
+    if (Matriz[i, j] >= 1) { 
       edges_args <- rbind(edges_args, data.frame(
         Program = rownames(Matriz)[i],
         Skill = colnames(Matriz)[j],
-        Program.Skill = Matriz[i, j] > 0,
+        #Program.Skill = Matriz[i, j] > 0,
         Frequency = Matriz[i, j]
       ))
     }
@@ -14,6 +14,7 @@ for (i in 1:nrow(Matriz)) {
 }
 
 isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
+isolated_programs
 Matriz[rownames(Matriz) %in% isolated_programs, ]
 
 
@@ -26,16 +27,22 @@ V(bnARG)$degree <- igraph::degree(bnARG)
 V(bnARG)$closeness <- igraph::closeness(bnARG)
 V(bnARG)$betweenness <- igraph::betweenness(bnARG)
 V(bnARG)$Eigenvector <- igraph::eigen_centrality(bnARG)$vector
-vertices <- edges_args[edges_args$Frequency > 0, ]
+vertices <- edges_args[edges_args$Frequency >= 1, ]
 E(bnARG)$Frequency <- vertices$Frequency
 #E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
+Aristas <- data.frame(as_edgelist(bnARG, names = TRUE))
+Aristas$Frequency <- edges_args$Frequency
+#colnames(Aristas)[1:2] <- c("tails", "heads")
 igraph::vertex.attributes(bnARG)$name
-adj_matrix <- as_adjacency_matrix(bnARG)
+ADY <- as_adjacency_matrix(bnARG)
+class(ADY)
+biadyacencia <- as_biadjacency_matrix(bnARG, attr = "Frequency", names = FALSE)
 str(adj_matrix)
 
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
+                          is_actor = c(rep(TRUE, 514), rep(FALSE, 10)),
                           node.type = c(rep("Program", 514), rep("Skill", 10)),
                           Degree = V(bnARG)$degree,
                           Closeness = V(bnARG)$closeness,
@@ -45,18 +52,27 @@ ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
 
 library(network)
-Argentina <- network::network(
+ARG <- as.network(adj_matrix, directed = FALSE, bipartite = TRUE)
+class(ARG)
+ARG
+network::list.edge.attributes(ARG)
+network::delete.edge.attribute(ARG, "na")
+network::list.edge.attributes(ARG)
+
+
+Argentina <- network::as.netwoARGTextsArgentina <- network::as.network(
   edges_args,
   directed = FALSE,
   vertices = ProgramsARG,
   bipartite = TRUE,
   matrix.type = "edgelist",
-  ignore.eval = FALSE  # Ensure edge attributes are parsed
-)
-network::set.network.attribute(Argentina, "bipartite", 514)
-network::delete.edge.attribute(Argentina, "na")
-network::get.network.attribute(Argentina, "bipartite") 
+  ignore.eval = FALSE)
+Argentina
+
+
 network::list.edge.attributes(Argentina)
+summary(network::get.edge.attribute(Argentina, "Frequency"))
+
 Argentina
 network::set.network.attribute(Argentina, "bipartite", 514)
 network::list.edge.attributes(Argentina)  # Should include "Frequency"
