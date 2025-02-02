@@ -1,4 +1,4 @@
-load("~/Documents/GitHub/SoftSkillsLatam/Matriz.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Matrices/MatrizARG.RData")
 edges_args <- data.frame()
 for (i in 1:nrow(Matriz)) {
   for (j in 1:ncol(Matriz)) {
