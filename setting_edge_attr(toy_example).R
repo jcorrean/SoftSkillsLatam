@@ -35,3 +35,29 @@ pave2 <- as.network(bip_edge_df,
            bipartite = TRUE
 )
 pave2
+class(pave2)
+class(bip_edge_df)
+
+
+edata <-data.frame(
+  tails=c(1,2,3),
+  heads=c(2,3,1),
+  love=c('yes','no','maybe'),
+  hate=c(3,-5,2),
+  stringsAsFactors=FALSE
+)
+
+
+
+g <- network.initialize(514, directed = FALSE, bipartite = 504)
+pave <- network.bipartite(Aristas,
+                     g,
+                    ignore.eval=FALSE, 
+                    names.eval = "Frequency")
+
+g
+as.sociomatrix(g,attrname='Frequency')
+g%e%'Frequency'
+g
+
+network.ed
