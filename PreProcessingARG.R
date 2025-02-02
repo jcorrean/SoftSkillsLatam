@@ -78,3 +78,5 @@ network::get.vertex.attribute(Argentina, "Program")
 network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
+rm(list=setdiff(ls(), c("Argentina")))
+saveRDS(Argentina, file = "NetworkData/Argentina.RDS")
