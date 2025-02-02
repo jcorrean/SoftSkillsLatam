@@ -34,11 +34,7 @@ igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
 Aristas <- data.frame(as_edgelist(bnARG, names = TRUE))
 Aristas$Frequency <- edges_args$Frequency
-#colnames(Aristas)[1:2] <- c("tails", "heads")
 igraph::vertex.attributes(bnARG)$name
-
-class(ADY)
-#biadyacencia <- as_biadjacency_matrix(bnARG, attr = "Frequency", names = FALSE)
 
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           is_actor = c(rep(TRUE, 514), rep(FALSE, 10)),
