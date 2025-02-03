@@ -33,6 +33,7 @@ E(bnBRA)$Frequency <- vertices$Frequency
 igraph::edge_attr_names(bnBRA)
 igraph::edge_attr(bnBRA)
 igraph::vertex.attributes(bnBRA)$name
+igraph::edge_density(bnBRA)
 
 ProgramsBRA <- data.frame(vertex.names = igraph::vertex.attributes(bnBRA)$name,
                           is_actor = c(rep(TRUE, nrow(Matriz)), rep(FALSE, 10)),
@@ -54,7 +55,7 @@ Brazil <- as.network(edges_args,
 class(Brazil)
 Brazil
 network::list.edge.attributes(Brazil)
-network::delete.edge.attribute(Brazil, "na")
+#network::delete.edge.attribute(Brazil, "na")
 network::list.edge.attributes(Brazil)
 
 print(summary(network::get.edge.attribute(Brazil, "Frequency")))
