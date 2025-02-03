@@ -54,7 +54,6 @@ Uruguay <- as.network(edges_args,
 class(Uruguay)
 Uruguay
 network::list.edge.attributes(Uruguay)
-network::delete.edge.attribute(Uruguay, "na")
 network::list.edge.attributes(Uruguay)
 
 print(summary(network::get.edge.attribute(Uruguay, "Frequency")))
@@ -71,7 +70,7 @@ set.network.attribute(Uruguay, "Density", DensityARG)
 set.network.attribute(Uruguay, "Clustering", ClusteringARG)
 set.network.attribute(Uruguay, "Country", "Uruguay")
 set.network.attribute(Uruguay, "Level", "All")
-set.network.attribute(Uruguay, "OECD", TRUE)
+set.network.attribute(Uruguay, "OECD", FALSE)
 
 network::get.vertex.attribute(Uruguay, "vertex.names")
 network::get.vertex.attribute(Uruguay, "Program")
