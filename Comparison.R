@@ -10,23 +10,23 @@ Venezuela <- readRDS("NetworkData/Venezuela.RDS")
 
 RegionalNetworks <- list(Argentina, Brazil, Chile, Colombia, CostaRica, Ecuador, Mexico, Uruguay, Venezuela)
 class(RegionalNetworks)
-rm(list=setdiff(ls(), c("RegionalNetworks")))
+library(network)
 RegionalNetworks
 country_names <- c("Argentina", "Brazil", "Chile", "Colombia", "CostaRica", "Ecuador", "Mexico", "Uruguay", "Venezuela")
 RegionalNetworks <- setNames(RegionalNetworks[1:9],country_names)
-saveRDS(RegionalNetworks, file = "RegionalNetworks.RDS")
-library(network)
+saveRDS(RegionalNetworks, file = "NetworkData/RegionalNetworks.RDS")
+rm(list=setdiff(ls(), c("RegionalNetworks")))
 library(purrr)
 library(tibble)
 library(knitr)
 library(dplyr)
-RegionalNetworks <- readRDS("RegionalNetworks.RDS")
+RegionalNetworks <- readRDS("NetworkData/RegionalNetworks.RDS")
 RegionalNetworks$Argentina
 
 length(RegionalNetworks)
 RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
-RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="edges")
+RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="vertices")
 
 
 
