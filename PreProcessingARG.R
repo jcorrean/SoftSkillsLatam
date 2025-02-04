@@ -54,13 +54,15 @@ Argentina <- as.network(edges_args,
                         vertices = ProgramsARG)
 class(Argentina)
 Argentina
+
+AAA <- str(Argentina)
 network::list.edge.attributes(Argentina)
 #network::delete.edge.attribute(Argentina, "na")
 network::list.edge.attributes(Argentina)
 
 print(summary(network::get.edge.attribute(Argentina, "Frequency")))
 
-get.edge.attribute(Argentina, "Frequency")
+network::get.edge.attribute(Argentina, "Frequency")
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
