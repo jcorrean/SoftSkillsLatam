@@ -7,19 +7,15 @@ for (i in 1:nrow(Matriz)) {
         Program = rownames(Matriz)[i],
         Skill = colnames(Matriz)[j],
         #Program.Skill = Matriz[i, j] > 0,
-        Frequency = Matriz[i, j]
+        Frequency = Matriz[i, j],
+        stringsAsFactors = FALSE
       ))
     }
   }
 }
 
-#isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
-#isolated_programs
-#Matriz[rownames(Matriz) %in% isolated_programs, ]
-
-
 library(igraph)
-bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+bnARG <- graph_from_biadjacency_matrix(Matriz, directed = FALSE, weighted = TRUE)
 V(bnARG)$type <- bipartite_mapping(bnARG)$type
 V(bnARG)$shape <- ifelse(V(bnARG)$type, "circle", "square")
 V(bnARG)$color <- ifelse(V(bnARG)$type, "red", "blue4")
@@ -27,14 +23,16 @@ V(bnARG)$degree <- igraph::degree(bnARG)
 V(bnARG)$closeness <- igraph::closeness(bnARG)
 V(bnARG)$betweenness <- igraph::betweenness(bnARG)
 V(bnARG)$Eigenvector <- igraph::eigen_centrality(bnARG)$vector
-vertices <- edges_args[edges_args$Frequency >= 1, ]
-E(bnARG)$Frequency <- vertices$Frequency
 #E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
 igraph::vertex.attributes(bnARG)$name
 igraph::edge_density(bnARG)
+pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE)
+pave2 <- igraph::as_edgelist(bnARG, names = FALSE)
+pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG))
 
+V(bnARG)$name
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           is_actor = c(rep(TRUE, 514), rep(FALSE, 10)),
                           node.type = c(rep("Program", 514), rep("Skill", 10)),
@@ -44,22 +42,56 @@ ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
                           Eigenvector = V(bnARG)$Eigenvector,
                           Program = c(ARGTexts$Program, rep(NA, 10)),
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
-
+ProgramsARG$is_actor[ProgramsARG$Degree == 0] <- FALSE
+length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])
 
 library(network)
-Argentina <- as.network(edges_args, 
+Messi <- network(pave3, loops = TRUE, directed = FALSE)
+Messi
+as.matrix(Messi) #ok
+
+valued <- network(Messi, 
+                  loops = TRUE, 
+                  directed = FALSE, 
+                  ignore.eval = FALSE, 
+                  names.eval = "Frequency")
+
+network::list.edge.attributes(valued)
+
+as.matrix(valued, attrname = "Frequency")
+
+Messi %e% 
+
+Messi <- network.initialize(igraph::vcount(bnARG),
+                            directed = FALSE,
+                            hyper = FALSE,
+                            loops = FALSE,
+                            multiple = FALSE,
+                            bipartite = length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])-10
+)
+Messi
+valuedNet <- set.edge.value(Matriz, "Frequency")
+set.edge.value(Messi, "Frequency", pave3)
+network::get.edgeIDs(Messi, 1)
+network::set.edge.value(Messi, value = E(bnARG)$Frequency, e = pave2, v = V(bnARG)$name)
+
+Verga <-network.bipartite(pave2, 
+                          Messi, 
+                          ignore.eval = FALSE,
+                          names.eval = "Frequency")
+
+Argentina <- as.network(edges_args,
+                        matrix.type = "bipartite",
                         directed = FALSE, 
                         bipartite = TRUE, 
                         bipartite_col = "is_actor", 
-                        vertices = ProgramsARG)
+                        vertices = ProgramsARG,
+                        ignore.eval = FALSE)
 class(Argentina)
 Argentina
-
-AAA <- str(Argentina)
+network::set.edge.attribute(Argentina, "Frequency", edges_args$Frequency)
+Argentina
 network::list.edge.attributes(Argentina)
-#network::delete.edge.attribute(Argentina, "na")
-network::list.edge.attributes(Argentina)
-
 print(summary(network::get.edge.attribute(Argentina, "Frequency")))
 
 network::get.edge.attribute(Argentina, "Frequency")
