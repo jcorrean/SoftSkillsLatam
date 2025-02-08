@@ -28,9 +28,10 @@ igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
 igraph::vertex.attributes(bnARG)$name
 igraph::edge_density(bnARG)
-pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE)
+bnARG
+pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE, attr = "weight")
 pave2 <- igraph::as_edgelist(bnARG, names = FALSE)
-pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG, names = TRUE))
+pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG, names = TRUE, attr = "weight"))
 
 V(bnARG)$name
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
@@ -51,11 +52,12 @@ Messi <- network(pave3,
                  directed = FALSE, 
                  bipartite = 514,
                  vertices = ProgramsARG)
+network::list.edge.attributes(Messi)
 Messi
 edge_ids <- as.matrix.network.incidence(Messi)
 edges <- as.matrix.network.edgelist(Messi)
 
-network::list.edge.attributes(valued)
+
 
 as.matrix(valued, attrname = "Frequency")
 
