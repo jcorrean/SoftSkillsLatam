@@ -26,16 +26,15 @@ V(bnARG)$Eigenvector <- igraph::eigen_centrality(bnARG)$vector
 #E(bnARG)$color <- "lightgrey"
 igraph::edge_attr_names(bnARG)
 igraph::edge_attr(bnARG)
-igraph::vertex.attributes(bnARG)$name
+NODES <-  data.frame(nodes = 1:length(igraph::vertex.attributes(bnARG)$name))
 igraph::edge_density(bnARG)
 bnARG
-pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE, attr = "weight")
+pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE)
 pave2 <- igraph::as_edgelist(bnARG, names = FALSE)
-pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG, names = TRUE, attr = "weight"))
+pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG))
 pave4 <- as_long_data_frame(bnARG)
 
-V(bnARG)$name
-ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
+ProgramsARG <- data.frame(vertex.names = NODES$nodes,
                           is_actor = c(rep(TRUE, 514), rep(FALSE, 10)),
                           node.type = c(rep("Program", 514), rep("Skill", 10)),
                           Degree = V(bnARG)$degree,
@@ -49,55 +48,14 @@ length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])
 
 
 library(network)
-Messi <- network(pave4, 
+Argentina <- network(pave, 
                  loops = FALSE, 
                  directed = FALSE, 
-                 bipartite = TRUE,
-                 vertices = ProgramsARG)
-network::list.edge.attributes(Messi)
-Messi
-edge_ids <- as.matrix.network.incidence(Messi)
-edges <- as.matrix.network.edgelist(Messi)
-
-
-
-as.matrix(valued, attrname = "Frequency")
-
-Messi %e% 
-
-Messi <- network.initialize(igraph::vcount(bnARG),
-                            directed = FALSE,
-                            hyper = FALSE,
-                            loops = FALSE,
-                            multiple = FALSE,
-                            bipartite = length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])-10
-)
-Messi
-valuedNet <- set.edge.value(Matriz, "Frequency")
-set.edge.value(Messi, "Frequency", pave3)
-network::get.edgeIDs(Messi, 1)
-network::set.edge.value(Messi, value = E(bnARG)$Frequency, e = pave2, v = V(bnARG)$name)
-
-Verga <-network.bipartite(pave2, 
-                          Messi, 
-                          ignore.eval = FALSE,
-                          names.eval = "Frequency")
-
-Argentina <- as.network(edges_args,
-                        matrix.type = "bipartite",
-                        directed = FALSE, 
-                        bipartite = TRUE, 
-                        bipartite_col = "is_actor", 
-                        vertices = ProgramsARG,
-                        ignore.eval = FALSE)
-class(Argentina)
-Argentina
-network::set.edge.attribute(Argentina, "Frequency", edges_args$Frequency)
+                 bipartite = TRUE)
 Argentina
 network::list.edge.attributes(Argentina)
-print(summary(network::get.edge.attribute(Argentina, "Frequency")))
-
-network::get.edge.attribute(Argentina, "Frequency")
+network::list.vertex.attributes(Argentina)
+get.vertex.attribute(Argentina, "vertex.names")
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
