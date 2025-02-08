@@ -46,18 +46,14 @@ ProgramsARG$is_actor[ProgramsARG$Degree == 0] <- FALSE
 length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])
 
 library(network)
-Messi <- network(pave3, loops = TRUE, directed = FALSE)
+Messi <- network(pave3, 
+                 loops = TRUE, 
+                 directed = FALSE, 
+                 bipartite = 514,
+                 vertices = ProgramsARG)
 Messi
-MessiMatrix <- as.matrix(Messi) #ok
 edge_ids <- as.matrix.network.incidence(Messi)
 edges <- as.matrix.network.edgelist(Messi)
-network::get.edgeIDs(Messi, 529)
-
-valued <- network(Messi, 
-                  loops = TRUE, 
-                  directed = FALSE, 
-                  ignore.eval = FALSE, 
-                  names.eval = "Frequency")
 
 network::list.edge.attributes(valued)
 
