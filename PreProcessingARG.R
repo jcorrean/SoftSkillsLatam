@@ -31,13 +31,12 @@ Argentina <- network(Matriz,
                      bipartite = TRUE)
 Argentina
 vergacion <- network::as.edgelist(Argentina)
-str(vergacion)
-
-str(vergacion)
-vergacion$
 network::list.edge.attributes(Argentina)
 network::list.vertex.attributes(Argentina)
 get.vertex.attribute(Argentina, "vertex.names")
+delete.vertex.attribute(Argentina, "na")
+network::list.vertex.attributes(Argentina)
+
 
 SizeARG <- network::network.size(Argentina)
 DensityARG <- network::network.density(Argentina)
