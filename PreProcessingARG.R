@@ -32,6 +32,7 @@ bnARG
 pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE, attr = "weight")
 pave2 <- igraph::as_edgelist(bnARG, names = FALSE)
 pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG, names = TRUE, attr = "weight"))
+pave4 <- as_long_data_frame(bnARG)
 
 V(bnARG)$name
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
@@ -46,11 +47,12 @@ ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
 ProgramsARG$is_actor[ProgramsARG$Degree == 0] <- FALSE
 length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])
 
+
 library(network)
-Messi <- network(pave3, 
-                 loops = TRUE, 
+Messi <- network(pave4, 
+                 loops = FALSE, 
                  directed = FALSE, 
-                 bipartite = 514,
+                 bipartite = TRUE,
                  vertices = ProgramsARG)
 network::list.edge.attributes(Messi)
 Messi
