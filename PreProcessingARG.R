@@ -30,7 +30,7 @@ igraph::vertex.attributes(bnARG)$name
 igraph::edge_density(bnARG)
 pave <- igraph::as_biadjacency_matrix(bnARG, names = TRUE)
 pave2 <- igraph::as_edgelist(bnARG, names = FALSE)
-pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG))
+pave3 <- as.matrix(igraph::as_adjacency_matrix(bnARG, names = TRUE))
 
 V(bnARG)$name
 ProgramsARG <- data.frame(vertex.names = igraph::vertex.attributes(bnARG)$name,
@@ -48,7 +48,10 @@ length(ProgramsARG$is_actor[ProgramsARG$Degree > 0])
 library(network)
 Messi <- network(pave3, loops = TRUE, directed = FALSE)
 Messi
-as.matrix(Messi) #ok
+MessiMatrix <- as.matrix(Messi) #ok
+edge_ids <- as.matrix.network.incidence(Messi)
+edges <- as.matrix.network.edgelist(Messi)
+network::get.edgeIDs(Messi, 529)
 
 valued <- network(Messi, 
                   loops = TRUE, 
