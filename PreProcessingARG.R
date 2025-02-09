@@ -25,17 +25,23 @@ ProgramsARG <- data.frame(vertex.names = V(bnARG)$name,
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
 
 library(network)
-Argentina <- network(Matriz,
-                     directed = FALSE, 
-                     vertices = ProgramsARG,
-                     bipartite = TRUE)
+Argentina <- as.network(Matriz,
+                   loops = FALSE,
+                   directed = FALSE,
+                   bipartite = TRUE,  # First 3 nodes belong to partition 1
+                   vertices = ProgramsARG)
+
 Argentina
 vergacion <- network::as.edgelist(Argentina)
 network::list.edge.attributes(Argentina)
+delete.edge.attribute(Argentina, "na")
+set.edge.value(Argentina, "Frequency", Edgelist$weight)
+get.edge.attribute(Argentina, "Frequency")
+Argentina
 network::list.vertex.attributes(Argentina)
-get.vertex.attribute(Argentina, "vertex.names")
 delete.vertex.attribute(Argentina, "na")
 network::list.vertex.attributes(Argentina)
+network::list.edge.attributes(Argentina)
 
 
 SizeARG <- network::network.size(Argentina)
