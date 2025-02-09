@@ -32,9 +32,9 @@ CostaRica <- as.network(Matriz,
                         vertices = ProgramsCR)
 CostaRica
 network::list.vertex.attributes(CostaRica)
-delete.vertex.attribute(CostaRica, "na")
+#delete.vertex.attribute(CostaRica, "na")
 network::list.edge.attributes(CostaRica)
-delete.edge.attribute(CostaRica, "na")
+#delete.edge.attribute(CostaRica, "na")
 CostaRica
 CostaRica %v% "Degree" <- ProgramsCR$Degree
 CostaRica %v% "Eigenvector.centrality" <- ProgramsCR$Eigenvector

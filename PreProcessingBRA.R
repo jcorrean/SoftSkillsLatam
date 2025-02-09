@@ -33,9 +33,9 @@ Brazil <- as.network(Matriz,
                      vertices = ProgramsBRA)
 Brazil
 network::list.vertex.attributes(Brazil)
-delete.vertex.attribute(Brazil, "na")
+#delete.vertex.attribute(Brazil, "na")
 network::list.edge.attributes(Brazil)
-delete.edge.attribute(Brazil, "na")
+#delete.edge.attribute(Brazil, "na")
 Brazil
 Brazil %v% "Degree" <- ProgramsBRA$Degree
 Brazil %v% "Eigenvector.centrality" <- ProgramsBRA$Eigenvector

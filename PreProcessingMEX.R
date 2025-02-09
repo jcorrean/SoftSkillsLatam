@@ -32,9 +32,9 @@ Mexico <- as.network(Matriz,
                      vertices = ProgramsMEX)
 Mexico
 network::list.vertex.attributes(Mexico)
-delete.vertex.attribute(Mexico, "na")
+#delete.vertex.attribute(Mexico, "na")
 network::list.edge.attributes(Mexico)
-delete.edge.attribute(Mexico, "na")
+#delete.edge.attribute(Mexico, "na")
 Mexico
 Mexico %v% "Degree" <- ProgramsMEX$Degree
 Mexico %v% "Eigenvector.centrality" <- ProgramsMEX$Eigenvector

@@ -33,9 +33,9 @@ Ecuador <- as.network(Matriz,
                       vertices = ProgramsECU)
 Ecuador
 network::list.vertex.attributes(Ecuador)
-delete.vertex.attribute(Ecuador, "na")
+#delete.vertex.attribute(Ecuador, "na")
 network::list.edge.attributes(Ecuador)
-delete.edge.attribute(Ecuador, "na")
+#delete.edge.attribute(Ecuador, "na")
 Ecuador
 Ecuador %v% "Degree" <- ProgramsECU$Degree
 Ecuador %v% "Eigenvector.centrality" <- ProgramsECU$Eigenvector

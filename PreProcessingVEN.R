@@ -32,9 +32,9 @@ Venezuela <- as.network(Matriz,
                       vertices = ProgramsVEN)
 Venezuela
 network::list.vertex.attributes(Venezuela)
-delete.vertex.attribute(Venezuela, "na")
+#delete.vertex.attribute(Venezuela, "na")
 network::list.edge.attributes(Venezuela)
-delete.edge.attribute(Venezuela, "na")
+#delete.edge.attribute(Venezuela, "na")
 Venezuela
 Venezuela %v% "Degree" <- ProgramsVEN$Degree
 Venezuela %v% "Eigenvector.centrality" <- ProgramsVEN$Eigenvector

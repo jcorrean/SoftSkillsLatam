@@ -28,8 +28,6 @@ RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
 RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="vertices")
 
-
-
 RegionalNetworks %>%
   imap(~ {
     mnext_value <- .x$gal$mnext
@@ -57,7 +55,7 @@ RegionalNetworks %>%
 library(ergm.multi)
 SampledNetworks <- Networks(RegionalNetworks)
 SampledNetworks
-mod1 <- ergm(SampledNetworks ~ N(~edges))
+mod1 <- ergm(RegionalNetworks ~ N(~edges))
 summary(mod1)
 exp(mod1$coefficients)/(1+exp(mod1$coefficients))
 # About 28.56% of all possible edges actually exist.

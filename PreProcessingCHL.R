@@ -32,9 +32,9 @@ Chile <- as.network(Matriz,
                     vertices = ProgramsCHL)
 Chile
 network::list.vertex.attributes(Chile)
-delete.vertex.attribute(Chile, "na")
+#delete.vertex.attribute(Chile, "na")
 network::list.edge.attributes(Chile)
-delete.edge.attribute(Chile, "na")
+#delete.edge.attribute(Chile, "na")
 Chile
 Chile %v% "Degree" <- ProgramsCHL$Degree
 Chile %v% "Eigenvector.centrality" <- ProgramsCHL$Eigenvector

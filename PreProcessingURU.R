@@ -33,9 +33,9 @@ Uruguay <- as.network(Matriz,
                      vertices = ProgramsURU)
 Uruguay
 network::list.vertex.attributes(Uruguay)
-delete.vertex.attribute(Uruguay, "na")
+#delete.vertex.attribute(Uruguay, "na")
 network::list.edge.attributes(Uruguay)
-delete.edge.attribute(Uruguay, "na")
+#delete.edge.attribute(Uruguay, "na")
 Uruguay
 Uruguay %v% "Degree" <- ProgramsURU$Degree
 Uruguay %v% "Eigenvector.centrality" <- ProgramsURU$Eigenvector

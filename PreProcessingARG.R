@@ -33,9 +33,9 @@ Argentina <- as.network(Matriz,
 
 Argentina
 network::list.vertex.attributes(Argentina)
-delete.vertex.attribute(Argentina, "na")
+#delete.vertex.attribute(Argentina, "na")
 network::list.edge.attributes(Argentina)
-delete.edge.attribute(Argentina, "na")
+#delete.edge.attribute(Argentina, "na")
 Argentina
 Argentina %v% "Degree" <- ProgramsARG$Degree
 Argentina %v% "Eigenvector.centrality" <- ProgramsARG$Eigenvector
@@ -70,5 +70,6 @@ network::get.vertex.attribute(Argentina, "Program")
 network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
+network.edgecount(Argentina)
 rm(list=setdiff(ls(), c("Argentina")))
 saveRDS(Argentina, file = "NetworkData/Argentina.RDS")

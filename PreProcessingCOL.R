@@ -32,9 +32,9 @@ Colombia <- as.network(Matriz,
                        vertices = ProgramsCOL)
 Colombia
 network::list.vertex.attributes(Colombia)
-delete.vertex.attribute(Colombia, "na")
+#delete.vertex.attribute(Colombia, "na")
 network::list.edge.attributes(Colombia)
-delete.edge.attribute(Colombia, "na")
+#delete.edge.attribute(Colombia, "na")
 Colombia
 Colombia %v% "Degree" <- ProgramsCOL$Degree
 Colombia %v% "Eigenvector.centrality" <- ProgramsCOL$Eigenvector
