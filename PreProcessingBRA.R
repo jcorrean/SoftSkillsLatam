@@ -1,25 +1,7 @@
 load("~/Documents/GitHub/SoftSkillsLatam/Matrices/MatrizBRA.RData")
-edges_args <- data.frame()
-for (i in 1:nrow(Matriz)) {
-  for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] >= 1) { 
-      edges_args <- rbind(edges_args, data.frame(
-        Program = rownames(Matriz)[i],
-        Skill = colnames(Matriz)[j],
-        #Program.Skill = Matriz[i, j] > 0,
-        Frequency = Matriz[i, j]
-      ))
-    }
-  }
-}
-
-#isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
-#isolated_programs
-#Matriz[rownames(Matriz) %in% isolated_programs, ]
-
-
+rm(list=setdiff(ls(), c("Matriz", "BRATexts")))
 library(igraph)
-bnBRA <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+bnBRA <- graph_from_biadjacency_matrix(Matriz, directed = FALSE, weighted = TRUE)
 V(bnBRA)$type <- bipartite_mapping(bnBRA)$type
 V(bnBRA)$shape <- ifelse(V(bnBRA)$type, "circle", "square")
 V(bnBRA)$color <- ifelse(V(bnBRA)$type, "red", "blue4")
@@ -27,15 +9,12 @@ V(bnBRA)$degree <- igraph::degree(bnBRA)
 V(bnBRA)$closeness <- igraph::closeness(bnBRA)
 V(bnBRA)$betweenness <- igraph::betweenness(bnBRA)
 V(bnBRA)$Eigenvector <- igraph::eigen_centrality(bnBRA)$vector
-vertices <- edges_args[edges_args$Frequency >= 1, ]
-E(bnBRA)$Frequency <- vertices$Frequency
-#E(bnBRA)$color <- "lightgrey"
-igraph::edge_attr_names(bnBRA)
-igraph::edge_attr(bnBRA)
-igraph::vertex.attributes(bnBRA)$name
-igraph::edge_density(bnBRA)
+Edgelist <- data.frame(as_long_data_frame(bnBRA), stringsAsFactors = FALSE)
+Edgelist$from <- Edgelist$from_name
+Edgelist$to <- Edgelist$to_name
+Edgelist <- Edgelist[1:3]
 
-ProgramsBRA <- data.frame(vertex.names = igraph::vertex.attributes(bnBRA)$name,
+ProgramsBRA <- data.frame(vertex.names = V(bnBRA)$name,
                           is_actor = c(rep(TRUE, nrow(Matriz)), rep(FALSE, 10)),
                           node.type = c(rep("Program", nrow(Matriz)), rep("Skill", 10)),
                           Degree = V(bnBRA)$degree,
@@ -47,20 +26,31 @@ ProgramsBRA <- data.frame(vertex.names = igraph::vertex.attributes(bnBRA)$name,
 
 
 library(network)
-Brazil <- as.network(edges_args, 
-                        directed = FALSE, 
-                        bipartite = TRUE, 
-                        bipartite_col = "is_actor", 
-                        vertices = ProgramsBRA)
-class(Brazil)
+Brazil <- as.network(Matriz,
+                     loops = FALSE,
+                     directed = FALSE,
+                     bipartite = TRUE,
+                     vertices = ProgramsBRA)
 Brazil
+network::list.vertex.attributes(Brazil)
+delete.vertex.attribute(Brazil, "na")
 network::list.edge.attributes(Brazil)
-#network::delete.edge.attribute(Brazil, "na")
+delete.edge.attribute(Brazil, "na")
+Brazil
+Brazil %v% "Degree" <- ProgramsBRA$Degree
+Brazil %v% "Eigenvector.centrality" <- ProgramsBRA$Eigenvector
+Brazil %v% "Brochure.Length" <-  ProgramsBRA$Brochure.Length
+Brazil %v% "Program" <- ProgramsBRA$Program
+Brazil %e% "Freq" <- Edgelist$weight
+get.edge.attribute(Brazil, "Freq")
+summary(get.edge.attribute(Brazil, "Freq"))
+summary(Edgelist$weight)
+
+Brazil
+
+network::list.vertex.attributes(Brazil)
+get.vertex.attribute(Brazil, "vertex.names")
 network::list.edge.attributes(Brazil)
-
-print(summary(network::get.edge.attribute(Brazil, "Frequency")))
-
-get.edge.attribute(Brazil, "Frequency")
 
 SizeARG <- network::network.size(Brazil)
 DensityARG <- network::network.density(Brazil)

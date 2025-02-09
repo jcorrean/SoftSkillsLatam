@@ -28,19 +28,28 @@ library(network)
 Argentina <- as.network(Matriz,
                    loops = FALSE,
                    directed = FALSE,
-                   bipartite = TRUE,  # First 3 nodes belong to partition 1
+                   bipartite = TRUE,
                    vertices = ProgramsARG)
 
 Argentina
-vergacion <- network::as.edgelist(Argentina)
-network::list.edge.attributes(Argentina)
-delete.edge.attribute(Argentina, "na")
-set.edge.value(Argentina, "Frequency", Edgelist$weight)
-get.edge.attribute(Argentina, "Frequency")
-Argentina
 network::list.vertex.attributes(Argentina)
 delete.vertex.attribute(Argentina, "na")
+network::list.edge.attributes(Argentina)
+delete.edge.attribute(Argentina, "na")
+Argentina
+Argentina %v% "Degree" <- ProgramsARG$Degree
+Argentina %v% "Eigenvector.centrality" <- ProgramsARG$Eigenvector
+Argentina %v% "Brochure.Length" <-  ProgramsARG$Brochure.Length
+Argentina %v% "Program" <- ProgramsARG$Program
+Argentina %e% "Freq" <- Edgelist$weight
+get.edge.attribute(Argentina, "Freq")
+summary(get.edge.attribute(Argentina, "Freq"))
+summary(Edgelist$weight)
+
+Argentina
+
 network::list.vertex.attributes(Argentina)
+get.vertex.attribute(Argentina, "vertex.names")
 network::list.edge.attributes(Argentina)
 
 
