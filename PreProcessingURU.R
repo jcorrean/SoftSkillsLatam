@@ -1,25 +1,7 @@
 load("~/Documents/GitHub/SoftSkillsLatam/Matrices/MatrizURU.RData")
-edges_args <- data.frame()
-for (i in 1:nrow(Matriz)) {
-  for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] >= 1) { 
-      edges_args <- rbind(edges_args, data.frame(
-        Program = rownames(Matriz)[i],
-        Skill = colnames(Matriz)[j],
-        #Program.Skill = Matriz[i, j] > 0,
-        Frequency = Matriz[i, j]
-      ))
-    }
-  }
-}
-
-#isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
-#isolated_programs
-#Matriz[rownames(Matriz) %in% isolated_programs, ]
-
-
+rm(list=setdiff(ls(), c("Matriz", "URUTexts")))
 library(igraph)
-bnURU <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+bnURU <- graph_from_biadjacency_matrix(Matriz, directed = FALSE, weighted = TRUE)
 V(bnURU)$type <- bipartite_mapping(bnURU)$type
 V(bnURU)$shape <- ifelse(V(bnURU)$type, "circle", "square")
 V(bnURU)$color <- ifelse(V(bnURU)$type, "red", "blue4")
@@ -27,14 +9,12 @@ V(bnURU)$degree <- igraph::degree(bnURU)
 V(bnURU)$closeness <- igraph::closeness(bnURU)
 V(bnURU)$betweenness <- igraph::betweenness(bnURU)
 V(bnURU)$Eigenvector <- igraph::eigen_centrality(bnURU)$vector
-vertices <- edges_args[edges_args$Frequency >= 1, ]
-E(bnURU)$Frequency <- vertices$Frequency
-#E(bnURU)$color <- "lightgrey"
-igraph::edge_attr_names(bnURU)
-igraph::edge_attr(bnURU)
-igraph::vertex.attributes(bnURU)$name
+Edgelist <- data.frame(as_long_data_frame(bnURU), stringsAsFactors = FALSE)
+Edgelist$from <- Edgelist$from_name
+Edgelist$to <- Edgelist$to_name
+Edgelist <- Edgelist[1:3]
 
-ProgramsURU <- data.frame(vertex.names = igraph::vertex.attributes(bnURU)$name,
+ProgramsURU <- data.frame(vertex.names = V(bnURU)$name,
                           is_actor = c(rep(TRUE, nrow(Matriz)), rep(FALSE, 10)),
                           node.type = c(rep("Program", nrow(Matriz)), rep("Skill", 10)),
                           Degree = V(bnURU)$degree,
@@ -46,19 +26,31 @@ ProgramsURU <- data.frame(vertex.names = igraph::vertex.attributes(bnURU)$name,
 
 
 library(network)
-Uruguay <- as.network(edges_args, 
-                     directed = FALSE, 
-                     bipartite = TRUE, 
-                     bipartite_col = "is_actor", 
+Uruguay <- as.network(Matriz,
+                      loops = FALSE,
+                      directed = FALSE,
+                      bipartite = TRUE,
                      vertices = ProgramsURU)
-class(Uruguay)
 Uruguay
+network::list.vertex.attributes(Uruguay)
+delete.vertex.attribute(Uruguay, "na")
 network::list.edge.attributes(Uruguay)
+delete.edge.attribute(Uruguay, "na")
+Uruguay
+Uruguay %v% "Degree" <- ProgramsURU$Degree
+Uruguay %v% "Eigenvector.centrality" <- ProgramsURU$Eigenvector
+Uruguay %v% "Brochure.Length" <-  ProgramsURU$Brochure.Length
+Uruguay %v% "Program" <- ProgramsURU$Program
+Uruguay %e% "Freq" <- Edgelist$weight
+get.edge.attribute(Uruguay, "Freq")
+summary(get.edge.attribute(Uruguay, "Freq"))
+summary(Edgelist$weight)
+
+Uruguay
+
+network::list.vertex.attributes(Uruguay)
+get.vertex.attribute(Uruguay, "vertex.names")
 network::list.edge.attributes(Uruguay)
-
-print(summary(network::get.edge.attribute(Uruguay, "Frequency")))
-
-get.edge.attribute(Uruguay, "Frequency")
 
 SizeARG <- network::network.size(Uruguay)
 DensityARG <- network::network.density(Uruguay)
