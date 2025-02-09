@@ -1,25 +1,7 @@
 load("~/Documents/GitHub/SoftSkillsLatam/Matrices/MatrizMEX.RData")
-edges_args <- data.frame()
-for (i in 1:nrow(Matriz)) {
-  for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] >= 1) { 
-      edges_args <- rbind(edges_args, data.frame(
-        Program = rownames(Matriz)[i],
-        Skill = colnames(Matriz)[j],
-        #Program.Skill = Matriz[i, j] > 0,
-        Frequency = Matriz[i, j]
-      ))
-    }
-  }
-}
-
-#isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
-#isolated_programs
-#Matriz[rownames(Matriz) %in% isolated_programs, ]
-
-
+rm(list=setdiff(ls(), c("Matriz", "MEXTexts")))
 library(igraph)
-bnMEX <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+bnMEX <- graph_from_biadjacency_matrix(Matriz, directed = FALSE, weighted = TRUE)
 V(bnMEX)$type <- bipartite_mapping(bnMEX)$type
 V(bnMEX)$shape <- ifelse(V(bnMEX)$type, "circle", "square")
 V(bnMEX)$color <- ifelse(V(bnMEX)$type, "red", "blue4")
@@ -27,14 +9,12 @@ V(bnMEX)$degree <- igraph::degree(bnMEX)
 V(bnMEX)$closeness <- igraph::closeness(bnMEX)
 V(bnMEX)$betweenness <- igraph::betweenness(bnMEX)
 V(bnMEX)$Eigenvector <- igraph::eigen_centrality(bnMEX)$vector
-vertices <- edges_args[edges_args$Frequency >= 1, ]
-E(bnMEX)$Frequency <- vertices$Frequency
-#E(bnMEX)$color <- "lightgrey"
-igraph::edge_attr_names(bnMEX)
-igraph::edge_attr(bnMEX)
-igraph::vertex.attributes(bnMEX)$name
+Edgelist <- data.frame(as_long_data_frame(bnMEX), stringsAsFactors = FALSE)
+Edgelist$from <- Edgelist$from_name
+Edgelist$to <- Edgelist$to_name
+Edgelist <- Edgelist[1:3]
 
-ProgramsMEX <- data.frame(vertex.names = igraph::vertex.attributes(bnMEX)$name,
+ProgramsMEX <- data.frame(vertex.names = V(bnMEX)$name,
                          is_actor = c(rep(TRUE, nrow(Matriz)), rep(FALSE, 10)),
                          node.type = c(rep("Program", nrow(Matriz)), rep("Skill", 10)),
                          Degree = V(bnMEX)$degree,
@@ -44,22 +24,26 @@ ProgramsMEX <- data.frame(vertex.names = igraph::vertex.attributes(bnMEX)$name,
                          Program = c(MEXTexts$Program, rep(NA, 10)),
                          Brochure.Length = c(MEXTexts$Tokens, rep(NA, 10)))
 
-
 library(network)
-Mexico <- as.network(edges_args, 
-                      directed = FALSE, 
-                      bipartite = TRUE, 
-                      bipartite_col = "is_actor", 
-                      vertices = ProgramsMEX)
-class(Mexico)
+Mexico <- as.network(Matriz,
+                     loops = FALSE,
+                     directed = FALSE,
+                     bipartite = TRUE,
+                     vertices = ProgramsMEX)
 Mexico
+network::list.vertex.attributes(Mexico)
+delete.vertex.attribute(Mexico, "na")
 network::list.edge.attributes(Mexico)
-network::delete.edge.attribute(Mexico, "na")
-network::list.edge.attributes(Mexico)
-
-print(summary(network::get.edge.attribute(Mexico, "Frequency")))
-
-get.edge.attribute(Mexico, "Frequency")
+delete.edge.attribute(Mexico, "na")
+Mexico
+Mexico %v% "Degree" <- ProgramsMEX$Degree
+Mexico %v% "Eigenvector.centrality" <- ProgramsMEX$Eigenvector
+Mexico %v% "Brochure.Length" <-  ProgramsMEX$Brochure.Length
+Mexico %v% "Program" <- ProgramsMEX$Program
+Mexico %e% "Freq" <- Edgelist$weight
+get.edge.attribute(Mexico, "Freq")
+summary(get.edge.attribute(Mexico, "Freq"))
+summary(Edgelist$weight)
 
 SizeARG <- network::network.size(Mexico)
 DensityARG <- network::network.density(Mexico)
@@ -80,4 +64,4 @@ network::get.vertex.attribute(Mexico, "Brochure.Length")
 Mexico
 rm(list=setdiff(ls(), c("Mexico")))
 saveRDS(Mexico, file = "NetworkData/Mexico.RDS")
-readRDS(file = "NetworkData/Mexico.RDS")
+
