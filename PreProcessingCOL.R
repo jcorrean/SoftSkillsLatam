@@ -1,25 +1,7 @@
 load("~/Documents/GitHub/SoftSkillsLatam/Matrices/MatrizCOL.RData")
-edges_args <- data.frame()
-for (i in 1:nrow(Matriz)) {
-  for (j in 1:ncol(Matriz)) {
-    if (Matriz[i, j] >= 1) { 
-      edges_args <- rbind(edges_args, data.frame(
-        Program = rownames(Matriz)[i],
-        Skill = colnames(Matriz)[j],
-        #Program.Skill = Matriz[i, j] > 0,
-        Frequency = Matriz[i, j]
-      ))
-    }
-  }
-}
-
-#isolated_programs <- which(rowSums(Matriz == 0) == ncol(Matriz))
-#isolated_programs
-#Matriz[rownames(Matriz) %in% isolated_programs, ]
-
-
+rm(list=setdiff(ls(), c("Matriz", "COLTexts")))
 library(igraph)
-bnCOL <- graph_from_biadjacency_matrix(Matriz, directed = FALSE)
+bnCOL <- graph_from_biadjacency_matrix(Matriz, directed = FALSE, weighted = TRUE)
 V(bnCOL)$type <- bipartite_mapping(bnCOL)$type
 V(bnCOL)$shape <- ifelse(V(bnCOL)$type, "circle", "square")
 V(bnCOL)$color <- ifelse(V(bnCOL)$type, "red", "blue4")
@@ -27,14 +9,12 @@ V(bnCOL)$degree <- igraph::degree(bnCOL)
 V(bnCOL)$closeness <- igraph::closeness(bnCOL)
 V(bnCOL)$betweenness <- igraph::betweenness(bnCOL)
 V(bnCOL)$Eigenvector <- igraph::eigen_centrality(bnCOL)$vector
-vertices <- edges_args[edges_args$Frequency >= 1, ]
-E(bnCOL)$Frequency <- vertices$Frequency
-#E(bnCOL)$color <- "lightgrey"
-igraph::edge_attr_names(bnCOL)
-igraph::edge_attr(bnCOL)
-igraph::vertex.attributes(bnCOL)$name
+Edgelist <- data.frame(as_long_data_frame(bnCOL), stringsAsFactors = FALSE)
+Edgelist$from <- Edgelist$from_name
+Edgelist$to <- Edgelist$to_name
+Edgelist <- Edgelist[1:3]
 
-ProgramsCOL <- data.frame(vertex.names = igraph::vertex.attributes(bnCOL)$name,
+ProgramsCOL <- data.frame(vertex.names = V(bnCOL)$name,
                           is_actor = c(rep(TRUE, nrow(Matriz)), rep(FALSE, 10)),
                           node.type = c(rep("Program", nrow(Matriz)), rep("Skill", 10)),
                           Degree = V(bnCOL)$degree,
@@ -44,22 +24,26 @@ ProgramsCOL <- data.frame(vertex.names = igraph::vertex.attributes(bnCOL)$name,
                           Program = c(COLTexts$Program, rep(NA, 10)),
                           Brochure.Length = c(COLTexts$Tokens, rep(NA, 10)))
 
-
 library(network)
-Colombia <- as.network(edges_args, 
-                    directed = FALSE, 
-                    bipartite = TRUE, 
-                    bipartite_col = "is_actor", 
-                    vertices = ProgramsCOL)
-class(Colombia)
+Colombia <- as.network(Matriz,
+                       loops = FALSE,
+                       directed = FALSE,
+                       bipartite = TRUE,
+                       vertices = ProgramsCOL)
 Colombia
+network::list.vertex.attributes(Colombia)
+delete.vertex.attribute(Colombia, "na")
 network::list.edge.attributes(Colombia)
-network::delete.edge.attribute(Colombia, "na")
-network::list.edge.attributes(Colombia)
-
-print(summary(network::get.edge.attribute(Colombia, "Frequency")))
-
-get.edge.attribute(Colombia, "Frequency")
+delete.edge.attribute(Colombia, "na")
+Colombia
+Colombia %v% "Degree" <- ProgramsCOL$Degree
+Colombia %v% "Eigenvector.centrality" <- ProgramsCOL$Eigenvector
+Colombia %v% "Brochure.Length" <-  ProgramsCOL$Brochure.Length
+Colombia %v% "Program" <- ProgramsCOL$Program
+Colombia %e% "Freq" <- Edgelist$weight
+get.edge.attribute(Colombia, "Freq")
+summary(get.edge.attribute(Colombia, "Freq"))
+summary(Edgelist$weight)
 
 SizeARG <- network::network.size(Colombia)
 DensityARG <- network::network.density(Colombia)
