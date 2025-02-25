@@ -41,8 +41,8 @@ Colombia %v% "Eigenvector.centrality" <- ProgramsCOL$Eigenvector
 Colombia %v% "Brochure.Length" <-  ProgramsCOL$Brochure.Length
 Colombia %v% "Program" <- ProgramsCOL$Program
 Colombia %e% "Freq" <- Edgelist$weight
-get.edge.attribute(Colombia, "Freq")
-summary(get.edge.attribute(Colombia, "Freq"))
+network::get.edge.attribute(Colombia, "Freq")
+summary(network::get.edge.attribute(Colombia, "Freq"))
 summary(Edgelist$weight)
 
 SizeARG <- network::network.size(Colombia)
