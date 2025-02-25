@@ -25,7 +25,7 @@ ProgramsARG <- data.frame(vertex.names = V(bnARG)$name,
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
 
 library(network)
-Argentina <- as.network(Matriz,
+Argentina <- network(Matriz,
                    loops = FALSE,
                    directed = FALSE,
                    bipartite = TRUE,
