@@ -42,14 +42,14 @@ Brazil %v% "Eigenvector.centrality" <- ProgramsBRA$Eigenvector
 Brazil %v% "Brochure.Length" <-  ProgramsBRA$Brochure.Length
 Brazil %v% "Program" <- ProgramsBRA$Program
 Brazil %e% "Freq" <- Edgelist$weight
-get.edge.attribute(Brazil, "Freq")
-summary(get.edge.attribute(Brazil, "Freq"))
+network::get.edge.attribute(Brazil, "Freq")
+summary(network::get.edge.attribute(Brazil, "Freq"))
 summary(Edgelist$weight)
 
 Brazil
 
 network::list.vertex.attributes(Brazil)
-get.vertex.attribute(Brazil, "vertex.names")
+network::get.vertex.attribute(Brazil, "vertex.names")
 network::list.edge.attributes(Brazil)
 
 SizeARG <- network::network.size(Brazil)
