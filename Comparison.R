@@ -25,7 +25,7 @@ RegionalNetworks
 
 length(RegionalNetworks)
 RegionalNetworks
-RegionalNetworks %>% discard(`%n%`, "OECD")
+RegionalNetworks %>% keep(`%n%`, "OECD")
 RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="vertices")
 
 RegionalNetworks %>%
@@ -58,7 +58,7 @@ SampledNetworks <- Networks(RegionalNetworks)
 # head_networks <- head(RegionalNetworks, 9)
 # SampledNetworks_head <- tryCatch(Networks(head_networks), error = function(e) e)
 # print(SampledNetworks_head)
-
+class(SampledNetworks)
 SampledNetworks
 mod1 <- ergm(SampledNetworks ~ N(~edges))
 summary(mod1)
