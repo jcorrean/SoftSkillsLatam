@@ -9,7 +9,6 @@ Uruguay <- readRDS("NetworkData/Uruguay.RDS")
 Venezuela <- readRDS("NetworkData/Venezuela.RDS")
 
 RegionalNetworks <- list(Argentina, Brazil, Chile, Colombia, CostaRica, Ecuador, Mexico, Uruguay, Venezuela)
-class(RegionalNetworks)
 library(network)
 RegionalNetworks
 country_names <- c("Argentina", "Brazil", "Chile", "Colombia", "CostaRica", "Ecuador", "Mexico", "Uruguay", "Venezuela")
@@ -60,7 +59,17 @@ SampledNetworks <- Networks(RegionalNetworks)
 # print(SampledNetworks_head)
 class(SampledNetworks)
 SampledNetworks
-mod1 <- ergm(SampledNetworks ~ N(~edges))
+# the term b1degree(3) specifies that programs, on average, should connect to 
+# three skills (3 is the average degree centrality). If the estimated term is
+# negative, that means programs would tend to specialize in fewer skills, if
+# the estimated term is positive, that means programs would tend to connect to more skills
+
+mod1 <- ergm(SampledNetworks ~ N(~edges + b1degree(3)))
 summary(mod1)
+mcmc.diagnostics(mod1)
+GOF1 <- gof(mod1)
+
+mod2 <- ergm(SampledNetworks ~ N(~edges + b1degree(3,by="Program", levels = "Doctorado")))
+summary(mod2)
 exp(mod1$coefficients)/(1+exp(mod1$coefficients))
 # About 28.56% of all possible edges actually exist.
