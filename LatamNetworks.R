@@ -51,16 +51,17 @@ Sampled.Universities
 
 268/Sampled.Universities
 
-RegionNetwork <- do.call(rbind, list(edges_arg, 
+RegionNetwork <- do.call(rbind, list(edges_args, 
                                      edges_br, 
                                      edges_chl, 
                                      edges_col, 
                                      edges_cr, 
-                                     edges_ec, 
+                                     edges_ecu, 
                                      edges_mx, 
-                                     edges_ur, 
-                                     edges_ve))
+                                     edges_uy, 
+                                     edges_ven))
 rm(list=setdiff(ls(), c("RegionNetwork")))
+
 
 library(igraph)
 bnR <- graph_from_data_frame(RegionNetwork, directed = F)
@@ -71,58 +72,21 @@ V(bnR)$color <- ifelse(V(bnR)$type, "green4", "red3")
 V(bnR)$label.cex <- ifelse(V(bnR)$type, 0.5, 1)
 V(bnR)$size <- sqrt(igraph::degree(bnR))
 E(bnR)$color <- "lightgrey"
-png(filename = "FR.png", width = 10, height = 38, units = "in", res = 300)
+png(filename = "FR.png", width = 40, height = 18, units = "in", res = 300)
 set.seed(8970)
 plot(bnR, vertex.label = NA, layout = layout.bipartite, arrow.width = 0.1, arrow.size = 0.1)
 dev.off()
-ProgramsRegion <- data.frame(Degree = igraph::degree(bnR),
-                          Closeness = igraph::closeness(bnR),
-                          Betweennes = igraph::betweenness(bnR),
-                          Eigen = igraph::eigen_centrality(bnR))
-ProgramsRegion <- ProgramsRegion[ -c(5:25) ]
+ProgramsRegion <- data.frame(Degree.centrality = igraph::degree(bnR),
+                          Closeness.centrality = igraph::closeness(bnR),
+                          Betweennes.centrality = igraph::betweenness(bnR),
+                          Eigenvector.centrality = igraph::eigen_centrality(bnR)$vector)
 rownames(ProgramsRegion)
-ProgramsRegion$SS <- rownames(ProgramsRegion)
+ProgramsRegion$Node <- rownames(ProgramsRegion)
 ProgramsRegion <- ProgramsRegion[order(-ProgramsRegion$Degree), ]
-#ProgramsRegion <- ProgramsRegion[!grepl("text", ProgramsRegion$SS), ]
-colnames(ProgramsRegion)[4] <- "Eigenvector"
-
-
-
-Matrix <- as.matrix(as_adjacency_matrix(bnR))
-nrow(Matrix) - 10
-ncol(Matrix)
-Matrix <- Matrix[1:10,11:ncol(Matrix)]
-Columnas <- data.frame(colnames(Matrix))
-verticesRegion <- nrow(Matrix) + ncol(Matrix)
-library(network)
-g <- network.initialize(verticesRegion, directed = F, bipartite = TRUE)
-pave <- network.bipartite(Matrix, g)
-Region <- network(pave, directed = F, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-Region
-
-SizeR <- network::network.size(Region)
-DensityR <- network::network.density(Region)
-ClusteringR <- tnet::clustering_tm(Matrix)
-set.network.attribute(Region, "Size", SizeR)
-set.network.attribute(Region, "Density", DensityR)
-set.network.attribute(Region, "Clustering", ClusteringR)
-Region
-
-Centralities <- data.frame(Degree = igraph::degree(bnR),
-                          Closeness = igraph::closeness(bnR),
-                          Betweennes = igraph::betweenness(bnR),
-                          Eigen = igraph::eigen_centrality(bnR))
-Centralities <- Centralities[ -c(5:25) ]
-rownames(Centralities)
-Centralities$Node <- rownames(Centralities)
-Centralities <- Centralities[order(-Centralities$Degree), ]
-#Centralities <- Centralities[!grepl("text", Centralities$SS), ]
-#Centralities <- Centralities[1:4]
-colnames(Centralities)[4] <- "Eigenvector"
-Centralities <- mutate(Centralities, 
+ProgramsRegion <- mutate(ProgramsRegion, 
                       Partition = ifelse(
                         grepl("text", Node), "Program", "Skill"))
-Centralities <- mutate(Centralities, 
+ProgramsRegion <- mutate(ProgramsRegion, 
                        Country = ifelse(
                          grepl("ARG_text", Node), "Argentina", 
                          ifelse(grepl("BRA_text", Node), "Brazil",
@@ -132,16 +96,16 @@ Centralities <- mutate(Centralities,
                          ifelse(grepl("ECU_text", Node), "Ecuador",
                          ifelse(grepl("MEX_text", Node), "Mexico",
                          ifelse(grepl("URU_text", Node), "Uruguay",
-                         ifelse(grepl("VEN_text", Node), "Venezuela", ""))))))))))
+                         ifelse(grepl("VEN_text", Node), "Venezuela", "Latam"))))))))))
 
-table(Centralities$Partition)
+table(ProgramsRegion$Partition)
 
 library(dplyr)
-result <- Centralities %>%
-  group_by(Country, Partition) %>%
+result <- ProgramsRegion %>%
+  group_by(Partition) %>%
   summarize(
-    Mean = mean(Eigenvector),
-    SD = sd(Eigenvector)
+    Mean = mean(Degree.centrality),
+    SD = sd(Degree.centrality)
   )
 
 result
@@ -153,7 +117,7 @@ DensityRN <- network::network.density(RegionNetwork)
 
 
 library(psych)
-describeBy(Centralities$Eigenvector, group = Centralities$Partition, mat = TRUE, digits = 2)
+describeBy(ProgramsRegion$Eigenvector, group = ProgramsRegion$Partition, mat = TRUE, digits = 2)
 
 rm(list = ls())
 
