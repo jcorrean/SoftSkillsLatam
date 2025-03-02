@@ -3,6 +3,19 @@ load("~/Documents/GitHub/SoftSkillsLatam/SkillsBRA.RData")
 load("~/Documents/GitHub/SoftSkillsLatam/SkillsCHL.RData")
 load("~/Documents/GitHub/SoftSkillsLatam/SkillsCOL.RData")
 load("~/Documents/GitHub/SoftSkillsLatam/SkillsCR.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsECU.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsMEX.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsURU.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsVEN.RData")
+Latam <- list(SkillsARG, SkillsBRA, SkillsCHL, SkillsCOL, SkillsCR, SkillsECU, SkillsMEX, SkillsURU, SkillsVEN)
+Latam <- do.call(rbind, Latam)
+library(tidyr)
+RadarSkills <- Latam %>%
+  mutate(skill_num = rep(1:10, 9)) %>%
+  select(country, skill_num, Eigenvector) %>%
+  pivot_wider(names_from = skill_num, values_from = Eigenvector) %>%
+  column_to_rownames(var = "country")
+colnames(RadarSkills) <- unique(Latam$vertex.names) 
 
 Argentina <- readRDS("NetworkData/Argentina.RDS")
 Brazil <- readRDS("NetworkData/Brazil.RDS")
