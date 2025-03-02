@@ -64,5 +64,8 @@ network::get.vertex.attribute(Ecuador, "Program")
 network::get.vertex.attribute(Ecuador, "Brochure.Length")
 
 Ecuador
+SkillsECU <- ProgramsECU %>% tail(., n =10)
+SkillsECU$country <- "Ecuador"
+save(ProgramsECU, file = "SkillsECU.RData")
 rm(list=setdiff(ls(), c("Ecuador")))
 saveRDS(Ecuador, file = "NetworkData/Ecuador.RDS")

@@ -24,6 +24,7 @@ ProgramsARG <- data.frame(vertex.names = V(bnARG)$name,
                           Program = c(ARGTexts$Program, rep(NA, 10)),
                           Brochure.Length = c(ARGTexts$Tokens, rep(NA, 10)))
 
+
 library(network)
 Argentina <- network(Matriz,
                    loops = FALSE,
@@ -50,7 +51,7 @@ summary(Edgelist$weight)
 Argentina
 
 network::list.vertex.attributes(Argentina)
-get.vertex.attribute(Argentina, "vertex.names")
+network::get.vertex.attribute(Argentina, "vertex.names")
 network::list.edge.attributes(Argentina)
 
 
@@ -72,5 +73,8 @@ network::get.vertex.attribute(Argentina, "Brochure.Length")
 
 Argentina
 network.edgecount(Argentina)
+SkillsARG <- ProgramsARG %>% tail(., n =10)
+SkillsARG$country <- "Argentina"
+save(SkillsARG, file = "SkillsARG.RData")
 rm(list=setdiff(ls(), c("Argentina")))
 saveRDS(Argentina, file = "NetworkData/Argentina.RDS")

@@ -63,5 +63,8 @@ network::get.vertex.attribute(Colombia, "Program")
 network::get.vertex.attribute(Colombia, "Brochure.Length")
 
 Colombia
+SkillsCOL <- ProgramsCOL %>% tail(., n =10)
+SkillsCOL$country <- "Colombia"
+save(SkillsCOL, file = "SkillsCOL.RData")
 rm(list=setdiff(ls(), c("Colombia")))
 saveRDS(Colombia, file = "NetworkData/Colombia.RDS")

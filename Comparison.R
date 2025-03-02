@@ -1,3 +1,9 @@
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsARG.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsBRA.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsCHL.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsCOL.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/SkillsCR.RData")
+
 Argentina <- readRDS("NetworkData/Argentina.RDS")
 Brazil <- readRDS("NetworkData/Brazil.RDS")
 Chile <- readRDS("NetworkData/Chile.RDS")
@@ -26,6 +32,8 @@ length(RegionalNetworks)
 RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
 RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="vertices")
+RegionalNetworks  %>% map(as_tibble, unit="vertices")
+map
 
 RegionalNetworks %>%
   imap(~ {

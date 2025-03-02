@@ -70,5 +70,8 @@ network::get.vertex.attribute(Brazil, "Program")
 network::get.vertex.attribute(Brazil, "Brochure.Length")
 
 Brazil
+SkillsBRA <- ProgramsBRA %>% tail(., n =10)
+SkillsBRA$country <- "Brazil"
+save(SkillsBRA, file = "SkillsBRA.RData")
 rm(list=setdiff(ls(), c("Brazil")))
 saveRDS(Brazil, file = "NetworkData/Brazil.RDS")
