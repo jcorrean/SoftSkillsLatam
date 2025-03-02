@@ -110,10 +110,6 @@ result <- ProgramsRegion %>%
 
 result
 library(network)
-RegionNetwork <- network(Matrix, directed = FALSE, hyper = FALSE, loops = FALSE, multiple = FALSE, bipartite = TRUE)
-RegionNetwork
-SizeRN <- network::network.size(RegionNetwork)
-DensityRN <- network::network.density(RegionNetwork)
 
 
 library(psych)
