@@ -41,6 +41,7 @@ Uruguay %v% "Degree" <- ProgramsURU$Degree
 Uruguay %v% "Eigenvector.centrality" <- ProgramsURU$Eigenvector
 Uruguay %v% "Brochure.Length" <-  ProgramsURU$Brochure.Length
 Uruguay %v% "Program" <- ProgramsURU$Program
+Uruguay %v% "Country" <- "Uruguay"
 Uruguay %e% "Freq" <- Edgelist$weight
 get.edge.attribute(Uruguay, "Freq")
 summary(get.edge.attribute(Uruguay, "Freq"))

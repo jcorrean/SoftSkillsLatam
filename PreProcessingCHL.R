@@ -40,6 +40,7 @@ Chile %v% "Degree" <- ProgramsCHL$Degree
 Chile %v% "Eigenvector.centrality" <- ProgramsCHL$Eigenvector
 Chile %v% "Brochure.Length" <-  ProgramsCHL$Brochure.Length
 Chile %v% "Program" <- ProgramsCHL$Program
+Chile %v% "Country" <- "Chile"
 Chile %e% "Freq" <- Edgelist$weight
 get.edge.attribute(Chile, "Freq")
 summary(get.edge.attribute(Chile, "Freq"))

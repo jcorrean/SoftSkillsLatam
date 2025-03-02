@@ -76,6 +76,7 @@ png(filename = "FR.png", width = 40, height = 18, units = "in", res = 300)
 set.seed(8970)
 plot(bnR, vertex.label = NA, layout = layout.bipartite, arrow.width = 0.1, arrow.size = 0.1)
 dev.off()
+
 ProgramsRegion <- data.frame(Degree.centrality = igraph::degree(bnR),
                           Closeness.centrality = igraph::closeness(bnR),
                           Betweennes.centrality = igraph::betweenness(bnR),

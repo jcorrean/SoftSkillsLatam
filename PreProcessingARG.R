@@ -41,6 +41,7 @@ Argentina %v% "Degree" <- ProgramsARG$Degree
 Argentina %v% "Eigenvector.centrality" <- ProgramsARG$Eigenvector
 Argentina %v% "Brochure.Length" <-  ProgramsARG$Brochure.Length
 Argentina %v% "Program" <- ProgramsARG$Program
+Argentina %v% "Country" <- "Argentina"
 Argentina %e% "Freq" <- Edgelist$weight
 get.edge.attribute(Argentina, "Freq")
 summary(get.edge.attribute(Argentina, "Freq"))

@@ -40,6 +40,7 @@ CostaRica %v% "Degree" <- ProgramsCR$Degree
 CostaRica %v% "Eigenvector.centrality" <- ProgramsCR$Eigenvector
 CostaRica %v% "Brochure.Length" <-  ProgramsCR$Brochure.Length
 CostaRica %v% "Program" <- ProgramsCR$Program
+CostaRica %v% "Country" <- "CostaRica"
 CostaRica %e% "Freq" <- Edgelist$weight
 get.edge.attribute(CostaRica, "Freq")
 summary(get.edge.attribute(CostaRica, "Freq"))

@@ -40,6 +40,7 @@ Venezuela %v% "Degree" <- ProgramsVEN$Degree
 Venezuela %v% "Eigenvector.centrality" <- ProgramsVEN$Eigenvector
 Venezuela %v% "Brochure.Length" <-  ProgramsVEN$Brochure.Length
 Venezuela %v% "Program" <- ProgramsVEN$Program
+Venezuela %v% "Country" <- "Venezuela"
 Venezuela %e% "Freq" <- Edgelist$weight
 get.edge.attribute(Venezuela, "Freq")
 summary(get.edge.attribute(Venezuela, "Freq"))

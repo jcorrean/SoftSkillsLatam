@@ -40,6 +40,7 @@ Colombia %v% "Degree" <- ProgramsCOL$Degree
 Colombia %v% "Eigenvector.centrality" <- ProgramsCOL$Eigenvector
 Colombia %v% "Brochure.Length" <-  ProgramsCOL$Brochure.Length
 Colombia %v% "Program" <- ProgramsCOL$Program
+Colombia %v% "Country" <- "Colombia"
 Colombia %e% "Freq" <- Edgelist$weight
 network::get.edge.attribute(Colombia, "Freq")
 summary(network::get.edge.attribute(Colombia, "Freq"))

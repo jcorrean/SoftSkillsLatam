@@ -40,6 +40,7 @@ Mexico %v% "Degree" <- ProgramsMEX$Degree
 Mexico %v% "Eigenvector.centrality" <- ProgramsMEX$Eigenvector
 Mexico %v% "Brochure.Length" <-  ProgramsMEX$Brochure.Length
 Mexico %v% "Program" <- ProgramsMEX$Program
+Mexico %v% "Country" <- "Mexico"
 Mexico %e% "Freq" <- Edgelist$weight
 get.edge.attribute(Mexico, "Freq")
 summary(get.edge.attribute(Mexico, "Freq"))

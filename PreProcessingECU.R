@@ -41,6 +41,7 @@ Ecuador %v% "Degree" <- ProgramsECU$Degree
 Ecuador %v% "Eigenvector.centrality" <- ProgramsECU$Eigenvector
 Ecuador %v% "Brochure.Length" <-  ProgramsECU$Brochure.Length
 Ecuador %v% "Program" <- ProgramsECU$Program
+Ecuador %v% "Country" <- "Ecuador"
 Ecuador %e% "Freq" <- Edgelist$weight
 get.edge.attribute(Ecuador, "Freq")
 summary(get.edge.attribute(Ecuador, "Freq"))

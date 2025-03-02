@@ -41,6 +41,7 @@ Brazil %v% "Degree" <- ProgramsBRA$Degree
 Brazil %v% "Eigenvector.centrality" <- ProgramsBRA$Eigenvector
 Brazil %v% "Brochure.Length" <-  ProgramsBRA$Brochure.Length
 Brazil %v% "Program" <- ProgramsBRA$Program
+Brazil %v% "Country" <- "Brazil"
 Brazil %e% "Freq" <- Edgelist$weight
 network::get.edge.attribute(Brazil, "Freq")
 summary(network::get.edge.attribute(Brazil, "Freq"))

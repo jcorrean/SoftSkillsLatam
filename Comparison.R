@@ -51,6 +51,7 @@ RegionalNetworks %>%
   kable()
 
 
+
 library(ergm.multi)
 SampledNetworks <- Networks(RegionalNetworks)
 # debugging
@@ -72,6 +73,8 @@ mod2 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program")))
 summary(mod2)
 mod3 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program") + b1cov("Brochure.Length")))
 summary(mod3)
+mod4 <- ergm(SampledNetworks ~ N(~ edges + b1cov("Brochure.Length")))
+summary(mod4)
 mcmc.diagnostics(mod1)
 GOF1 <- gof(mod1)
 
