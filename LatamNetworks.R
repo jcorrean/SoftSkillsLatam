@@ -61,7 +61,7 @@ RegionNetwork <- do.call(rbind, list(edges_args,
                                      edges_uy, 
                                      edges_ven))
 rm(list=setdiff(ls(), c("RegionNetwork")))
-
+load("LatamNetwork.RData")
 
 library(igraph)
 bnR <- graph_from_data_frame(RegionNetwork, directed = F)
