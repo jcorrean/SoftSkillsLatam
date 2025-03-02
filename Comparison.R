@@ -67,18 +67,21 @@ SampledNetworks
 
 mod0 <- ergm(SampledNetworks ~ N(~ edges))
 summary(mod0)
-mod1 <- ergm(SampledNetworks ~ N(~edges + b1degree(3)))
+mod1 <- ergm(SampledNetworks ~ N(~edges + b1nodematch("Country", diff = FALSE)))
 summary(mod1)
-mod2 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program")))
+mod2 <- ergm(SampledNetworks ~ N(~edges + b1degree(3)))
 summary(mod2)
-mod3 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program") + b1cov("Brochure.Length")))
+mod3 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program")))
 summary(mod3)
-mod4 <- ergm(SampledNetworks ~ N(~ edges + b1cov("Brochure.Length")))
+mod4 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program") + b1cov("Brochure.Length")))
 summary(mod4)
-mcmc.diagnostics(mod1)
+mod5 <- ergm(SampledNetworks ~ N(~ edges + b1cov("Brochure.Length")))
+summary(mod5)
+#mcmc.diagnostics(mod1)
+
 GOF1 <- gof(mod1)
 
-mod2 <- ergm(SampledNetworks ~ N(~edges + b1degree(3,by="Program", levels = "Doctorado")))
-summary(mod2)
+mod6 <- ergm(SampledNetworks ~ N(~edges + b1degree(3,by="Program", levels = "Doctorado")))
+summary(mod6)
 exp(mod1$coefficients)/(1+exp(mod1$coefficients))
 # About 28.56% of all possible edges actually exist.
