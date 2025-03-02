@@ -64,8 +64,14 @@ SampledNetworks
 # negative, that means programs would tend to specialize in fewer skills, if
 # the estimated term is positive, that means programs would tend to connect to more skills
 
+mod0 <- ergm(SampledNetworks ~ N(~ edges))
+summary(mod0)
 mod1 <- ergm(SampledNetworks ~ N(~edges + b1degree(3)))
 summary(mod1)
+mod2 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program")))
+summary(mod2)
+mod3 <- ergm(SampledNetworks ~ N(~edges + b1degree(3) + b1factor("Program") + b1cov("Brochure.Length")))
+summary(mod3)
 mcmc.diagnostics(mod1)
 GOF1 <- gof(mod1)
 
