@@ -1,45 +1,33 @@
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsARG.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsBRA.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsCHL.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsCOL.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsCR.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsECU.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsMEX.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsURU.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/SkillsVEN.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsARG.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsBRA.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsCHL.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsCOL.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsCR.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsECU.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsMEX.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsURU.RData")
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsVEN.RData")
 Latam <- list(SkillsARG, SkillsBRA, SkillsCHL, SkillsCOL, SkillsCR, SkillsECU, SkillsMEX, SkillsURU, SkillsVEN)
 Latam <- do.call(rbind, Latam)
 library(dplyr)
 library(tidyr)
 library(tibble)
-RadarSkills <- Latam %>%
-  mutate(skill_num = rep(1:10, 9)) %>%
-  select(country, skill_num, Eigenvector) %>%
-  pivot_wider(names_from = skill_num, values_from = Eigenvector)
-colnames(RadarSkills) <- c("Country", unique(Latam$vertex.names))
-
 library(ggplot2)
 SKILLS <- Latam[c(1,7,10)]
-ggplot(SKILLS, aes(x=Eigenvector, y=vertex.names))+
-  geom_segment(aes(yend = vertex.names), xend=0, colour="grey79")+
-  geom_point(size = 3, aes(colour=country))+
-  scale_colour_brewer(palette = "Set1", guide=FALSE)+
-  theme_bw()+
-  theme(panel.grid.major.y = element_blank()) +
-  facet_grid(country ~ ., scales="free_y", space="free_y")+
-  coord_flip()+
-  ylab("")
 
+png(filename = "FS.png", width = 40, height = 18, units = "in", res = 300)
 ggplot(SKILLS, aes(x=vertex.names, y=Eigenvector))+
   geom_bar(stat = "identity", color = "black", fill = "#7c00c7") +
   facet_wrap(. ~ country) +
   theme_linedraw() +
   coord_flip()+
-  theme(axis.text.x = element_text(angle=90, hjust=1),
-        strip.text = element_text(face="bold", size=rel(1.5), colour = "black"),
+  theme(axis.text.x = element_text(angle=90, hjust=1, size = 30),
+        axis.text.y = element_text(size = 30),
+        strip.text = element_text(face="bold", size=rel(3.5), colour = "black"),
         strip.background = element_rect(fill="white", colour="white",
-                                        size=10))+
+                                        size=30))+
   xlab("") + ylab("Eigenvector centrality of basic skills")
+dev.off()
 
 Argentina <- readRDS("NetworkData/Argentina.RDS")
 Brazil <- readRDS("NetworkData/Brazil.RDS")

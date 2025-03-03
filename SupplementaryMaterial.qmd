@@ -1,0 +1,66 @@
+---
+title: "A Cross-National Comparison Case Study on the Basic Skills Academic Offering"
+subtitle: "Supplementary material"
+author: 
+  - name: "Juan C. Correa"
+    orcid: "0000-0002-0301-5641"
+    corresponding: TRUE
+    affiliation: "Critical Centrality Institute"
+    url: 'https://scholar.google.com/citations?user=fb0nE80AAAAJ&hl=en'
+    email: j.correa.n@gmail.com
+abstract: |
+  This supplementary material aims to expand the data and methodological documentation of the work: "*A Cross-National Comparison Case Study on the Basic Skills Academic Offering.*" Emphasis is placed on how to use the associated [GitHub repository](https://github.com/jcorrean/SoftSkillsLatam) for R users with expertise in network data science.
+date: "March 3 2025"
+lang: en
+number-sections: true
+output: html
+---
+
+# Raw Data and Pre-processing
+
+Raw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder "Argentina," documents from Brazil are available in the folder "Brazil," and so on. Texts pre-processing were handled with `readtext` and `quanteda` in a series of R scripts. These scripts are available in the folder "Pre-processing."
+
+# Curated Data
+As a convenient step in our analyses, we created the folder "Curated_Data" which provides curated data for each country. This curated data provides the estimated centrality for each basic skill in each country. Apart from these data, we also provide the NetworkData folder. This second folder contains the academic offering of each nation as a network data serialized in RDS format.
+
+# Network analyses
+
+Pre-processing texts result in a series of features-document matrices which are available in the folder "Matrices." We used these matrices as raw input for modeling the academic offering as a series of non-directed bipartite networks with the help of the `igraph` package.
+
+## Network properties set up
+
+The network properties of each nation's academic offering was done with the `network` package. The following network attributes are present for each academic offering: country of origin, membership to the Organization for Economic Development (OECD), network size, network density, network clustering (estimated by the `reinforcement_tm` algortihm available in the `tnet` package). Vertex attributes include the country of origin (for both node partitions), the length of the brochure (for nodes in the first partition), the degree centrality (for both node partitions), the eigenvector centrality (for both node partitions), the program level (for the first node partition), and the name of each skills (for nodes in the second partition).
+
+# Regional Network Analysis
+
+```{r}
+library(network)
+library(purrr)
+library(tibble)
+library(knitr)
+library(dplyr)
+RegionalNetworks <- readRDS("NetworkData/RegionalNetworks.RDS")
+RegionalNetworks %>%
+  imap(~ {
+    mnext_value <- .x$gal$mnext
+    list(
+      Country = .y,
+      OECD.Member = .x %n% "OECD",
+      n = network.size(.x),
+      d = network.density(.x),
+      Clustering = get.network.attribute(.x, "Clustering"),
+      mnext = ifelse(is.null(mnext_value), NA_integer_, mnext_value)
+    )
+  }) %>%
+  bind_rows() %>%
+  group_by(Country) %>%
+  summarize(
+    OECD.Member = first(OECD.Member),
+    Edges = mnext,
+    Size = sum(n),
+    Density = mean(d),
+    Clustering = first(Clustering)
+  ) %>%
+  kable()
+```
+
