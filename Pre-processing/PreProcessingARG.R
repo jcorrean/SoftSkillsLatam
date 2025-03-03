@@ -75,6 +75,6 @@ Argentina
 network.edgecount(Argentina)
 SkillsARG <- ProgramsARG %>% tail(., n =10)
 SkillsARG$country <- "Argentina"
-save(SkillsARG, file = "SkillsARG.RData")
+save(SkillsARG, file = "Curated_Data/SkillsARG.RData")
 rm(list=setdiff(ls(), c("Argentina")))
 saveRDS(Argentina, file = "NetworkData/Argentina.RDS")

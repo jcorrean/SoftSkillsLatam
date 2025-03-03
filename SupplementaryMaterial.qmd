@@ -16,6 +16,22 @@ number-sections: true
 output: html
 ---
 
+```{r, echo = FALSE, warning = FALSE}
+# Packages
+suppressPackageStartupMessages(library(tidyverse)) # Data wrangling
+suppressPackageStartupMessages(library(dplyr)) # Data wrangling
+suppressPackageStartupMessages(library(gridExtra)) # arrange plots of ggplot 
+suppressPackageStartupMessages(library(ggpubr)) # arrange plots of ggplot 
+suppressPackageStartupMessages(library(igraph)) # for modeling data as network
+suppressPackageStartupMessages(library(network)) # for modeling and analyzing data as network
+suppressPackageStartupMessages(library(ergm)) # for network-based statistical inference
+suppressPackageStartupMessages(library(ergm.multi)) # for multivariate network-based statistical inference
+suppressPackageStartupMessages(library(kableExtra)) # tables
+suppressPackageStartupMessages(library(ggmosaic)) # tables
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(broom)) # Convert Statistical suppressPackageStartupMessages(library(ggthemes)) # ggplot themes
+```
+
 # Raw Data and Pre-processing
 
 Raw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder "Argentina," documents from Brazil are available in the folder "Brazil," and so on. Texts pre-processing were handled with `readtext` and `quanteda` in a series of R scripts. These scripts are available in the folder "Pre-processing."
@@ -33,7 +49,7 @@ The network properties of each nation's academic offering was done with the `net
 
 # Regional Network Analysis
 
-```{r}
+```{r, echo = FALSE}
 library(network)
 library(purrr)
 library(tibble)

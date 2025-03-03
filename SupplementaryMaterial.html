@@ -22,40 +22,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -143,55 +109,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="regional-network-analysis" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Regional Network Analysis</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(network)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-'network' 1.19.0 (2024-12-08), part of the Statnet Project
-* 'news(package="network")' for changes since last version
-* 'citation("network")' for citation information
-* 'https://statnet.org' for help, support, and other information</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>RegionalNetworks <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"NetworkData/RegionalNetworks.RDS"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>RegionalNetworks <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">imap</span>(<span class="sc">~</span> {</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    mnext_value <span class="ot">&lt;-</span> .x<span class="sc">$</span>gal<span class="sc">$</span>mnext</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">Country =</span> .y,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">OECD.Member =</span> .x <span class="sc">%n%</span> <span class="st">"OECD"</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> <span class="fu">network.size</span>(.x),</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">d =</span> <span class="fu">network.density</span>(.x),</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">Clustering =</span> <span class="fu">get.network.attribute</span>(.x, <span class="st">"Clustering"</span>),</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">mnext =</span> <span class="fu">ifelse</span>(<span class="fu">is.null</span>(mnext_value), <span class="cn">NA_integer_</span>, mnext_value)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Country) <span class="sc">%&gt;%</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">OECD.Member =</span> <span class="fu">first</span>(OECD.Member),</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">Edges =</span> mnext,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size =</span> <span class="fu">sum</span>(n),</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">Density =</span> <span class="fu">mean</span>(d),</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">Clustering =</span> <span class="fu">first</span>(Clustering)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -207,11 +124,11 @@ Attaching package: 'dplyr'</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Argentina</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">1575</td>
 <td style="text-align: right;">524</td>
 <td style="text-align: right;">0.0114869</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.4151898</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Brazil</td>
@@ -223,11 +140,11 @@ Attaching package: 'dplyr'</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Chile</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">764</td>
 <td style="text-align: right;">218</td>
 <td style="text-align: right;">0.0322581</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.4952651</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Colombia</td>
@@ -239,43 +156,43 @@ Attaching package: 'dplyr'</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CostaRica</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">511</td>
 <td style="text-align: right;">130</td>
 <td style="text-align: right;">0.0608229</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.6470876</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Ecuador</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">1405</td>
 <td style="text-align: right;">741</td>
 <td style="text-align: right;">0.0051209</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.4257895</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Mexico</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">TRUE</td>
 <td style="text-align: right;">2126</td>
 <td style="text-align: right;">562</td>
 <td style="text-align: right;">0.0134800</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.5720639</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Uruguay</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">383</td>
 <td style="text-align: right;">157</td>
 <td style="text-align: right;">0.0311939</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.4005043</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Venezuela</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: left;">FALSE</td>
 <td style="text-align: right;">677</td>
 <td style="text-align: right;">220</td>
 <td style="text-align: right;">0.0280614</td>
-<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.5425009</td>
 </tr>
 </tbody>
 </table>

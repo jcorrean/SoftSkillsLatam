@@ -58,7 +58,7 @@ RegionalNetworks
 RegionalNetworks %>% keep(`%n%`, "OECD")
 RegionalNetworks %>% discard(`%n%`, "OECD") %>% map(as_tibble, unit="vertices")
 RegionalNetworks  %>% map(as_tibble, unit="vertices")
-map
+
 
 RegionalNetworks %>%
   imap(~ {
@@ -82,6 +82,7 @@ RegionalNetworks %>%
     Clustering = first(Clustering)
   ) %>%
   kable()
+
 
 
 

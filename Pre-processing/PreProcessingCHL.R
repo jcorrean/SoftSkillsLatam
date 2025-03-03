@@ -66,6 +66,6 @@ network::get.vertex.attribute(Chile, "Brochure.Length")
 Chile
 SkillsCHL <- ProgramsCHL %>% tail(., n =10)
 SkillsCHL$country <- "Chile"
-save(SkillsCHL, file = "SkillsCHL.RData")
+save(SkillsCHL, file = "Curated_Data/SkillsCHL.RData")
 rm(list=setdiff(ls(), c("Chile")))
 saveRDS(Chile, file = "NetworkData/Chile.RDS")
