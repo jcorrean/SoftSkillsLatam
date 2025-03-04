@@ -58,15 +58,24 @@ psych::describeBy(result$Mean, group = result$Partition, mat = TRUE, digits = 3)
 
 library(ggplot2)
 
-png(filename = "F1.png", width = 12, height = 8, units = "in", res = 300)
+png(filename = "F1.png", width = 30, height = 18, units = "in", res = 300)
 ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
-  geom_boxplot(notch = TRUE) +
+  geom_violin() +
   scale_x_discrete(limits = c("Specialization", "Master", "PhD")) +
   facet_wrap(~Country) +
   theme_bw() +
   theme(legend.position = "bottom",
-        axis.text.x = element_text(color = "black"),
-        axis.text.y = element_text(color = "black")) +
-  xlab("") + ylab("Eigenvector centrality degree") +
-  scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "#FFFFFF"))
+        legend.title=element_text(size=50), 
+        legend.text=element_text(size=50),
+        axis.title.x = element_text(size = 30, colour = "black"),
+        axis.title.y = element_text(size = 30, colour = "black"),
+        axis.text.x = element_text(size = 30, colour = "black"),
+        axis.text.y = element_text(size = 30, colour = "black"),
+        strip.text = element_text(face="bold", size=rel(3.5), colour = "black"),
+        strip.background = element_rect(fill="grey", colour="grey",
+                                        size=30)) +
+  xlab("") + ylab("Estimated importance") +
+  labs(fill="")+
+  scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "red2"))
 dev.off()
+

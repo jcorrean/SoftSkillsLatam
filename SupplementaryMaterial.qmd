@@ -19,9 +19,9 @@ output: html
 ```{r, echo = FALSE, warning = FALSE}
 # Packages
 suppressPackageStartupMessages(library(tidyverse)) # Data wrangling
+suppressPackageStartupMessages(library(ggplot2)) # Data visualization
 suppressPackageStartupMessages(library(dplyr)) # Data wrangling
 suppressPackageStartupMessages(library(gridExtra)) # arrange plots of ggplot 
-suppressPackageStartupMessages(library(ggpubr)) # arrange plots of ggplot 
 suppressPackageStartupMessages(library(igraph)) # for modeling data as network
 suppressPackageStartupMessages(library(network)) # for modeling and analyzing data as network
 suppressPackageStartupMessages(library(ergm)) # for network-based statistical inference
@@ -29,7 +29,10 @@ suppressPackageStartupMessages(library(ergm.multi)) # for multivariate network-b
 suppressPackageStartupMessages(library(kableExtra)) # tables
 suppressPackageStartupMessages(library(ggmosaic)) # tables
 suppressPackageStartupMessages(library(knitr))
-suppressPackageStartupMessages(library(broom)) # Convert Statistical suppressPackageStartupMessages(library(ggthemes)) # ggplot themes
+suppressPackageStartupMessages(library(broom)) # Convert Statistical 
+suppressPackageStartupMessages(library(purrr)) # for mapping functions and vectors
+suppressPackageStartupMessages(library(tibble)) # for tibbles
+suppressPackageStartupMessages(library(psych)) # for multivariate analysis
 ```
 
 # Raw Data and Pre-processing
@@ -45,16 +48,13 @@ Pre-processing texts result in a series of features-document matrices which are 
 
 ## Network properties set up
 
-The network properties of each nation's academic offering was done with the `network` package. The following network attributes are present for each academic offering: country of origin, membership to the Organization for Economic Development (OECD), network size, network density, network clustering (estimated by the `reinforcement_tm` algortihm available in the `tnet` package). Vertex attributes include the country of origin (for both node partitions), the length of the brochure (for nodes in the first partition), the degree centrality (for both node partitions), the eigenvector centrality (for both node partitions), the program level (for the first node partition), and the name of each skills (for nodes in the second partition).
+The network properties of each nation's academic offering was done with the `network` package. The following network attributes are present for each academic offering: country of origin, membership to the Organization for Economic Development (OECD), network size, network density, network clustering (estimated by the `reinforcement_tm` algortihm available in the `tnet` package). Vertex attributes include the country of origin (for both node partitions), the length of the brochure (for nodes in the first partition), the degree centrality (for both node partitions), the eigenvector centrality (for both node partitions), the program level (for the first node partition), and the name of each skills (for nodes in the second partition). These vertex attributes enable us to exert statistical control when estimating the network effects in our series of exponential random graph models. 
 
 # Regional Network Analysis
 
+The following table summarizes the network statistics of the academic offering of graduate programs in Latin American sampled countries. In general terms, the academic offering is weakly connected to basic skills (network density ranges from 0.005 in Brazil and Ecuador to 0.061 in Costa Rica). The weak connectivity between programs and basic skills reveals that the academic offering from sampled universities in Latin America highlights other contents that have nothing to do with basic skills as developed capacities that facilitate learning and a faster acquisition of knowledge.
+
 ```{r, echo = FALSE}
-library(network)
-library(purrr)
-library(tibble)
-library(knitr)
-library(dplyr)
 RegionalNetworks <- readRDS("NetworkData/RegionalNetworks.RDS")
 RegionalNetworks %>%
   imap(~ {
@@ -78,5 +78,77 @@ RegionalNetworks %>%
     Clustering = first(Clustering)
   ) %>%
   kable()
+```
+
+Despite the weak connectivity between programs and skills and to address the artifact discussed in section 3.5 of the article, we compare programs' and skills' centrality as a function of program levels (see Figure F1). 
+
+```{r F1, fig.cap="Statistical distributions for the estimated importance of skills and programs.", echo=FALSE, fig.width=30, fig.height=18, warning=FALSE}
+load("Results/Argentina.RData")
+load("Results/Brazil.RData")
+load("Results/Chile.RData")
+load("Results/Colombia.RData")
+load("Results/CostaRica.RData")
+load("Results/Ecuador.RData")
+load("Results/Mexico.RData")
+load("Results/Uruguay.RData")
+load("Results/Venezuela.RData")
+
+rm(list=setdiff(ls(), c("ProgramsARG1", "ProgramsARG2", "ProgramsARG3",
+                        "ProgramsBRA1", "ProgramsBRA2", "ProgramsBRA3",
+                        "ProgramsCHL1", "ProgramsCHL2", "ProgramsCHL3",
+                        "ProgramsCOL1", "ProgramsCOL2", "ProgramsCOL3",
+                        "ProgramsCORI1", "ProgramsCORI2", "ProgramsCORI3",
+                        "ProgramsECU1", "ProgramsECU2", "ProgramsECU3",
+                        "ProgramsMEX1", "ProgramsMEX2", "ProgramsMEX3",
+                        "ProgramsURU1", "ProgramsURU2", "ProgramsURU3",
+                        "ProgramsVEN1", "ProgramsVEN2", "ProgramsVEN3")))
+
+AllPrograms <- do.call(rbind, list(ProgramsARG1,
+                                   ProgramsARG2,
+                                   ProgramsARG3,
+                                   ProgramsBRA1,
+                                   ProgramsBRA2,
+                                   ProgramsBRA3,
+                                   ProgramsCHL1,
+                                   ProgramsCHL2,
+                                   ProgramsCHL3,
+                                   ProgramsCOL1,
+                                   ProgramsCOL2,
+                                   ProgramsCOL3,
+                                   ProgramsCORI1,
+                                   ProgramsCORI2,
+                                   ProgramsCORI3,
+                                   ProgramsECU1,
+                                   ProgramsECU2,
+                                   ProgramsECU3,
+                                   ProgramsMEX1,
+                                   ProgramsMEX2,
+                                   ProgramsMEX3,
+                                   ProgramsURU1,
+                                   ProgramsURU2,
+                                   ProgramsURU3,
+                                   ProgramsVEN1,
+                                   ProgramsVEN2,
+                                   ProgramsVEN3))
+
+
+ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
+  geom_violin() +
+  scale_x_discrete(limits = c("Specialization", "Master", "PhD")) +
+  facet_wrap(~Country) +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        legend.title=element_text(size=50), 
+        legend.text=element_text(size=50),
+        axis.title.x = element_text(size = 30, colour = "black"),
+        axis.title.y = element_text(size = 30, colour = "black"),
+        axis.text.x = element_text(size = 30, colour = "black"),
+        axis.text.y = element_text(size = 30, colour = "black"),
+        strip.text = element_text(face="bold", size=rel(3.5), colour = "black"),
+        strip.background = element_rect(fill="grey", colour="grey",
+                                        size=30)) +
+  xlab("") + ylab("Estimated importance") +
+  labs(fill="")+
+  scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "red2"))
 ```
 
