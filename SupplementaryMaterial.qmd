@@ -80,9 +80,9 @@ RegionalNetworks %>%
   kable()
 ```
 
-Despite the weak connectivity between programs and skills and to address the artifact discussed in section 3.5 of the article, we compare programs' and skills' centrality as a function of program levels (see Figure F1). 
+Despite the weak connectivity between programs and skills and to address the artifact discussed in section 3.5 of the article, we compare programs' and skills' centrality as a function of program levels in each country (see Figure F1). 
 
-```{r F1, fig.cap="Statistical distributions for the estimated importance of skills and programs.", echo=FALSE, fig.width=30, fig.height=18, warning=FALSE}
+```{r F1, fig.cap="Figure 1. Statistical distributions for the estimated importance of skills and programs.", echo=FALSE, fig.width=30, fig.height=18, warning=FALSE}
 load("Results/Argentina.RData")
 load("Results/Brazil.RData")
 load("Results/Chile.RData")
@@ -150,5 +150,54 @@ ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
   xlab("") + ylab("Estimated importance") +
   labs(fill="")+
   scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "red2"))
+```
+
+The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality (except for Uruguay where speaking ranked first followed by science).
+
+```{r F2, fig.cap="Figure 2. Estimated importance of basic skills by country.", echo=FALSE, fig.width=40, fig.height=18, warning=FALSE}
+Skills <- AllPrograms %>% filter(., Partition == "Skill")
+Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
+
+ggplot(Skills, aes(x=vertex.names, y=Eigenvector))+
+  geom_bar(stat = "identity", color = "black", fill = "#09419e") +
+  facet_wrap(. ~ country) +
+  theme_linedraw() +
+  coord_flip()+
+  theme(axis.text.x = element_text(angle=0, hjust=1, size = 30),
+        axis.text.y = element_text(size = 30),
+        axis.title.x = element_text(size = 30, colour = "black"),
+        axis.title.y = element_text(size = 50, colour = "black"),
+        legend.text = element_text(size = 30),  
+        legend.title = element_text(size = 20), 
+        strip.text = element_text(face="bold", size=rel(5.5), colour = "black"),
+        strip.background = element_rect(fill="grey", colour="grey",
+                                        size=30))+
+  xlab("") + ylab("Eigenvector centrality of basic skills") +
+  labs(fill="")
+```
+
+Now, let's examine basic skills' centrality more closely.
+
+```{r F3, fig.cap="Figure 3. Basic skills by country and program level.", echo=FALSE, fig.width=40, fig.height=25, warning=FALSE}
+Skills <- AllPrograms %>% filter(., Partition == "Skill")
+Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
+
+ggplot(Skills, aes(Level, Node, fill= Eigenvector)) + 
+  geom_tile() + 
+  scale_x_discrete(limits = c("Specialization", "Master", "PhD"))+
+  facet_wrap(~Country) +
+  theme(axis.text.x = element_text(angle=0, hjust=1, size = 30, colour = "black"),
+        axis.text.y = element_text(size = 30, colour = "black"),
+        axis.title.x = element_text(size = 30, colour = "black"),
+        axis.title.y = element_text(size = 50, colour = "black"),
+        legend.text = element_text(size = 20),  
+        legend.title = element_text(size = 30), 
+        legend.position="top",
+        strip.text = element_text(face="bold", size=rel(5.5), colour = "black"),
+        strip.background = element_rect(fill="grey", colour="grey",
+                                        size=30))+
+  xlab("Program Level") + ylab("Basic Skills") +
+  scale_fill_gradient(low = "lightblue1", high = "#09419e") +
+  labs(fill="Centrality")
 ```
 
