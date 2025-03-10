@@ -35,6 +35,7 @@ suppressPackageStartupMessages(library(tibble)) # for tibbles
 suppressPackageStartupMessages(library(psych)) # for multivariate analysis
 ```
 
+
 # Raw Data and Pre-processing
 
 Raw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder "Argentina," documents from Brazil are available in the folder "Brazil," and so on. Texts pre-processing were handled with `readtext` and `quanteda` in a series of R scripts. These scripts are available in the folder "Pre-processing."
