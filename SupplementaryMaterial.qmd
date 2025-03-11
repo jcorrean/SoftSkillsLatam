@@ -203,3 +203,6 @@ ggplot(Skills, aes(Level, Node, fill= Eigenvector)) +
   labs(fill="Centrality")
 ```
 
+As previous Figure shows, scientific reasoning (science) emerges as the principal basic skill in the academic offering. Nonetheless, other skills are important (e.g., speaking and learning strategy). By ranking the importance of these skills, we now have sufficient evidence to estimate their importance following the logic of exponential random graph model.
+
+# Inferential Network Analysis
