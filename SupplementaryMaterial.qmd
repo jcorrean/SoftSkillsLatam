@@ -1,19 +1,13 @@
 ---
 title: "A Cross-National Comparison Case Study on the Basic Skills Academic Offering"
-subtitle: "Supplementary material"
-author: 
-  - name: "Juan C. Correa"
-    orcid: "0000-0002-0301-5641"
-    corresponding: TRUE
-    affiliation: "Critical Centrality Institute"
-    url: 'https://scholar.google.com/citations?user=fb0nE80AAAAJ&hl=en'
-    email: j.correa.n@gmail.com
+format: html
+keywords: 
+  - Basic Skills
+  - Academic Offering
+  - Latin American
+  - Bipartite Network Modeling
 abstract: |
   This supplementary material aims to expand the data and methodological documentation of the work: "*A Cross-National Comparison Case Study on the Basic Skills Academic Offering.*" Emphasis is placed on how to use the associated [GitHub repository](https://github.com/jcorrean/SoftSkillsLatam) for R users with expertise in network data science.
-date: "March 3 2025"
-lang: en
-number-sections: true
-output: html
 ---
 
 ```{r, echo = FALSE, warning = FALSE}
