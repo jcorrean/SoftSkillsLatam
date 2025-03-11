@@ -1,0 +1,31 @@
+project:
+  type: website
+
+title: A Cross-National Comparison Case Study on the Basic Skills Academic Offering
+subtitle: "***Supplementary Material***"
+author:
+  - name: Juan C. Correa
+    orcid: 0000-0002-0301-5641
+    corresponding: TRUE
+    affiliation: Critical Centrality Institute
+    url: 'https://scholar.google.com/citations?user=fb0nE80AAAAJ&hl=en'
+    email: j.correa.n@gmail.com
+date: "March 3 2025"
+lang: en
+bibliography: refs.bib
+number-sections: true
+
+website:
+  title: ""
+sidebar:
+  left:
+  - href: SupplementaryMaterial.qmd
+text: Home
+
+format:
+  html:
+    theme: cosmo
+css: styles.css
+toc: true
+
+editor: visual
