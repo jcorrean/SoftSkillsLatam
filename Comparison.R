@@ -74,8 +74,10 @@ Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
 
 
 png(filename = "FS.png", width = 40, height = 18, units = "in", res = 300)
-ggplot(Skills, aes(x=Node, y=Eigenvector))+
-  geom_bar(stat = "identity", color = "black", fill = "#09419e") +
+ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
+  geom_bar(position = "stack", stat = "identity") +
+  scale_fill_manual("", values = c("Specialization" = "royalblue4", "Master" = "lightsteelblue3", "PhD" = "lightskyblue2")) +
+#  scale_fill_manual(values = c("steelblue1", "slateblue1", "slateblue4")) +
   facet_wrap(. ~ Country) +
   theme_linedraw() +
   coord_flip()+
