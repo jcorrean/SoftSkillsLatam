@@ -154,7 +154,7 @@ The next Figure shows the estimated centrality for each basic skill in each coun
 Skills <- AllPrograms %>% filter(., Partition == "Skill")
 Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
 
-ggplot(Skills, aes(x=Node, y=Eigenvector))+
+ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
   geom_bar(stat = "identity", color = "black", fill = "#09419e") +
   facet_wrap(. ~ Country) +
   theme_linedraw() +

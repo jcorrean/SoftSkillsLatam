@@ -64,27 +64,19 @@ RegionalNetworks %>%
   ) %>%
   kable()
 
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsARG.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsBRA.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsCHL.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsCOL.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsCR.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsECU.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsMEX.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsURU.RData")
-load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/SkillsVEN.RData")
-Latam <- list(SkillsARG, SkillsBRA, SkillsCHL, SkillsCOL, SkillsCR, SkillsECU, SkillsMEX, SkillsURU, SkillsVEN)
-Latam <- do.call(rbind, Latam)
 library(dplyr)
 library(tidyr)
 library(tibble)
 library(ggplot2)
-SKILLS <- Latam[c(1,7,10)]
+load("~/Documents/GitHub/SoftSkillsLatam/Curated_Data/AllProgramsSkills.RData")
+Skills <- AllPrograms %>% filter(., Partition == "Skill")
+Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
+
 
 png(filename = "FS.png", width = 40, height = 18, units = "in", res = 300)
-ggplot(SKILLS, aes(x=vertex.names, y=Eigenvector))+
+ggplot(Skills, aes(x=Node, y=Eigenvector))+
   geom_bar(stat = "identity", color = "black", fill = "#09419e") +
-  facet_wrap(. ~ country) +
+  facet_wrap(. ~ Country) +
   theme_linedraw() +
   coord_flip()+
   theme(axis.text.x = element_text(angle=0, hjust=1, size = 30),
