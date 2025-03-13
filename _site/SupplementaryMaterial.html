@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#regional-network-analysis" id="toc-regional-network-analysis" class="nav-link" data-scroll-target="#regional-network-analysis"><span class="header-section-number">3</span> Regional Network Analysis</a></li>
   <li><a href="#inferential-network-analysis" id="toc-inferential-network-analysis" class="nav-link" data-scroll-target="#inferential-network-analysis"><span class="header-section-number">4</span> Inferential Network Analysis</a>
   <ul class="collapse">
-  <li><a href="#model-specifications" id="toc-model-specifications" class="nav-link" data-scroll-target="#model-specifications"><span class="header-section-number">4.1</span> Model Specifications</a></li>
+  <li><a href="#hypothesis-and-model-specifications" id="toc-hypothesis-and-model-specifications" class="nav-link" data-scroll-target="#hypothesis-and-model-specifications"><span class="header-section-number">4.1</span> Hypothesis and Model Specifications</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -295,26 +295,39 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="inferential-network-analysis" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Inferential Network Analysis</h1>
-<p>To estimate the importance of these basic skills in the academic offering of graduate programs in Latin America, we now switch the attention to a series of exponential random graph models.</p>
-<section id="model-specifications" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="model-specifications"><span class="header-section-number">4.1</span> Model Specifications</h2>
-<p>We begin with the specification of our <em>Model 1</em></p>
+<p>To estimate the importance of these basic skills for the academic offering of graduate programs in Latin America, we now switch the attention to a series of exponential random graph models.</p>
+<section id="hypothesis-and-model-specifications" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="hypothesis-and-model-specifications"><span class="header-section-number">4.1</span> Hypothesis and Model Specifications</h2>
+<p><strong>Model 1</strong>: The fundamental hypothesis associated to this model posits that our top five basic skills suffice to account for the connectivity observed above. When each of these skills are modeled as statistical terms, their estimates will be positive, greater than zero, and statistically significant.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
-ergm(formula = SampledNetworks ~ edges)
+ergm(formula = SampledNetworks ~ edges + b2factor("vertex.names", 
+    levels = c(8, 9, 2, 4, 1)))
 
 Maximum Likelihood Results:
 
-      Estimate Std. Error MCMC % z value Pr(&gt;|z|)    
-edges -0.91681    0.01161      0  -78.95   &lt;1e-04 ***
+                                        Estimate Std. Error MCMC % z value
+edges                                   -1.58520    0.01975      0 -80.276
+b2factor.vertex.names.science            3.08692    0.04730      0  65.267
+b2factor.vertex.names.speaking           1.08756    0.03950      0  27.533
+b2factor.vertex.names.active_listening   0.78953    0.04092      0  19.296
+b2factor.vertex.names.learning_strategy  0.76631    0.04106      0  18.664
+b2factor.vertex.names.active_learning    0.15393    0.04645      0   3.314
+                                        Pr(&gt;|z|)    
+edges                                    &lt; 1e-04 ***
+b2factor.vertex.names.science            &lt; 1e-04 ***
+b2factor.vertex.names.speaking           &lt; 1e-04 ***
+b2factor.vertex.names.active_listening   &lt; 1e-04 ***
+b2factor.vertex.names.learning_strategy  &lt; 1e-04 ***
+b2factor.vertex.names.active_learning    0.00092 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
      Null Deviance: 50378  on 36340  degrees of freedom
- Residual Deviance: 43475  on 36339  degrees of freedom
+ Residual Deviance: 37385  on 36334  degrees of freedom
  
-AIC: 43477  BIC: 43486  (Smaller is better. MC Std. Err. = 0)</code></pre>
+AIC: 37397  BIC: 37448  (Smaller is better. MC Std. Err. = 0)</code></pre>
 </div>
 </div>
 

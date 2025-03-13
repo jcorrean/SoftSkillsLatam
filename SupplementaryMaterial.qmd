@@ -183,17 +183,17 @@ ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
 
 # Inferential Network Analysis
 
-To estimate the importance of these basic skills in the academic offering of graduate programs in Latin America, we now switch the attention to a series of exponential random graph models.
+To estimate the importance of these basic skills for the academic offering of graduate programs in Latin America, we now switch the attention to a series of exponential random graph models.
 
-## Model Specifications 
+## Hypothesis and Model Specifications
 
-We begin with the specification of our *Model 1*
+**Model 1**: The fundamental hypothesis associated to this model posits that our top five basic skills suffice to account for the connectivity observed above. When each of these skills are modeled as statistical terms, their estimates will be positive, greater than zero, and statistically significant.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 RegionalNetworks <- readRDS("NetworkData/RegionalNetworks.RDS")
 SampledNetworks <- Networks(RegionalNetworks)
 
 
-model1 <- ergm(SampledNetworks ~ edges)
+model1 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)))
 summary(model1)
 ```
