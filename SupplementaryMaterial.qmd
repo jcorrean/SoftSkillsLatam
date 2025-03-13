@@ -197,3 +197,15 @@ SampledNetworks <- Networks(RegionalNetworks)
 model1 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)))
 summary(model1)
 ```
+The results of our first models confirms our expectations regarding the significance of these basic skills for accounting for the network connectivity between programs and basic skills in the Latin American academic offering.
+
+**Model 2**: This model is an extension of the previous one and compares the robustness of our top five basic skills against the length of the brochure that is used to promote the programs where these skills are explicitly mentioned. The length of the brochure is a covariate that can hide confounding factors associated to the skills targeted by the programs. To prevent biased estimates of our five basic skills, we need to clarify if this covariate alters the estimates reported in model 1. We expect that the statistical estimates for our five basic skills will remain positive, greater than zero, and statistically significant, while the statistical estimate for the brochure length will remain non-significant and close to zero. 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+model2 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)) + b1cov("Brochure.Length"))
+summary(model2) # AIC: 36919
+```
+
+The hypothesis proposed in model 2 is partially confirmed. The statistical estimates for our top five skills remained almost invariant, while the estimate for the length of the brochure is close to zero albeit statistically significant. 
+
+**Model 3**: The f

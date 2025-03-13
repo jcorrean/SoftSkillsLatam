@@ -330,6 +330,43 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 AIC: 37397  BIC: 37448  (Smaller is better. MC Std. Err. = 0)</code></pre>
 </div>
 </div>
+<p>The results of our first models confirms our expectations regarding the significance of these basic skills for accounting for the network connectivity between programs and basic skills in the Latin American academic offering.</p>
+<p><strong>Model 2</strong>: This model is an extension of the previous one and compares the robustness of our top five basic skills against the length of the brochure that is used to promote the programs where these skills are explicitly mentioned. The length of the brochure is a covariate that can hide confounding factors associated to the skills targeted by the programs. To prevent biased estimates of our five basic skills, we need to clarify if this covariate alters the estimates reported in model 1. We expect that the statistical estimates for our five basic skills will remain positive, greater than zero, and statistically significant, while the statistical estimate for the brochure length will remain non-significant and close to zero.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+ergm(formula = SampledNetworks ~ edges + b2factor("vertex.names", 
+    levels = c(8, 9, 2, 4, 1)) + b1cov("Brochure.Length"))
+
+Maximum Likelihood Results:
+
+                                          Estimate Std. Error MCMC % z value
+edges                                   -1.682e+00  2.064e-02      0 -81.497
+b2factor.vertex.names.science            3.114e+00  4.746e-02      0  65.614
+b2factor.vertex.names.speaking           1.103e+00  3.977e-02      0  27.743
+b2factor.vertex.names.active_listening   8.018e-01  4.122e-02      0  19.454
+b2factor.vertex.names.learning_strategy  7.783e-01  4.136e-02      0  18.818
+b2factor.vertex.names.active_learning    1.567e-01  4.685e-02      0   3.344
+b1cov.Brochure.Length                    6.034e-05  3.347e-06      0  18.026
+                                        Pr(&gt;|z|)    
+edges                                    &lt; 1e-04 ***
+b2factor.vertex.names.science            &lt; 1e-04 ***
+b2factor.vertex.names.speaking           &lt; 1e-04 ***
+b2factor.vertex.names.active_listening   &lt; 1e-04 ***
+b2factor.vertex.names.learning_strategy  &lt; 1e-04 ***
+b2factor.vertex.names.active_learning   0.000826 ***
+b1cov.Brochure.Length                    &lt; 1e-04 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+     Null Deviance: 50378  on 36340  degrees of freedom
+ Residual Deviance: 36905  on 36333  degrees of freedom
+ 
+AIC: 36919  BIC: 36979  (Smaller is better. MC Std. Err. = 0)</code></pre>
+</div>
+</div>
+<p>The hypothesis proposed in model 2 is partially confirmed. The statistical estimates for our top five skills remained almost invariant, while the estimate for the length of the brochure is close to zero albeit statistically significant.</p>
+<p><strong>Model 3</strong>: The f</p>
 
 
 </section>
