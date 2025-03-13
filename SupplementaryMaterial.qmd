@@ -32,7 +32,7 @@ suppressPackageStartupMessages(library(psych)) # for multivariate analysis
 
 # The Data
 
-The raw data and the codes developed to preprocess it are associated to the RProject file. 
+The codes developed to preprocess the raw data is available in the following [GitHub repository](https://github.com/jcorrean/BasicSkillsLatam) are associated to the RProject file. 
 
 ## Raw data and pre-processing
 
