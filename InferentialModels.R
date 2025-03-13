@@ -5,7 +5,10 @@ library(ergm.multi)
 SampledNetworks <- Networks(RegionalNetworks)
 
 
-model1 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)))
+model1 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)), 
+                                                  control = control.ergm(MCMC.samplesize = 100000, 
+                                                                         MCMC.burnin = 10000, 
+                                                                         MCMLE.maxit = 10))
 summary(model1) # AIC: 37397
 model2 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)) + b1cov("Brochure.Length"))
 summary(model2) # AIC: 36919
