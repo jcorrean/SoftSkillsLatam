@@ -1,4 +1,4 @@
-# SoftSkillsLatam
+# BasicSkillsLatam
 
 Este repo contiene toda la data, documentación, códigos y análisis necesarios para el análisis de las habilidades básicas y su presencia en la formación universitaria de postgrado en varios países de Latinoamérica. 
 
