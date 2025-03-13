@@ -95,7 +95,23 @@ ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
 dev.off()
 
 
-
+ggplot(Skills, aes(Level, Node, fill= Eigenvector)) + 
+  geom_tile() + 
+  scale_x_discrete(limits = c("Specialization", "Master", "PhD"))+
+  facet_wrap(~Country) +
+  theme(axis.text.x = element_text(angle=0, hjust=1, size = 30, colour = "black"),
+        axis.text.y = element_text(size = 30, colour = "black"),
+        axis.title.x = element_text(size = 30, colour = "black"),
+        axis.title.y = element_text(size = 50, colour = "black"),
+        legend.text = element_text(size = 15),  
+        legend.title = element_text(size = 20), 
+        legend.position="right",
+        strip.text = element_text(face="bold", size=rel(5.5), colour = "black"),
+        strip.background = element_rect(fill="grey", colour="grey",
+                                        size=30))+
+  xlab("Program Level") + ylab("Basic Skills") +
+  scale_fill_gradient(low = "lightblue1", high = "#09419e") +
+  labs(fill="Centrality")
 
 
 library(ergm.multi)

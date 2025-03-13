@@ -30,11 +30,15 @@ suppressPackageStartupMessages(library(psych)) # for multivariate analysis
 ```
 
 
-# Raw Data and Pre-processing
+# The Data
+
+The raw data and the codes developed to preprocess it are associated to the RProject file. 
+
+## Raw data and pre-processing
 
 Raw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder "Argentina," documents from Brazil are available in the folder "Brazil," and so on. Texts pre-processing were handled with `readtext` and `quanteda` in a series of R scripts. These scripts are available in the folder "Pre-processing."
 
-# Curated Data
+## Curated Data
 As a convenient step in our analyses, we created the folder "Curated_Data" which provides curated data for each country. This curated data provides the estimated centrality for each basic skill in each country. Apart from these data, we also provide the NetworkData folder. This second folder contains the academic offering of each nation as a network data serialized in RDS format.
 
 # Network analyses
@@ -147,15 +151,19 @@ ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
   scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "red2"))
 ```
 
-The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality (except for Uruguay where speaking ranked first followed by science).
+The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality regardless of the local academic offering available in each country. Apart from scientific reasoning (science), other skills are important as well (e.g., speaking, learning strategy, active listening, reading comprehension). By ranking the importance of these skills, we now have sufficient evidence to estimate their importance following the logic of exponential random graph model. In the following section, we provide inferential evidence on the importance of these skills for the academic offering.
+
 
 ```{r F2, fig.cap="Figure 2. Estimated importance of basic skills by country.", echo=FALSE, fig.width=40, fig.height=18, warning=FALSE}
 
 Skills <- AllPrograms %>% filter(., Partition == "Skill")
 Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
+Skills$Level <- factor(Skills$Level, levels = c("Specialization", "Master", "PhD"))
 
 ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
-  geom_bar(stat = "identity", color = "black", fill = "#09419e") +
+  geom_bar(position = "stack", stat = "identity") +
+  scale_fill_manual("", values = c("Specialization" = "lightskyblue2", "Master" = "lightsteelblue3", "PhD" = "royalblue4")) +
+#  scale_fill_manual(values = c("steelblue1", "slateblue1", "slateblue4")) +
   facet_wrap(. ~ Country) +
   theme_linedraw() +
   coord_flip()+
@@ -165,38 +173,23 @@ ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
         axis.title.y = element_text(size = 50, colour = "black"),
         legend.text = element_text(size = 30),  
         legend.title = element_text(size = 20), 
-        strip.text = element_text(face="bold", size=rel(5.5), colour = "black"),
+        strip.text = element_text(face="bold", size=rel(3.5), colour = "black"),
         strip.background = element_rect(fill="grey", colour="grey",
                                         size=30))+
   xlab("") + ylab("Eigenvector centrality of basic skills") +
   labs(fill="")
 ```
 
-Now, let's examine basic skills' centrality more closely.
 
-```{r F3, fig.cap="Figure 3. Basic skills by country and program level.", echo=FALSE, fig.width=40, fig.height=25, warning=FALSE}
-Skills <- AllPrograms %>% filter(., Partition == "Skill")
-Skills$Node <- gsub("^(ARG|BRA|CHL|COL|CR|ECU|MEX|URU|VEN)_", "", Skills$Node)
-
-ggplot(Skills, aes(Level, Node, fill= Eigenvector)) + 
-  geom_tile() + 
-  scale_x_discrete(limits = c("Specialization", "Master", "PhD"))+
-  facet_wrap(~Country) +
-  theme(axis.text.x = element_text(angle=0, hjust=1, size = 30, colour = "black"),
-        axis.text.y = element_text(size = 30, colour = "black"),
-        axis.title.x = element_text(size = 30, colour = "black"),
-        axis.title.y = element_text(size = 50, colour = "black"),
-        legend.text = element_text(size = 15),  
-        legend.title = element_text(size = 20), 
-        legend.position="right",
-        strip.text = element_text(face="bold", size=rel(5.5), colour = "black"),
-        strip.background = element_rect(fill="grey", colour="grey",
-                                        size=30))+
-  xlab("Program Level") + ylab("Basic Skills") +
-  scale_fill_gradient(low = "lightblue1", high = "#09419e") +
-  labs(fill="Centrality")
-```
-
-As previous Figure shows, scientific reasoning (science) emerges as the principal basic skill in the academic offering. Nonetheless, other skills are important (e.g., speaking and learning strategy). By ranking the importance of these skills, we now have sufficient evidence to estimate their importance following the logic of exponential random graph model.
 
 # Inferential Network Analysis
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+RegionalNetworks <- readRDS("NetworkData/RegionalNetworks.RDS")
+SampledNetworks <- Networks(RegionalNetworks)
+
+
+model1 <- ergm(SampledNetworks ~ edges)
+summary(model1)
+```
+
