@@ -10,6 +10,8 @@ model1 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 
                                                                          MCMC.burnin = 10000, 
                                                                          MCMLE.maxit = 10))
 summary(model1) # AIC: 37397
+GOF <- gof(model1)
+
 model2 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)) + b1cov("Brochure.Length"))
 summary(model2) # AIC: 36919
 model3 <- ergm(SampledNetworks ~ edges + b2factor("vertex.names", levels = c(8, 9, 2, 4, 1)) + b1cov("Brochure.Length") + b1factor("Country", levels = NULL))
