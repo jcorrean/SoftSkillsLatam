@@ -4,7 +4,7 @@
     "href": "SupplementaryMaterial.html",
     "title": "A Cross-National Comparison Case Study on the Basic Skills Academic Offering",
     "section": "",
-    "text": "The codes developed to preprocess the raw data is available in the following GitHub repository are associated to the RProject file.\n\n\nRaw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder “Argentina,” documents from Brazil are available in the folder “Brazil,” and so on. Texts pre-processing were handled with readtext and quanteda in a series of R scripts. These scripts are available in the folder “Pre-processing.”\n\n\n\nAs a convenient step in our analyses, we created the folder “Curated_Data” which provides curated data for each country. This curated data provides the estimated centrality for each basic skill in each country. Apart from these data, we also provide the NetworkData folder. This second folder contains the academic offering of each nation as a network data serialized in RDS format."
+    "text": "The codes developed to preprocess the raw data are available in the following GitHub repository. Researchers interested in replicate or reproduce our analysis can find the RProject file BasicSkillsLatam.RProj.\nThe supplementary material is documented as a Quarto document with the name SupplementaryMaterial.qmd and can be rendered in RStudio.\n\n\nRaw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder “Argentina,” documents from Brazil are available in the folder “Brazil,” and so on. Texts pre-processing were handled with readtext and quanteda in a series of R scripts. These scripts are available in the folder “Pre-processing.”\n\n\n\nAs a convenient step in our analyses, we created the folder “Curated_Data” which provides curated data for each country. This curated data provides the estimated centrality for each basic skill in each country. Apart from these data, we also provide the NetworkData folder. This second folder contains the academic offering of each nation as a network data serialized in RDS format."
   },
   {
     "objectID": "SupplementaryMaterial.html#network-properties-set-up",
@@ -47,5 +47,12 @@
     "title": "A Cross-National Comparison Case Study on the Basic Skills Academic Offering",
     "section": "",
     "text": "As a convenient step in our analyses, we created the folder “Curated_Data” which provides curated data for each country. This curated data provides the estimated centrality for each basic skill in each country. Apart from these data, we also provide the NetworkData folder. This second folder contains the academic offering of each nation as a network data serialized in RDS format."
+  },
+  {
+    "objectID": "SupplementaryMaterial.html#model-specifications",
+    "href": "SupplementaryMaterial.html#model-specifications",
+    "title": "A Cross-National Comparison Case Study on the Basic Skills Academic Offering",
+    "section": "4.1 Model Specifications",
+    "text": "4.1 Model Specifications\nWe begin with the specification of our Model 1\n\n\nCall:\nergm(formula = SampledNetworks ~ edges)\n\nMaximum Likelihood Results:\n\n      Estimate Std. Error MCMC % z value Pr(&gt;|z|)    \nedges -0.91681    0.01161      0  -78.95   &lt;1e-04 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n     Null Deviance: 50378  on 36340  degrees of freedom\n Residual Deviance: 43475  on 36339  degrees of freedom\n \nAIC: 43477  BIC: 43486  (Smaller is better. MC Std. Err. = 0)"
   }
 ]

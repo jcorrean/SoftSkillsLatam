@@ -95,7 +95,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#network-properties-set-up" id="toc-network-properties-set-up" class="nav-link" data-scroll-target="#network-properties-set-up"><span class="header-section-number">2.1</span> Network properties set up</a></li>
   </ul></li>
   <li><a href="#regional-network-analysis" id="toc-regional-network-analysis" class="nav-link" data-scroll-target="#regional-network-analysis"><span class="header-section-number">3</span> Regional Network Analysis</a></li>
-  <li><a href="#inferential-network-analysis" id="toc-inferential-network-analysis" class="nav-link" data-scroll-target="#inferential-network-analysis"><span class="header-section-number">4</span> Inferential Network Analysis</a></li>
+  <li><a href="#inferential-network-analysis" id="toc-inferential-network-analysis" class="nav-link" data-scroll-target="#inferential-network-analysis"><span class="header-section-number">4</span> Inferential Network Analysis</a>
+  <ul class="collapse">
+  <li><a href="#model-specifications" id="toc-model-specifications" class="nav-link" data-scroll-target="#model-specifications"><span class="header-section-number">4.1</span> Model Specifications</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -155,7 +158,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="the-data" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> The Data</h1>
-<p>The codes developed to preprocess the raw data is available in the following <a href="https://github.com/jcorrean/BasicSkillsLatam">GitHub repository</a> are associated to the RProject file.</p>
+<p>The codes developed to preprocess the raw data are available in the following <a href="https://github.com/jcorrean/BasicSkillsLatam">GitHub repository</a>. Researchers interested in replicate or reproduce our analysis can find the RProject file <code>BasicSkillsLatam.RProj.</code></p>
+<p>The supplementary material is documented as a Quarto document with the name <code>SupplementaryMaterial.qmd</code> and can be rendered in RStudio.</p>
 <section id="raw-data-and-pre-processing" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="raw-data-and-pre-processing"><span class="header-section-number">1.1</span> Raw data and pre-processing</h2>
 <p>Raw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder “Argentina,” documents from Brazil are available in the folder “Brazil,” and so on. Texts pre-processing were handled with <code>readtext</code> and <code>quanteda</code> in a series of R scripts. These scripts are available in the folder “Pre-processing.”</p>
@@ -277,7 +281,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality regardless of the local academic offering available in each country. Apart from scientific reasoning (science), other skills are important as well (e.g., speaking, learning strategy, active listening, reading comprehension). By ranking the importance of these skills, we now have sufficient evidence to estimate their importance following the logic of exponential random graph model. In the following section, we provide inferential evidence on the importance of these skills for the academic offering.</p>
+<p>The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality regardless of the local academic offering available in each country. Together with scientific reasoning (science), the following basic skills join the top five competencies: speaking, active listening, learning strategy, and active learning.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -291,6 +295,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="inferential-network-analysis" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Inferential Network Analysis</h1>
+<p>To estimate the importance of these basic skills in the academic offering of graduate programs in Latin America, we now switch the attention to a series of exponential random graph models.</p>
+<section id="model-specifications" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="model-specifications"><span class="header-section-number">4.1</span> Model Specifications</h2>
+<p>We begin with the specification of our <em>Model 1</em></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -311,6 +319,7 @@ AIC: 43477  BIC: 43486  (Smaller is better. MC Std. Err. = 0)</code></pre>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

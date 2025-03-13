@@ -29,16 +29,18 @@ suppressPackageStartupMessages(library(tibble)) # for tibbles
 suppressPackageStartupMessages(library(psych)) # for multivariate analysis
 ```
 
-
 # The Data
 
-The codes developed to preprocess the raw data is available in the following [GitHub repository](https://github.com/jcorrean/BasicSkillsLatam) are associated to the RProject file. 
+The codes developed to preprocess the raw data are available in the following [GitHub repository](https://github.com/jcorrean/BasicSkillsLatam). Researchers interested in replicate or reproduce our analysis can find the RProject file `BasicSkillsLatam.RProj.`
+
+The supplementary material is documented as a Quarto document with the name `SupplementaryMaterial.qmd` and can be rendered in RStudio.
 
 ## Raw data and pre-processing
 
 Raw data are available as texts (PDF or docx files) in the folder of the corresponding sampled country. For example, sampled documents from Argentina are available in the folder "Argentina," documents from Brazil are available in the folder "Brazil," and so on. Texts pre-processing were handled with `readtext` and `quanteda` in a series of R scripts. These scripts are available in the folder "Pre-processing."
 
 ## Curated Data
+
 As a convenient step in our analyses, we created the folder "Curated_Data" which provides curated data for each country. This curated data provides the estimated centrality for each basic skill in each country. Apart from these data, we also provide the NetworkData folder. This second folder contains the academic offering of each nation as a network data serialized in RDS format.
 
 # Network analyses
@@ -47,7 +49,7 @@ Pre-processing texts result in a series of features-document matrices which are 
 
 ## Network properties set up
 
-The network properties of each nation's academic offering was done with the `network` package. The following network attributes are present for each academic offering: country of origin, membership to the Organization for Economic Development (OECD), network size, network density, network clustering (estimated by the `reinforcement_tm` algortihm available in the `tnet` package). Vertex attributes include the country of origin (for both node partitions), the length of the brochure (for nodes in the first partition), the degree centrality (for both node partitions), the eigenvector centrality (for both node partitions), the program level (for the first node partition), and the name of each skills (for nodes in the second partition). These vertex attributes enable us to exert statistical control when estimating the network effects in our series of exponential random graph models. 
+The network properties of each nation's academic offering was done with the `network` package. The following network attributes are present for each academic offering: country of origin, membership to the Organization for Economic Development (OECD), network size, network density, network clustering (estimated by the `reinforcement_tm` algortihm available in the `tnet` package). Vertex attributes include the country of origin (for both node partitions), the length of the brochure (for nodes in the first partition), the degree centrality (for both node partitions), the eigenvector centrality (for both node partitions), the program level (for the first node partition), and the name of each skills (for nodes in the second partition). These vertex attributes enable us to exert statistical control when estimating the network effects in our series of exponential random graph models.
 
 # Regional Network Analysis
 
@@ -79,7 +81,7 @@ RegionalNetworks %>%
   kable()
 ```
 
-Despite the weak connectivity between programs and skills and to address the artifact discussed in section 3.5 of the article, we compare programs' and skills' centrality as a function of program levels in each country (see Figure F1). 
+Despite the weak connectivity between programs and skills and to address the artifact discussed in section 3.5 of the article, we compare programs' and skills' centrality as a function of program levels in each country (see Figure F1).
 
 ```{r F1, fig.cap="Figure 1. Statistical distributions for the estimated importance of skills and programs.", echo=FALSE, fig.width=30, fig.height=18, warning=FALSE}
 load("Results/Argentina.RData")
@@ -151,8 +153,7 @@ ggplot(AllPrograms, aes(x=Level, y=Eigenvector, fill = Partition)) +
   scale_fill_manual(values = c("Skill" = "#09419e", "Program" = "red2"))
 ```
 
-The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality regardless of the local academic offering available in each country. Apart from scientific reasoning (science), other skills are important as well (e.g., speaking, learning strategy, active listening, reading comprehension). By ranking the importance of these skills, we now have sufficient evidence to estimate their importance following the logic of exponential random graph model. In the following section, we provide inferential evidence on the importance of these skills for the academic offering.
-
+The next Figure shows the estimated centrality for each basic skill in each country. Scientific reasoning (science) proved to be the first basic skill with the highest centrality regardless of the local academic offering available in each country. Together with scientific reasoning (science), the following basic skills join the top five competencies: speaking, active listening, learning strategy, and active learning.
 
 ```{r F2, fig.cap="Figure 2. Estimated importance of basic skills by country.", echo=FALSE, fig.width=40, fig.height=18, warning=FALSE}
 
@@ -180,9 +181,13 @@ ggplot(Skills, aes(x=reorder(Node, -Eigenvector), y=Eigenvector, fill = Level))+
   labs(fill="")
 ```
 
-
-
 # Inferential Network Analysis
+
+To estimate the importance of these basic skills in the academic offering of graduate programs in Latin America, we now switch the attention to a series of exponential random graph models.
+
+## Model Specifications 
+
+We begin with the specification of our *Model 1*
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 RegionalNetworks <- readRDS("NetworkData/RegionalNetworks.RDS")
@@ -192,4 +197,3 @@ SampledNetworks <- Networks(RegionalNetworks)
 model1 <- ergm(SampledNetworks ~ edges)
 summary(model1)
 ```
-
