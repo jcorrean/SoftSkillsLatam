@@ -14,7 +14,7 @@ summary(model1) # AIC: 37397
 GOF <- gof(model1)
 plot(GOF)
 
-
+set.seed(2758)
 Simuladas1 <- simulate(model1, nsim = 1000, 
                        coef = model1$coefficients,
                        control = 
